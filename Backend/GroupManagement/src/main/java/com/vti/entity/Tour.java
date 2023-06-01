@@ -30,4 +30,10 @@ public class Tour implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "`type`", nullable = false)
     private Type type;
+
+    @Column(name = "`details`", nullable = false, length = 500)
+    private String details;
+
+    @Column(name = "`saleRate`", nullable = false)
+    private double saleRate;
 }
