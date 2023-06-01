@@ -17,6 +17,13 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "Trip")
 public class Trip implements Serializable{

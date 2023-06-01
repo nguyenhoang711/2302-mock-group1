@@ -14,6 +14,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Formula;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "`User`")
 public class User implements Serializable {
