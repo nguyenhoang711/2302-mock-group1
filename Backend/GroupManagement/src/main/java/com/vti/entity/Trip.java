@@ -1,43 +1,59 @@
 package com.vti.entity;
 
-import javax.persistence.*;
+import java.io.Serializable;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "Trip")
-public class Trip {
+public class Trip implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private short id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "`id`", unique = true, nullable = false)
+	private short id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column(name = "`name`", nullable = false, length = 50, unique = true)
+	private String name;
 
-	public short getId() {
-		return id;
-	}
+	@ManyToOne
+	@JoinColumn(name = "TourID")
+	private Tour tour;
 
-	public void setId(short id) {
-		this.id = id;
-	}
+	@Column(name = "startDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date createDate;
 
-	public String getName() {
-		return name;
-	}
+	@Column(name = "endDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date endDate;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	@Column(name = "`startPoint`", nullable = false, length = 50)
+	private String startPoint;
 
-	public Trip(String name) {
-		super();
-		this.name = name;
-	}
+	@Column(name = "gatherDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date gatherDate;
 
-	public Trip() {
-
-	}
-    
+	@Column(name = "`hotel`", nullable = false, length = 50)
+	private String hotel;
 	
     
 }
