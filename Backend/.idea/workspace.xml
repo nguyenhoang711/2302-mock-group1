@@ -123,6 +123,7 @@
       <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/GroupManagement/GroupManagement.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/GroupManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/GroupManagementApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/config/authentication/AuthenticationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/config/authentication/AuthenticationConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/config/authentication/JWTAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/GroupManagement/src/main/java/com/group1/config/authentication/JWTAuthenticationFilter.java" afterDir="false" />
@@ -195,17 +196,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GroupManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="GroupManagement" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.group1.GroupManagementApplication" />
