@@ -124,22 +124,21 @@ public class UserController {
         		user.getFirstName(), 
         		user.getLastName(),
         		user.getRole(),
-        		user.getStatus().toString(),
-        		user.getAvatarUrl());
+        		user.getStatus().toString());
 
 		return new ResponseEntity<>(profileDto, HttpStatus.OK);
 	}
 	
-	@PutMapping("/profile")
-	// validate: check exists, check not expired
-	public ResponseEntity<?> changeUserProfile(Authentication authentication, @RequestBody ChangePublicProfileDTO dto) {
-		
-		// get username from token
-		String username = authentication.getName();
-		
-		userService.changeUserProfile(username, dto);
-		
-		return new ResponseEntity<>("Change Profile Successfully!", HttpStatus.OK);
-	}
+//	@PutMapping("/profile")
+//	// validate: check exists, check not expired
+//	public ResponseEntity<?> changeUserProfile(Authentication authentication, @RequestBody ChangePublicProfileDTO dto) {
+//		
+//		// get username from token
+//		String username = authentication.getName();
+//		
+//		userService.changeUserProfile(username, dto);
+//		
+//		return new ResponseEntity<>("Change Profile Successfully!", HttpStatus.OK);
+//	}
 
 }

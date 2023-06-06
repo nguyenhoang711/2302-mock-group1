@@ -1,5 +1,5 @@
 package com.vti.entity;
 
 public enum UserStatus {
-	ADMIN, CUSTOMER;
+	NOT_ACTIVE, ACTIVE;
 }

@@ -34,9 +34,6 @@ public class User implements Serializable {
 	@Column(name = "`username`", nullable = false, length = 50, unique = true)
 	private String userName;
 	
-//	@Column(name = "`name`", nullable = false, length = 50, unique = true)
-//	private String name;
-	
 	@Column(name = "`email`", nullable = false, length = 50, unique = true)
 	private String email;
 
@@ -51,21 +48,52 @@ public class User implements Serializable {
 
 	@Formula("concat(firstName, ' ', lastName)")
 	private String fullName;
-
-//	@Column(name = "role", nullable = false)
-//	private String role = "Employee"
 	
 	@Column(name = "`address`", nullable = false, length = 50)
 	private String address;
 	
-	@Column(name = "`phoneNumber`", nullable = false)
-	private short phoneNumber;
-	
-	@Column(name = "`role`", nullable = false)
+	@Column(name = "`phoneNumber`", nullable = false, length = 50)
+	private String phoneNumber;
+
+	@Column(name = "role", columnDefinition = "ENUM('ADMIN', 'EMPLOYEE', 'CUSTOMER')")
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	public enum Role {
+		ADMIN, EMPLOYEE, CUSTOMER;
+		public static Role toEnum(String name) {
+			for (Role item : Role.values()) {
+				if (item.toString().equals(name))
+					return item;
+			}
+			return null;
+		}
+	}
+
 	@Enumerated(EnumType.ORDINAL)
-	private UserStatus role = UserStatus.CUSTOMER;
+	@Column(name = "`status`", nullable = false)
+	private UserStatus status = UserStatus.NOT_ACTIVE;
 	
-	@Column(name = "`supervisor_Id`")
-	private short supervisorId;
+	@Column(name = "`supervisor_id`", nullable = true)
+	private short supervisor_id;
+
+	public User(String userName, String email, String password, String firstName, String lastName) {
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public User() {
+	}
+
+	public String getRole() {
+		return role.name();
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 }
