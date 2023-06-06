@@ -1,19 +1,24 @@
 package com.vti.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import lombok.Data;
 
 @Entity
 @Table(name = "Tour")
 @Data
+@Getter
+@Setter
 public class Tour implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "`id`", unique = true, nullable = false)
-    private int id;
+    private short id;
 
     @Column(name = "`name`", nullable = false, length = 200, unique = true)
     private String name;
@@ -25,7 +30,7 @@ public class Tour implements Serializable {
     private String duration;
 
     @Column(name = "`numOfPeople`", nullable = false)
-    private int numOfPeople;
+    private short numOfPeople;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "`type`", nullable = false)
