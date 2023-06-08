@@ -14,17 +14,13 @@ public class ProfileDTO {
 
 	private String status;
 
-	private String avatarUrl;
-
-	public ProfileDTO(String userName, String email, String firstName, String lastName, String role, String status,
-			String avatarUrl) {
+	public ProfileDTO(String userName, String email, String firstName, String lastName, String role, String status) {
 		this.userName = userName;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
 		this.status = status;
-		this.avatarUrl = avatarUrl;
 	}
 
 	public String getUserName() {
@@ -51,8 +47,5 @@ public class ProfileDTO {
 		return status;
 	}
 
-	public String getAvatarUrl() {
-		return avatarUrl;
-	}
 
 }

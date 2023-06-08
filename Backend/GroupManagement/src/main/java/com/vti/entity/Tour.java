@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.vti.entity.User.Role;
+
 import java.io.Serializable;
 
 @Entity
@@ -30,7 +33,7 @@ public class Tour implements Serializable {
     @Column(name = "`numOfPeople`", nullable = false)
     private short numOfPeople;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "`type`", nullable = false)
     private Type type;
 

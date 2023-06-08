@@ -34,11 +34,11 @@ public class Trip implements Serializable{
 	@Column(name = "`id`", unique = true, nullable = false)
 	private short id;
 
-	@Column(name = "`name`", nullable = false, length = 50, unique = true)
+	@Column(name = "`name`", nullable = false, length = 100	, unique = true)
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "TourID")
+	@JoinColumn(name = "tourID")
 	private Tour tour;
 
 	@Column(name = "startDate")
@@ -62,5 +62,7 @@ public class Trip implements Serializable{
 	@Column(name = "`hotel`", nullable = false, length = 50)
 	private String hotel;
 	
-    
+	public Trip() {
+		super();
+	}
 }
