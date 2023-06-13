@@ -17,5 +17,4 @@ public class GroupFormForCreating {
 	public Group toEntity() {
 		return new Group(name);
 	}
-
 }
