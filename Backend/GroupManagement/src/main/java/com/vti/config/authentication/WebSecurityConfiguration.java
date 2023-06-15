@@ -1,5 +1,7 @@
 package com.vti.config.authentication;
 
+import com.google.common.collect.ImmutableList;
+import com.vti.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,9 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import com.google.common.collect.ImmutableList;
-import com.vti.service.IUserService;
 
 @Component
 @EnableWebSecurity
@@ -47,14 +46,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.addFilterBefore(
 				new JWTAuthenticationFilter("/api/v1/login", authenticationManager(), service), 
-				UsernamePasswordAuthenticationFilter.class) 
+				UsernamePasswordAuthenticationFilter.class)
 		.addFilterBefore(
 				new JWTAuthorizationFilter(), 
 				UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Bean
-    CorsConfigurationSource corsConfigurationSource() {
+	CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
 	    configuration.setAllowedMethods(ImmutableList.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 	    configuration.applyPermitDefaultValues();

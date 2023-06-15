@@ -1,5 +1,6 @@
 package com.vti.entity;
 
+
 import lombok.*;
 
 import javax.persistence.*;
