@@ -49,10 +49,10 @@ public class User implements Serializable {
 	@Formula("concat(firstName, ' ', lastName)")
 	private String fullName;
 	
-	@Column(name = "`address`", nullable = false, length = 50)
+	@Column(name = "`address`", length = 50)
 	private String address;
 	
-	@Column(name = "`phoneNumber`", nullable = false, length = 50)
+	@Column(name = "`phoneNumber`", length = 50)
 	private String phoneNumber;
 
 	@Column(name = "role", columnDefinition = "ENUM('ADMIN', 'EMPLOYEE', 'CUSTOMER')")

@@ -32,7 +32,7 @@ public class TourSpecificationBuilder {
             where = new TourSpecification(searchCriteria).and(new TourSpecification(searchCriteria2));
         }
 
-        //min price filter
+//        min price filter
         if(filter.getMinPrice() != 0){
             if(where != null){
                 where = where.and(new TourSpecification(minPrice));
@@ -42,7 +42,7 @@ public class TourSpecificationBuilder {
             }
         }
 
-        //max price filter
+//        max price filter
         if(filter.getMaxPrice() != 0){
             if(where != null){
                 where = where.and(new TourSpecification(maxPrice));
@@ -53,7 +53,7 @@ public class TourSpecificationBuilder {
         }
 
         // min num of people filter
-        if (filter.getMinPrice() != 0) {
+        if (filter.getMinNumOfPeople() != 0) {
             if (where != null) {
                 where = where.and(new TourSpecification(minNumOfPeople));
             } else {

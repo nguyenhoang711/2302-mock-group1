@@ -7,11 +7,11 @@ import com.vti.entity.Type;
 public class TourFormForCreating {
     private String name;
 
-    private double price;
-
     private String duration;
 
     private short numOfPeople;
+
+    private double price;
 
     private Type type;
 

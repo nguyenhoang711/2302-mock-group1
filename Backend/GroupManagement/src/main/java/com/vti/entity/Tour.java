@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -49,4 +50,7 @@ public class Tour implements Serializable {
 
     @Column(name = "`saleRate`")
     private double saleRate;
+
+    @OneToMany(mappedBy = "tour")
+    private List<Trip> trips;
 }
