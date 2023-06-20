@@ -53,6 +53,7 @@ public class UserService implements IUserService {
 		// create new user registration token
 		createNewRegistrationUserToken(user);
 
+		//lỗi ở phần sendConfirmEmail
 		// send email to confirm
 		sendConfirmUserRegistrationViaEmail(user.getEmail());
 	}

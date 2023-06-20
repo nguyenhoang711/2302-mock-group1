@@ -40,10 +40,40 @@ public class Tour implements Serializable {
     @NonNull
     private short numOfPeople;
 
+    public enum Type {
+        LUXURY,STANDARD, GOOD_PRICE, PAY_LESS;
+        public static Tour.Type toEnum(String name) {
+            for (Tour.Type item : Tour.Type.values()) {
+                if (item.toString().equals(name))
+                    return item;
+            }
+            return null;
+        }
+    }
+
+
     @Enumerated(EnumType.STRING)
     @Column(name = "`type`", nullable = false)
     @NonNull
     private Type type;
+
+    @Column(name = "startDest", nullable = false, length= 50)
+    private String startDest;
+
+    @Column(name = "img1_url", length = 200)
+    private String image1;
+
+    @Column(name = "img2_url", length = 200)
+    private String image2;
+
+    @Column(name = "img3_url", length = 200)
+    private String image3;
+
+    @Column(name = "img4_url", length = 200)
+    private String image4;
+
+    @Column(name = "thumbnail_url", length = 200)
+    private String thumbnail;
 
     @Column(name = "`details`", length = 500)
     private String details;

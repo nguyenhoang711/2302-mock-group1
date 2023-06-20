@@ -28,6 +28,7 @@ public class EmailService implements IEmailService {
 	public void sendRegistrationUserConfirm(String email) {
 
 		User user = userService.findUserByEmail(email);
+
 		String token = registrationUserTokenRepository.findByUserId(user.getId());
 
 		String confirmationUrl = "http://localhost:8080/api/v1/users/activeUser?token=" + token;

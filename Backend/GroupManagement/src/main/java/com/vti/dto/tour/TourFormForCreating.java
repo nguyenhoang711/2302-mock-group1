@@ -1,7 +1,6 @@
 package com.vti.dto.tour;
 
 import com.vti.entity.Tour;
-import com.vti.entity.Type;
 
 
 public class TourFormForCreating {
@@ -13,7 +12,7 @@ public class TourFormForCreating {
 
     private double price;
 
-    private Type type;
+    private Tour.Type type;
 
     private String details;
 

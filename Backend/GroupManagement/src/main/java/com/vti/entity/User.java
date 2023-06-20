@@ -1,26 +1,19 @@
 package com.vti.entity;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.UUID;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Formula;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @Entity
 @Table(name = "`User`")
 public class User implements Serializable {
@@ -28,7 +21,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "`id`", unique = true, nullable = false)
+	@Column(name = "`id`")
 	private short id;
 
 	@Column(name = "`username`", nullable = false, length = 50, unique = true)
@@ -52,10 +45,13 @@ public class User implements Serializable {
 	@Column(name = "`address`", length = 50)
 	private String address;
 	
-	@Column(name = "`phoneNumber`", length = 50)
+	@Column(name = "`phoneNumber`", length = 20)
 	private String phoneNumber;
 
-	@Column(name = "role", columnDefinition = "ENUM('ADMIN', 'EMPLOYEE', 'CUSTOMER')")
+	@Column(name = "`avatar`", length = 200)
+	private String avatar;
+
+	@Column(name = "`role`", columnDefinition = "ENUM('ADMIN', 'EMPLOYEE', 'CUSTOMER')")
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
@@ -74,15 +70,16 @@ public class User implements Serializable {
 	@Column(name = "`status`", nullable = false)
 	private UserStatus status = UserStatus.NOT_ACTIVE;
 	
-	@Column(name = "`supervisor_id`", nullable = true)
-	private short supervisor_id;
+//	@Column(name = "`supervisor_id`", nullable = true)
+//	private short supervisor_id;
 
-	public User(String userName, String email, String password, String firstName, String lastName) {
+	public User(String userName, String email, String password, String firstName, String lastName, String phoneNumber) {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public User() {
@@ -95,5 +92,33 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+//
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
+//
+//	public short getId() {
+//		return id;
+//	}
+//
+//	public void setId(short id) {
+//		this.id = id;
+//	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", userName='" + userName + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", fullName='" + fullName + '\'' +
+				'}';
+	}
 }

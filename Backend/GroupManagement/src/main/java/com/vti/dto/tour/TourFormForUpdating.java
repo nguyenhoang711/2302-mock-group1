@@ -1,6 +1,6 @@
 package com.vti.dto.tour;
 
-import com.vti.entity.Type;
+import com.vti.entity.Tour;
 
 public class TourFormForUpdating {
     private String name;
@@ -11,7 +11,7 @@ public class TourFormForUpdating {
 
     private short numOfPeople;
 
-    private Type type;
+    private Tour.Type type;
 
     private String details;
 
@@ -49,11 +49,11 @@ public class TourFormForUpdating {
         this.numOfPeople = numOfPeople;
     }
 
-    public Type getType() {
+    public Tour.Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Tour.Type type) {
         this.type = type;
     }
 

@@ -26,6 +26,9 @@ import org.hibernate.annotations.CreationTimestamp;
 @Setter
 @Entity
 @Table(name = "Trip")
+//xóa bỏ thuộc tính điểm xuất phát
+//bổ sung thông tin người phụ trách
+//dùng thuộc tính 'name' thay là tên người phụ trách
 public class Trip implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -33,9 +36,6 @@ public class Trip implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "`id`", unique = true, nullable = false)
 	private short id;
-
-	@Column(name = "`name`", nullable = false, length = 100	, unique = true)
-	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "tourID")
@@ -50,9 +50,6 @@ public class Trip implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date endDate;
-
-	@Column(name = "`startPoint`", nullable = false, length = 50)
-	private String startPoint;
 
 	@Column(name = "gatherDate")
 	@Temporal(TemporalType.TIMESTAMP)

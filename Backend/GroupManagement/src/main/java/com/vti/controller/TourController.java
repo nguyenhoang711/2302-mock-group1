@@ -22,7 +22,7 @@ public class TourController {
     private ITourService service;
 
     @GetMapping()
-    public ResponseEntity<?> getAllBookings(
+    public ResponseEntity<?> getAllTours(
             Pageable pageable,
             TourFilter filter,
             @RequestParam(required = false)
@@ -32,29 +32,29 @@ public class TourController {
     }
 
     @GetMapping(value = "/id/{id}")
-    public ResponseEntity<?> existsBookingById(@PathVariable(name = "id") short id) {
+    public ResponseEntity<?> existsTourById(@PathVariable(name = "id") short id) {
         return new ResponseEntity<>(service.isTourExistsById(id), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<?> createBooking(@RequestBody TourFormForCreating form) {
+    public ResponseEntity<?> createTour(@RequestBody TourFormForCreating form) {
         service.createTour(form);
         return new ResponseEntity<String>("Create tour successfully!", HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getBookingByID(@PathVariable(name = "id") short id) {
+    public ResponseEntity<?> getTourByID(@PathVariable(name = "id") short id) {
         return new ResponseEntity<>(service.getTourByID(id), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateBooking(@PathVariable(name = "id") short id, @RequestBody TourFormForUpdating form) {
+    public ResponseEntity<?> updateTour(@PathVariable(name = "id") short id, @RequestBody TourFormForUpdating form) {
         service.updateTour(id, form);
         return new ResponseEntity<String>("Update tour successfully!", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{ids}")
-    public ResponseEntity<?> deleteBookings(@PathVariable(name = "ids") List<Short> ids) {
+    public ResponseEntity<?> deleteTours(@PathVariable(name = "ids") List<Short> ids) {
         service.deleteTours(ids);
         return new ResponseEntity<String>("Delete tour successfully!", HttpStatus.OK);
     }

@@ -20,6 +20,8 @@ public class UserDTO {
 	// check not null, check length, check format (regex)...
 	private String lastName;
 
+	private String phoneNumber;
+
 	public UserDTO() {
 	}
 
@@ -63,7 +65,15 @@ public class UserDTO {
 		this.lastName = lastName;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public User toEntity() {
-		return new User(userName, email, password, firstName, lastName);
+		return new User(userName, email, password, firstName, lastName,phoneNumber);
 	}
 }
