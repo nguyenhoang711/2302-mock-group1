@@ -116,6 +116,9 @@ const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 // groups
 const Group = async(() => import("../pages/group/Group"));
 
+// groups
+const Booking = async(() => import("../pages/booking/Booking"));
+
 // Routes
 const landingRoutes = {
   path: "/",
@@ -170,6 +173,15 @@ const groupRoutes = {
   component: withAuth(Group),
   children: null
 };
+
+const bookingRoutes = {
+  path: "/bookings",
+  name: "Booking",
+  icon: ListIcon,
+  component: Booking,
+  children: null
+};
+
 
 const pageRoutes = {
   path: "/pages",
@@ -609,6 +621,7 @@ const SettingsRoutes = {
 export const dashboard = [
   dashboardRoutes,
   groupRoutes,
+  bookingRoutes,
   pageRoutes,
   layoutRoutes,
   documentationRoutes,
@@ -637,6 +650,7 @@ export const page = [authRoutes];
 export default [
   dashboardRoutes,
   groupRoutes,
+  bookingRoutes,
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,

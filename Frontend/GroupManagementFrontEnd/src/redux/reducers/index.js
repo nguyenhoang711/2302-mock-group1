@@ -5,6 +5,7 @@ import layout from "./layoutReducer";
 import theme from "./themeReducer";
 import UserLoginInfo from "./UserLoginInfoReducers";
 import Group from "./GroupReducers";
+import Booking from "./BookingReducers";
 
 import { reducer as toastr } from "react-redux-toastr";
 
@@ -14,5 +15,6 @@ export default combineReducers({
   theme,
   toastr,
   UserLoginInfo,
-  Group
+  Group,
+  Booking
 });
