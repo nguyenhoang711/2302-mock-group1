@@ -24,7 +24,7 @@ public class Tour implements Serializable {
     @Column(name = "`id`", unique = true)
     private short id;
 
-    @Column(name = "`name`", nullable = false, length = 200, unique = true)
+    @Column(name = "`name`", nullable = false, length = 400, unique = true)
     @NonNull
     private String name;
 
@@ -32,7 +32,7 @@ public class Tour implements Serializable {
     @NonNull
     private double price;
 
-    @Column(name = "`duration`", nullable = false, length = 800)
+    @Column(name = "`duration`", nullable = false, length = 80)
     @NonNull
     private String duration;
 
@@ -57,6 +57,7 @@ public class Tour implements Serializable {
     private Type type;
 
     @Column(name = "startDest", nullable = false, length= 50)
+    @NonNull
     private String startDest;
 
     @Column(name = "img1_url", length = 200)
@@ -74,10 +75,12 @@ public class Tour implements Serializable {
     @Column(name = "thumbnail_url", length = 200)
     private String thumbnail;
 
-    @Column(name = "`details`", length = 500)
+    @Column(name = "`details`", length = 900, nullable = false)
+    @NonNull
     private String details;
 
-    @Column(name = "`saleRate`")
+    @Column(name = "`saleRate`", nullable = false)
+    @NonNull
     private double saleRate;
 
     @OneToMany(mappedBy = "tour")

@@ -102,10 +102,13 @@ const PublicInfo = () => {
     };
   };
 
+  //upload image into server
   const handleSaveEvent = async () => {
+    //B1: upload ảnh lên
     const nameImage = await FileApi.uploadImage(previewAvatarFile);
     console.log(nameImage);
     // call api update profile
+    //B2: update info chung lên
     await UserApi.updateProfile(nameImage);
     showSucessNotification("Change Avatar", "Change avatar successfully!")
   }
