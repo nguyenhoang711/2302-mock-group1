@@ -17,13 +17,13 @@ public interface ResetPasswordTokenRepository extends JpaRepository<ResetPasswor
 	@Query("	SELECT 	token	"
 			+ "	FROM 	ResetPasswordToken "
 			+ " WHERE 	user.id = :userId")
-	public String findByUserId(@Param("userId") int userId);
+	public String findByUserId(@Param("userId") short userId);
 	
 	@Transactional
 	@Modifying
 	@Query("	DELETE 						" 
 			+ "	FROM 	ResetPasswordToken 	" 
 			+ " WHERE 	user.id = :userId")
-	public void deleteByUserId(@Param("userId") int userId);
+	public void deleteByUserId(@Param("userId") short userId);
 
 }

@@ -13,7 +13,7 @@ import Statistics from "./Statistics";
 
 const Default = () => (
   <Container fluid className="p-0">
-    <Header />
+    {/* <Header />
     <Statistics />
     <Row>
       <Col lg="8" className="d-flex">
@@ -41,7 +41,7 @@ const Default = () => (
       <Col lg="6" xl="4" className="d-flex">
         <BarChart />
       </Col>
-    </Row>
+    </Row> */}
   </Container>
 );
 

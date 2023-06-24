@@ -51,6 +51,7 @@ const SignUp = (props) => {
             username: '',
             email: '',
             password: '',
+            phoneNumber: '',
             confirmPassword: ''
           }
         }
@@ -82,6 +83,10 @@ const SignUp = (props) => {
                 const isExists = await UserApi.existsByEmail(email);
                 return !isExists;
               }),
+            
+            phoneNumber: Yup.string()
+              .min(10, 'Số điện thoại phải có 10 số ')
+              .required('Required'),
 
             password: Yup.string()
               .min(6, 'Must be between 6 and 50 characters')
@@ -109,7 +114,8 @@ const SignUp = (props) => {
                 values.lastname,
                 values.username,
                 values.email,
-                values.password
+                values.password,
+                values.phoneNumber
               );
 
               // message
@@ -171,6 +177,17 @@ const SignUp = (props) => {
                       bsSize="lg"
                       name="email"
                       placeholder="Enter your email"
+                      component={ReactstrapInput}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <FastField
+                      label="Phone number"
+                      type="text"
+                      bsSize="lg"
+                      name="phoneNumber"
+                      placeholder="Enter your phone number"
                       component={ReactstrapInput}
                     />
                   </FormGroup>

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vti.entity.RegistrationUserToken;
 
 
-public interface RegistrationUserTokenRepository extends JpaRepository<RegistrationUserToken, Integer> {
+public interface RegistrationUserTokenRepository extends JpaRepository<RegistrationUserToken, Short> {
 
 	public RegistrationUserToken findByToken(String token);
 

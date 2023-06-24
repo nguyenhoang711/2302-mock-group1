@@ -1,16 +1,15 @@
 import * as types from "../constants";
 
-export function getListGroupAction(groups, page, totalSize, minTotalMember, maxTotalMember, search) {
+export function getListTourAction(tours, page, totalSize, minPrice, maxPrice, search) {
   return {
-    type: types.GET_LIST_GROUP,
+    type: types.GET_LIST_TOUR,
     payload: {
-      groups,
+      tours,
       page,
       totalSize,
-
       // filter
-      minTotalMember,
-      maxTotalMember,
+      minPrice,
+      maxPrice,
       // search
       search
     }
@@ -19,7 +18,7 @@ export function getListGroupAction(groups, page, totalSize, minTotalMember, maxT
 
 export function updateSelectedRowsAction(selectedRows) {
   return {
-    type: types.GET_LIST_GROUP_SELECTED_ROWS,
+    type: types.GET_LIST_TOUR_SELECTED_ROWS,
     payload: selectedRows
   };
 };

@@ -51,7 +51,6 @@ public class Tour implements Serializable {
         }
     }
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "`type`", nullable = false)
     @NonNull

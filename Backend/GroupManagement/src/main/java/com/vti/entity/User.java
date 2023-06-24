@@ -10,6 +10,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Formula;
 
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import lombok.Getter;
 //import lombok.Setter;
 
@@ -69,6 +70,13 @@ public class User implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "`status`", nullable = false)
 	private UserStatus status = UserStatus.NOT_ACTIVE;
+
+	@PrePersist
+	public void prePersist() {
+		if (role == null) {
+			role = Role.ADMIN;
+		}
+	}
 	
 //	@Column(name = "`supervisor_id`", nullable = true)
 //	private short supervisor_id;

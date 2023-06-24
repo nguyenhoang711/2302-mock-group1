@@ -10,14 +10,15 @@ const existsByUsername = (username) => {
     return Api.get(`${url}/userName/${username}`);
 };
 
-const create = (firstname, lastname, username, email, password) => {
+const create = (firstname, lastname, username, email, password, phoneNumber) => {
 
     const body = {
         firstName: firstname,
         lastName: lastname,
         userName: username,
         email: email,
-        password: password
+        password: password,
+        phoneNumber: phoneNumber
     }
 
     return Api.post(url, body);

@@ -121,7 +121,8 @@ const SignIn = (props) => {
                   result.status)
 
                 // redirect to home page
-                props.history.push("/dashboard/default");
+                // props.history.push("/dashboard/default");
+                props.history.push("/");
               }
 
             } catch (error) {
@@ -176,7 +177,22 @@ const SignIn = (props) => {
                     <small>
                       <Link to="/auth/reset-password">Forgot password?</Link>
                     </small>
+                    
                   </FormGroup>
+
+                  {/*Don't have account */}
+                  <div>
+                    <small>
+                      <Link to="/auth/sign-up">You don't have account? Sign up</Link>
+                    </small>
+                  </div>
+
+                  {/*don't reveive email */}
+                  {/* <div>
+                    <small>
+                      <Link to="/users/userRegistrationConfirmRequest?email=${}">You haven't received email yet? Click here</Link>
+                    </small>
+                  </div> */}
 
                   {/* Remember me */}
                   <div>

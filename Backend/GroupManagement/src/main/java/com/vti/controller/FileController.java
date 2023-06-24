@@ -44,6 +44,7 @@ public class FileController {
 			return new ResponseEntity<>("File must be image!", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
+		//lay duong dan den anh luu tru
 		String imageLink = fileService.uploadImage(image);
 
 		System.out.println("name: " + name + ", imageLink: " + imageLink);

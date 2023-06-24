@@ -7,7 +7,7 @@ import {
 } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
-import LandingLayout from "../layouts/Landing";
+// import LandingLayout from "../layouts/Landing";
 import AuthLayout from "../layouts/Auth";
 import Page404 from "../pages/auth/Page404";
 
@@ -48,7 +48,7 @@ const Routes = () => (
   <Router>
     <ScrollToTop>
       <Switch>
-        {childRoutes(LandingLayout, landingRoutes)}
+        {/* {childRoutes(LandingLayout, landingRoutes)} */}
         {childRoutes(DashboardLayout, dashboardRoutes)}
         {childRoutes(AuthLayout, pageRoutes)}
         <Route

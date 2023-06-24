@@ -222,11 +222,11 @@ const NavbarComponent = (props) => {
             })}
           </NavbarDropdown>
 
-          <UncontrolledDropdown nav inNavbar className="mr-2">
-            <DropdownToggle nav caret className="nav-flag">
+          {/* <UncontrolledDropdown nav inNavbar className="mr-2"> */}
+            {/* <DropdownToggle nav caret className="nav-flag">
               <img src={usFlag} alt="English" />
-            </DropdownToggle>
-            <DropdownMenu right>
+            </DropdownToggle> */}
+            {/* <DropdownMenu right>
               <DropdownItem>
                 <img
                   src={usFlag}
@@ -263,8 +263,8 @@ const NavbarComponent = (props) => {
                 />
                 <span className="align-middle">Dutch</span>
               </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+            </DropdownMenu> */}
+          {/* </UncontrolledDropdown> */}
 
           <UncontrolledDropdown nav inNavbar>
             <span className="d-inline-block d-sm-none">
@@ -287,14 +287,14 @@ const NavbarComponent = (props) => {
                 <User size={18} className="align-middle mr-2" />
                 Profile
               </DropdownItem>
-              <DropdownItem>
+              {/* <DropdownItem>
                 <PieChart size={18} className="align-middle mr-2" />
                 Analytics
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem divider />
               <DropdownItem onClick={() => history.push("/settings")}>Settings & Privacy</DropdownItem>
-              <DropdownItem>Help</DropdownItem>
-              <DropdownItem>Sign out</DropdownItem>
+              {/* <DropdownItem>Help</DropdownItem> */}
+              <DropdownItem onClick={() => history.push("/auth/sign-in")}>Sign out</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>

@@ -24,13 +24,13 @@ public class RegistrationUserToken implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "`id`", unique = true, nullable = false)
-	private int id;
+	private short id;
 
 	@Column(name = "`token`", nullable = false, length = 36, unique = true)
 	private String token;
 
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = false, name = "user_id")
+	@JoinColumn(nullable = false, name = "user_id", referencedColumnName = "id")
 	private User user;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -48,11 +48,11 @@ public class RegistrationUserToken implements Serializable {
 		expiryDate = new Date(System.currentTimeMillis() + 360000);
 	}
 
-	public int getId() {
+	public short getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(short id) {
 		this.id = id;
 	}
 
