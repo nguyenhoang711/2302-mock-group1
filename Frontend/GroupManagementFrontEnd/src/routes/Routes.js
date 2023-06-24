@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
-  landing as landingRoutes,
+  // landing as landingRoutes,
   dashboard as dashboardRoutes,
   page as pageRoutes
 } from "./index";
