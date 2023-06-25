@@ -15,6 +15,8 @@ public interface ITourService {
 
     boolean isTourExistsById(short id);
 
+    boolean isTourExistsByName(String name);
+
     void createTour(TourFormForCreating form);
 
     Tour getTourByID(short id);

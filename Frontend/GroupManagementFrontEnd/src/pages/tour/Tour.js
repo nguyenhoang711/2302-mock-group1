@@ -10,7 +10,12 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu,
+  ButtonDropdown
 } from "reactstrap";
+import Type from './Type';
 // import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -89,6 +94,11 @@ const Tour = (props) => {
       {
         dataField: "saleRate",
         text: "Giảm giá",
+        sort: true
+      },
+      {
+        dataField: "details",
+        text: "Chi tiết",
         sort: true
       },
       {
@@ -180,6 +190,11 @@ const Tour = (props) => {
     const updateTour = async (tourId) => {
       setOpenModalUpdate(true);
       const tourInfo = await TourApi.getById(tourId);
+      tourInfo['type'] = Type[tourInfo['type']]
+      // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
+      // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
+      // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
+      // else values.type = 'GOOD_PRICE';
       setTourUpdateInfo(tourInfo);
     }
   
@@ -195,7 +210,8 @@ const Tour = (props) => {
       } else {
         selected = props.selectedRows.filter(x => x !== row.id)
       }
-  
+
+      console.log(selected);
       props.updateSelectedRowsAction(selected);
     }
   
@@ -309,7 +325,7 @@ const Tour = (props) => {
         </Row>
                   
         {/*Validate create tour form */}
-        {/* <Modal isOpen={isOpenModalCreate}>
+        <Modal isOpen={isOpenModalCreate}>
           <Formik
             initialValues={
               {
@@ -326,12 +342,13 @@ const Tour = (props) => {
             validationSchema={
               Yup.object({
                 name: Yup.string()
-                  .min(6, 'Must be between 6 and 50 characters')
-                  .max(50, 'Must be between 6 and 50 characters')
+                  .min(6, 'Must be between 6 and 400 characters')
+                  .max(400, 'Must be between 6 and 400 characters')
                   .required('Required')
                   .test('checkUniqueName', 'This name is already registered.', async name => {
                     // call api
                     const isExists = await TourApi.existsByName(name);
+                    // console.log(isExists);
                     return !isExists;
                   }),
                 price: Yup.number()
@@ -344,14 +361,14 @@ const Tour = (props) => {
                   .min(0, 'The number of people always more than 1')
                   .required('Required field'),
                 type: Yup.string()
-                  .oneOf('Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt')
+                  .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
                   .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
-                  .max(40, 'Must be smaller than 40 characters')
+                  .max(50, 'Must be smaller than 50 characters')
                   .required('Required field'),
                 saleRate: Yup.number()
-                  .min(0.0, 'Sale rate always more than or equal to zero')
+                  .min(0, 'Sale rate always more than or equal to zero')
                   .max(100, 'Sale rate always less than 100 percent'),
                 details: Yup.string()
                   .required('Required field'),
@@ -360,8 +377,18 @@ const Tour = (props) => {
   
             onSubmit={
               async values => {
+                // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
+                // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
+                // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
+                // else values.type = 'GOOD_PRICE';
+                Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
+                                        values.type = k;
+                                        return;
+                                      }})
                 try {
-                  await TourApi.create(values.name);
+                  await TourApi.create(values.name, values.price,
+                    values.duration, values.numOfPeople, values.type,
+                    values.startDest, values.saleRate, values.details);
                   // show notification
                   showSuccessNotification(
                     "Create Tour",
@@ -384,32 +411,132 @@ const Tour = (props) => {
             validateOnBlur={false}
           >
             {({ isSubmitting }) => (
-              <Form> */}
+              <Form>
                 {/* header */}
-                {/* <ModalHeader>Create Tour</ModalHeader> */}
+                <ModalHeader>Create Tour</ModalHeader>
   
                 {/* body */}
-                {/* <ModalBody className="m-3">
+                <ModalBody className="m-3">
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
-                      <label>Tour Name:</label>
+                      <label>Tên tour</label>
                     </Col>
                     <Col>
                       <FastField
                         type="text"
                         bsSize="lg"
                         name="name"
-                        placeholder="Enter Tour name"
+                        placeholder="Nhập tên tour"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Nhập giá tour</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        name="price"
+                        placeholder="Nhập giá tour/ người"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Nhập loại tour</label>
+                    </Col>
+                    <Col>
+                      {/* <ButtonDropdown isOpen={true}>
+                        <DropdownToggle className="bg-secondary">
+                          Different Props Applied</DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem header>Header Item</DropdownItem>
+                          <DropdownItem active>Active Item</DropdownItem>
+                          <DropdownItem disabled>Disabled Item</DropdownItem>
+                          <DropdownItem divider>Divider Item</DropdownItem>
+                        </DropdownMenu>
+                      </ButtonDropdown> */}
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="type"
+                        placeholder="Hạng tour"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Thời gian</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="duration"
+                        placeholder=""
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Số người</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        name="numOfPeople"
+                        placeholder="Số lượng khách nhận"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Điểm xuất phát</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="startDest"
+                        placeholder="Điểm xuất phát"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Mô tả</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="details"
+                        placeholder="Thông tin tour"
                         component={ReactstrapInput}
                       />
                     </Col>
                   </Row>
   
                 </ModalBody>
-   */}
+  
                 {/* footer */}
-                {/* <ModalFooter>
+                <ModalFooter>
                   <Button type="submit" color="primary" disabled={isSubmitting}>
                     Save
                   </Button>{" "}
@@ -421,16 +548,22 @@ const Tour = (props) => {
               </Form>
             )}
           </Formik >
-        </Modal> */}
+        </Modal>
               {/*Update tour form*/}
-        {/* <Modal isOpen={isOpenModalUpdate}>
+        <Modal isOpen={isOpenModalUpdate}>
+          
           <Formik
             enableReinitialize
             initialValues={
               {
                 name: tourUpdateInfo && tourUpdateInfo.name ? tourUpdateInfo.name : '',
                 price: tourUpdateInfo && tourUpdateInfo.price !== undefined && tourUpdateInfo.price !== null ? tourUpdateInfo.price : 1000000,
-                numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople != null ? tourUpdateInfo: 10
+                numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople !== null ? tourUpdateInfo.numOfPeople: 0,
+                duration: tourUpdateInfo && tourUpdateInfo.duration ? tourUpdateInfo.duration: '',
+                type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: 'Tiêu chuẩn',
+                startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
+                details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
+                saleRate: tourUpdateInfo && tourUpdateInfo.saleRate !== undefined && tourUpdateInfo.saleRate != null ? tourUpdateInfo.saleRate : 0
               }
             }
             validationSchema={
@@ -445,23 +578,50 @@ const Tour = (props) => {
                     }
                     // call api
                     const isExists = await TourApi.existsByName(name);
+                    
                     return !isExists;
                   }),
-  
                 price: Yup.number()
-                  .min(0, 'Must be greater than or equal 0 and integer'),
-                  // .integer('Must be greater than or equal 0 and integer')
-                
+                  .min(0, 'The price always more than 0')
+                  .required('Required field'),
+                duration: Yup.string()
+                  // .min(0, 'The duration always more than 1 day')
+                  .required('Required field'),
+                numOfPeople: Yup.number()
+                  .min(0, 'The number of people always more than 1')
+                  .required('Required field'),
+                type: Yup.string()
+                  .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
+                  .required('Required field'),
+                startDest: Yup.string()
+                  .min(5, 'Must be greater than 5 characters')
+                  .max(50, 'Must be smaller than 50 characters')
+                  .required('Required field'),
+                saleRate: Yup.number()
+                  .min(0, 'Sale rate always more than or equal to zero')
+                  .max(100, 'Sale rate always less than 100 percent'),
+                details: Yup.string()
+                  .required('Required field'),
               })
-            } */}
+            }
   
-            {/* onSubmit={
+            onSubmit={
               async values => {
+                // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
+                // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
+                // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
+                // else values.type = 'GOOD_PRICE';
+                Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
+                  values.type = k;
+                  return;
+                }})
                 try {
                   await TourApi.update(
                     tourUpdateInfo.id,
-                    values.name,
-                    values.price
+                    values.name,values.price,
+                    values.duration, values.startDest,
+                    values.type, values.numOfPeople, values.details,
+                    values.saleRate
                   );
                   // show notification
                   showSuccessNotification(
@@ -483,15 +643,14 @@ const Tour = (props) => {
   
             validateOnChange={false}
             validateOnBlur={false}
-          > */}
-            {/*{({ isSubmitting }) => (
+          >
+            {({ isSubmitting }) => (
               <Form>
-            */}
+           
                 {/* header */}
-                {/* <ModalHeader>Update Tour</ModalHeader> */}
-  
+                <ModalHeader>Update Tour</ModalHeader>
                 {/* body */}
-                {/* <ModalBody className="m-3">
+                <ModalBody className="m-3">
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
@@ -510,23 +669,108 @@ const Tour = (props) => {
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
-                      <label>Giá từng người</label>
+                      <label>Nhập giá tour</label>
                     </Col>
                     <Col>
                       <FastField
                         type="number"
                         bsSize="lg"
                         name="price"
-                        placeholder="Enter price for each person"
+                        placeholder="Nhập giá tour/ người"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Nhập loại tour</label>
+                    </Col>
+                    <Col>
+                      {/* <ButtonDropdown isOpen={true}>
+                        <DropdownToggle className="bg-secondary">
+                          Different Props Applied</DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem header>Header Item</DropdownItem>
+                          <DropdownItem active>Active Item</DropdownItem>
+                          <DropdownItem disabled>Disabled Item</DropdownItem>
+                          <DropdownItem divider>Divider Item</DropdownItem>
+                        </DropdownMenu>
+                      </ButtonDropdown> */}
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="type"
+                        placeholder="Hạng tour"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Thời gian</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="duration"
+                        placeholder=""
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Số người</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        name="numOfPeople"
+                        placeholder="Số lượng khách nhận"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Điểm xuất phát</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="startDest"
+                        placeholder="Điểm xuất phát"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Mô tả</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="text"
+                        bsSize="lg"
+                        name="details"
+                        placeholder="Thông tin tour"
                         component={ReactstrapInput}
                       />
                     </Col>
                   </Row>
   
-                </ModalBody> */}
+                </ModalBody>
   
                 {/* footer */}
-                {/* <ModalFooter>
+                <ModalFooter>
                   <Button type="submit" color="primary" disabled={isSubmitting}>
                     Save
                   </Button>{" "}
@@ -538,7 +782,7 @@ const Tour = (props) => {
               </Form>
             )}
           </Formik >
-        </Modal> */}
+        </Modal>
   
       </Container>
     )

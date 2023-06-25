@@ -36,6 +36,11 @@ public class TourController {
         return new ResponseEntity<>(service.isTourExistsById(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<?> existsTourByName(@PathVariable(name = "name") String name) {
+        return new ResponseEntity<>(service.isTourExistsByName(name), HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<?> createTour(@RequestBody TourFormForCreating form) {
         service.createTour(form);

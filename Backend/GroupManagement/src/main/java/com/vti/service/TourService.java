@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -30,14 +31,16 @@ public class TourService implements ITourService{
         return repository.existsById(id);
     }
 
+    public boolean isTourExistsByName(String name) { return repository.existsByName(name);}
     @Override
     public void createTour(TourFormForCreating tour) {
+        System.out.println(tour);
         repository.save(tour.toEntity());
     }
 
     @Override
     public Tour getTourByID(short id) {
-        return null;
+        return repository.findById(id).get();
     }
 
     @Override
@@ -53,6 +56,7 @@ public class TourService implements ITourService{
         repository.save(entity);
     }
 
+    @Transactional
     @Override
     public void deleteTours(List<Short> ids) {
         repository.deleteByIdIn(ids);

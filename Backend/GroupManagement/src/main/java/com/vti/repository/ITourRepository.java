@@ -11,5 +11,7 @@ public interface ITourRepository extends JpaRepository<Tour, Short>, JpaSpecific
 
     public boolean existsById(Short id);
 
+    public boolean existsByName(String name);
+
     public void deleteByIdIn(List<Short> ids);
 }

@@ -80,8 +80,11 @@ const deleteByIds = (ids) => {
     return Api.delete(`${url}/${ids.toString()}`);
 };
 
+const existsByName = (name) => {
+    return Api.get(`${url}/name/${name}`);
+};
 // export
 const api = { getAll, 
-    // existsByName, 
+    existsByName, 
     create, getById, update, deleteByIds }
 export default api;
