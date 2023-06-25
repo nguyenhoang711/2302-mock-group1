@@ -57,7 +57,7 @@ const SignIn = (props) => {
   return (
     <React.Fragment>
       <div className="text-center mt-4">
-        <h2>Welcome to VTI Academy</h2>
+        <h2>Chào mừng đến với Việt Travel</h2>
         <p className="lead">Sign in to your account to continue</p>
       </div>
 

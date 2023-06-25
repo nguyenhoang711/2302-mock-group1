@@ -10,10 +10,10 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  FormGroup,
-  Input
+  Input,
+  Label
 } from "reactstrap";
-import Type from './Type';
+// import Type from './Type';
 // import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -158,6 +158,7 @@ const Tour = (props) => {
   
     // create
     const [isOpenModalCreate, setOpenModalCreate] = useState(false);
+    
   
     const showSuccessNotification = (title, message) => {
       const options = {
@@ -184,11 +185,19 @@ const Tour = (props) => {
     }
     // update tour
     const [tourUpdateInfo, setTourUpdateInfo] = useState();
+
+    const [selectUpdateOption, setSelectedUpdateOption] = useState('');
+
+    //update type value
+    const handleUpdateOptionChange = event => {
+      setSelectedUpdateOption(event.target.value);
+    }
   
     const updateTour = async (tourId) => {
       setOpenModalUpdate(true);
       const tourInfo = await TourApi.getById(tourId);
-      tourInfo['type'] = Type[tourInfo['type']]
+      setSelectedUpdateOption(tourInfo['type']);
+      // tourInfo['type'] = Type[tourInfo['type']]
       // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
       // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
       // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
@@ -197,7 +206,15 @@ const Tour = (props) => {
     }
   
     const [isOpenModalUpdate, setOpenModalUpdate] = useState(false);
-  
+
+    const [selectedOptionValue, setSelectedOptionValue] = useState('');
+
+    //create type value
+    const handleOptionChange = (event) => {
+      console.log(event.target.value);
+      setSelectedOptionValue(event.target.value);
+    };
+
     // delete
     const handleOnSelect = (row, isSelect) => {
   
@@ -329,9 +346,9 @@ const Tour = (props) => {
               {
                 name: '',
                 price: 0,
-                duration: 1,
+                duration: 0,
                 numOfPeople: 10,
-                type: 'Tiêu chuẩn',
+                type: '',
                 startDest: '',
                 saleRate: 0.0,
                 details: 'thông tin chi tiết'
@@ -358,9 +375,9 @@ const Tour = (props) => {
                 numOfPeople: Yup.number()
                   .min(0, 'The number of people always more than 1')
                   .required('Required field'),
-                type: Yup.string()
-                  .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
-                  .required('Required field'),
+                // type: Yup.string()
+                //   .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
+                //   .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
@@ -379,13 +396,13 @@ const Tour = (props) => {
                 // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
                 // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
                 // else values.type = 'GOOD_PRICE';
-                Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
-                                        values.type = k;
-                                        return;
-                                      }})
+                // Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
+                //                         values.type = k;
+                //                         return;
+                //                       }})
                 try {
                   await TourApi.create(values.name, values.price,
-                    values.duration, values.numOfPeople, values.type,
+                    values.duration, values.numOfPeople, selectedOptionValue,
                     values.startDest, values.saleRate, values.details);
                   // show notification
                   showSuccessNotification(
@@ -445,30 +462,36 @@ const Tour = (props) => {
                       />
                     </Col>
                   </Row>
-
-                  <Row style={{ alignItems: "center" }}>
-                    <Col lg="auto">
-                      <label>Nhập loại tour</label>
-                    </Col>
-                    <Col>
-                    <FormGroup>
-                      <label for="type">Hạng tour</label>
-                      <Input type="select" name="type" id="type">
+                  <Row>
+                    <Label for="type">Hạng tour</Label>
+                    <Input 
+                      type="select" 
+                      name="type" 
+                      id="type"
+                      value= {selectedOptionValue}
+                      onChange={handleOptionChange}
+                    >
                         <option value={'STANDARD'}>Tiêu chuẩn</option>
                         <option value={'GOOD_PRICE'}>Giá tốt</option>
                         <option value={'LUXURY'}>Cao cấp</option>
                         <option value={'PAY_LESS'}>Tiết kiệm</option>
-                      </Input>
-                    </FormGroup>
-                      {/* <FastField
+                    </Input>
+                  </Row>
+                  {/* <Row style={{ alignItems: "center" }}>
+                    <Col lg="auto">
+                      <label>Hạng tour</label>
+                    </Col>
+                    <Col>
+                      
+                      <FastField
                         type="text"
                         bsSize="lg"
                         name="type"
                         placeholder="Hạng tour"
                         component={ReactstrapInput}
-                      /> */}
+                      />
                     </Col>
-                  </Row>
+                  </Row> */}
 
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
@@ -557,7 +580,7 @@ const Tour = (props) => {
                 price: tourUpdateInfo && tourUpdateInfo.price !== undefined && tourUpdateInfo.price !== null ? tourUpdateInfo.price : 1000000,
                 numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople !== null ? tourUpdateInfo.numOfPeople: 0,
                 duration: tourUpdateInfo && tourUpdateInfo.duration ? tourUpdateInfo.duration: '',
-                type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: 'Tiêu chuẩn',
+                // type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: '',
                 startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
                 details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
                 saleRate: tourUpdateInfo && tourUpdateInfo.saleRate !== undefined && tourUpdateInfo.saleRate != null ? tourUpdateInfo.saleRate : 0
@@ -587,9 +610,9 @@ const Tour = (props) => {
                 numOfPeople: Yup.number()
                   .min(0, 'The number of people always more than 1')
                   .required('Required field'),
-                type: Yup.string()
-                  .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
-                  .required('Required field'),
+                // type: Yup.string()
+                //   .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
+                //   .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
@@ -608,16 +631,17 @@ const Tour = (props) => {
                 // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
                 // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
                 // else values.type = 'GOOD_PRICE';
-                Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
-                  values.type = k;
-                  return;
-                }})
+                
+                // Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
+                //   values.type = k;
+                //   return;
+                // }})
                 try {
                   await TourApi.update(
                     tourUpdateInfo.id,
                     values.name,values.price,
                     values.duration, values.startDest,
-                    values.type, values.numOfPeople, values.details,
+                    selectUpdateOption, values.numOfPeople, values.details,
                     values.saleRate
                   );
                   // show notification
@@ -679,11 +703,11 @@ const Tour = (props) => {
                     </Col>
                   </Row>
 
-                  <Row style={{ alignItems: "center" }}>
+                  {/* <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
                       <label>Nhập loại tour</label>
                     </Col>
-                    <Col>
+                    <Col> */}
                       {/* <ButtonDropdown isOpen={true}>
                         <DropdownToggle className="bg-secondary">
                           Different Props Applied</DropdownToggle>
@@ -694,7 +718,7 @@ const Tour = (props) => {
                           <DropdownItem divider>Divider Item</DropdownItem>
                         </DropdownMenu>
                       </ButtonDropdown> */}
-                      <FastField
+                      {/* <FastField
                         type="text"
                         bsSize="lg"
                         name="type"
@@ -702,6 +726,22 @@ const Tour = (props) => {
                         component={ReactstrapInput}
                       />
                     </Col>
+                  </Row> */}
+
+                  <Row>
+                    <Label for="type">Hạng tour</Label>
+                    <Input 
+                      type="select" 
+                      name="type" 
+                      id="type"
+                      value= {selectUpdateOption}
+                      onChange={handleUpdateOptionChange}
+                    >
+                        <option value={'STANDARD'}>Tiêu chuẩn</option>
+                        <option value={'GOOD_PRICE'}>Giá tốt</option>
+                        <option value={'LUXURY'}>Cao cấp</option>
+                        <option value={'PAY_LESS'}>Tiết kiệm</option>
+                    </Input>
                   </Row>
 
                   <Row style={{ alignItems: "center" }}>

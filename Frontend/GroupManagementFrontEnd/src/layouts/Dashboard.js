@@ -6,7 +6,7 @@ import Main from "../components/Main";
 import Navbar from "../components/Navbar";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
-import Settings from "../components/Settings";
+// import Settings from "../components/Settings";
 
 const Dashboard = ({ children }) => (
   <React.Fragment>

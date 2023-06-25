@@ -9,6 +9,7 @@ const isRememberMe = () => {
     }
 
     // convert string to boolean
+    console.log(JSON.parse(localStorage.getItem('isRememberMe')));
     return JSON.parse(localStorage.getItem('isRememberMe'));
 };
 
@@ -56,6 +57,18 @@ const getUserInfo = () => {
     };
 }
 
+const clearAll = () => {
+    if(localStorage.getItem('isRememberMe') === 'false' ){
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        localStorage.removeItem('firstName');
+        localStorage.removeItem('lastName');
+        localStorage.removeItem('role');
+        localStorage.removeItem('status');
+        localStorage.removeItem('token');
+    }
+}
+
 // export
-const storage = { isRememberMe, setRememberMe, setToken, getToken, setUserInfo, getUserInfo }
+const storage = { isRememberMe, setRememberMe, setToken, getToken, setUserInfo, getUserInfo, clearAll }
 export default storage;

@@ -1,5 +1,4 @@
 
-DROP DATABASE IF EXISTS testingsystem;
 USE testingsystem;
 
 -- them thong tin bang Tour

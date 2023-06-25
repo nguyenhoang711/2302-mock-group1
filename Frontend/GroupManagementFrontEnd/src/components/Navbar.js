@@ -30,10 +30,10 @@ import {
   UserPlus
 } from "react-feather";
 
-import usFlag from "../assets/img/flags/us.png";
-import esFlag from "../assets/img/flags/es.png";
-import deFlag from "../assets/img/flags/de.png";
-import nlFlag from "../assets/img/flags/nl.png";
+// import usFlag from "../assets/img/flags/us.png";
+// import esFlag from "../assets/img/flags/es.png";
+// import deFlag from "../assets/img/flags/de.png";
+// import nlFlag from "../assets/img/flags/nl.png";
 
 import avatar1 from "../assets/img/avatars/avatar.jpg";
 import avatar3 from "../assets/img/avatars/avatar-3.jpg";
@@ -41,7 +41,7 @@ import avatar4 from "../assets/img/avatars/avatar-4.jpg";
 import avatar5 from "../assets/img/avatars/avatar-5.jpg";
 import { selectFullName } from "../redux/selectors/UserLoginInfoSelector";
 import { useHistory } from "react-router-dom";
-
+import storage from "../Storage/Storage";
 const notifications = [
   {
     type: "important",
@@ -294,7 +294,12 @@ const NavbarComponent = (props) => {
               <DropdownItem divider />
               <DropdownItem onClick={() => history.push("/settings")}>Settings & Privacy</DropdownItem>
               {/* <DropdownItem>Help</DropdownItem> */}
-              <DropdownItem onClick={() => history.push("/auth/sign-in")}>Sign out</DropdownItem>
+              <DropdownItem onClick={() => {
+                  storage.clearAll();
+                  history.push("/auth/sign-in");
+                }
+                }>Sign out
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
