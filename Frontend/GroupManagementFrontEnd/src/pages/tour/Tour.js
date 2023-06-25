@@ -10,10 +10,8 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  ButtonDropdown
+  FormGroup,
+  Input
 } from "reactstrap";
 import Type from './Type';
 // import filterFactory, { customFilter } from 'react-bootstrap-table2-filter';
@@ -453,23 +451,22 @@ const Tour = (props) => {
                       <label>Nhập loại tour</label>
                     </Col>
                     <Col>
-                      {/* <ButtonDropdown isOpen={true}>
-                        <DropdownToggle className="bg-secondary">
-                          Different Props Applied</DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem header>Header Item</DropdownItem>
-                          <DropdownItem active>Active Item</DropdownItem>
-                          <DropdownItem disabled>Disabled Item</DropdownItem>
-                          <DropdownItem divider>Divider Item</DropdownItem>
-                        </DropdownMenu>
-                      </ButtonDropdown> */}
-                      <FastField
+                    <FormGroup>
+                      <label for="type">Hạng tour</label>
+                      <Input type="select" name="type" id="type">
+                        <option value={'STANDARD'}>Tiêu chuẩn</option>
+                        <option value={'GOOD_PRICE'}>Giá tốt</option>
+                        <option value={'LUXURY'}>Cao cấp</option>
+                        <option value={'PAY_LESS'}>Tiết kiệm</option>
+                      </Input>
+                    </FormGroup>
+                      {/* <FastField
                         type="text"
                         bsSize="lg"
                         name="type"
                         placeholder="Hạng tour"
                         component={ReactstrapInput}
-                      />
+                      /> */}
                     </Col>
                   </Row>
 

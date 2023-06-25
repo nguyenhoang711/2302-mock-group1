@@ -54,7 +54,7 @@ import Notifications from "../pages/notifications/Notifications";
 
 // Pages
 import Profile from "../pages/pages/Profile";
-// import Settings from "../pages/pages/Settings";
+import Settings from "../pages/pages/Settings";
 // import Clients from "../pages/pages/Clients";
 // import Projects from "../pages/pages/Projects";
 // import Invoice from "../pages/pages/Invoice";
@@ -193,6 +193,13 @@ const bookingRoutes = {
   icon: ListIcon,
   component: Booking,
   children: null
+};
+
+const settingRoutes = {
+  path: "/settings",
+  name: "Settings",
+  icon: ListIcon,
+  component: Settings
 };
 
 
@@ -636,6 +643,7 @@ export const dashboard = [
   groupRoutes,
   bookingRoutes,
   tourRoutes,
+  settingRoutes,
   // pageRoutes,
   // layoutRoutes,
   // documentationRoutes,
@@ -666,6 +674,7 @@ export default [
   groupRoutes,
   tourRoutes,
   bookingRoutes,
+  settingRoutes,
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,
