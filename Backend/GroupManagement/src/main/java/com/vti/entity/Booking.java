@@ -28,7 +28,7 @@ public class Booking implements Serializable {
 	private short numOfPeople;
 
 	@Column(name = "totalPrice", nullable = false)
-	private BigDecimal totalPrice;
+	private int totalPrice;
 
 	@Column(name = "details", columnDefinition = "TEXT")
 	private String details;
@@ -36,12 +36,12 @@ public class Booking implements Serializable {
 	public Booking() {
 	}
 
-	public Booking(short tripId, short userId, short numOfPeople, BigDecimal totalPrice, String details) {
+	public Booking(short tripId, short userId, short numOfPeople, int totalPrice, String details) {
 		super();
-        this.trip = new Trip();
-        this.trip.setId(tripId);
-        this.user = new User();
-        this.user.setId(userId);
+		this.trip = new Trip();
+		this.trip.setId(tripId);
+		this.user = new User();
+		this.user.setId(userId);
 		this.numOfPeople = numOfPeople;
 		this.totalPrice = totalPrice;
 		this.details = details;
@@ -62,10 +62,10 @@ public class Booking implements Serializable {
 	public void setTrip(Trip trip) {
 		this.trip = trip;
 	}
-	
+
 	public void setTripId(short tripId) {
-        this.trip = new Trip();
-        this.trip.setId(tripId);
+		this.trip = new Trip();
+		this.trip.setId(tripId);
 	}
 
 	public User getUser() {
@@ -75,10 +75,10 @@ public class Booking implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public void setUserId(short userId) {
-        this.user = new User();
-        this.user.setId(userId);
+		this.user = new User();
+		this.user.setId(userId);
 	}
 
 	public short getNumOfPeople() {
@@ -89,11 +89,11 @@ public class Booking implements Serializable {
 		this.numOfPeople = numOfPeople;
 	}
 
-	public BigDecimal getTotalPrice() {
+	public int getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
+	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 

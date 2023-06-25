@@ -1,33 +1,35 @@
 package com.vti.specification;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+
+import com.vti.entity.Tour;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
 import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
+import com.vti.entity.Trip;
 
 public class BookingSpecificationBuilder {
-	private BookingFilter filter;
-	private String search;
 
-	public BookingSpecificationBuilder(BookingFilter filter, String search) {
-		this.filter = filter;
+	public String search;
+
+	public BookingSpecificationBuilder(String search) {
 		this.search = search;
 	}
-	
-	@SuppressWarnings("deprecation")
+
+
 	public Specification<Booking> build() {
+		return (root, query, criteriaBuilder) -> {
+			Join<Booking, Trip> tripJoin = root.join("trip", JoinType.INNER);
+			Join<Trip, Tour> tourJoin = tripJoin.join("tour", JoinType.INNER);
 
-		SearchCriteria seachCriteria = new SearchCriteria("name", "Like", search);
+			Predicate tourName = criteriaBuilder.like(tourJoin.get("name"), "%" + search + "%");
 
-		Specification<Booking> where = null;
-
-		// search
-		if (!StringUtils.isEmpty(search)) {
-			where = new BookingSpecification(seachCriteria);
-		}
-
-
-		return where;
+			return tourName;
+		};
 	}
+
 }

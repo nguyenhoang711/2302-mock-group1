@@ -80,6 +80,4 @@ public class Tour implements Serializable {
     @Column(name = "`saleRate`")
     private double saleRate;
 
-    @OneToMany(mappedBy = "tour")
-    private List<Trip> trips;
 }

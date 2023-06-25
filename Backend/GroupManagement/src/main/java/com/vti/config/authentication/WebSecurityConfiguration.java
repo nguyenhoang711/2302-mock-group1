@@ -36,6 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/api/v1/login").anonymous()
 //		.antMatchers("/api/v1/users/profile").authenticated()
+		.antMatchers("/api/v1/bookings/**").permitAll()
 		.antMatchers("/api/v1/users/profile").permitAll()
 		.antMatchers("/api/v1/users/**").permitAll()
 		.antMatchers("/api/v1/tours/**").permitAll()

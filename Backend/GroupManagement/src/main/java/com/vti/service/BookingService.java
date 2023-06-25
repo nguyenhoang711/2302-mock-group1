@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vti.dto.booking.BookingFormForCreating;
 import com.vti.dto.booking.BookingFormForUpdating;
-import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
 import com.vti.repository.BookingRepository;
 import com.vti.specification.BookingSpecificationBuilder;
@@ -21,8 +20,8 @@ public class BookingService implements IBookingService {
 	private BookingRepository repository;
 
 	@Override
-	public Page<Booking> getAllBookings(Pageable pageable, BookingFilter filter, String search) {
-		BookingSpecificationBuilder specification = new BookingSpecificationBuilder(filter, search);
+	public Page<Booking> getAllBookings(Pageable pageable, String search) {
+		BookingSpecificationBuilder specification = new BookingSpecificationBuilder(search);
 
 		return repository.findAll(specification.build(), pageable);
 	}
@@ -51,7 +50,7 @@ public class BookingService implements IBookingService {
 		entity.setTotalPrice(form.getTotalPrice());
 		entity.setDetails(form.getDetails());
 		repository.save(entity);
-		
+
 	}
 
 	@Transactional

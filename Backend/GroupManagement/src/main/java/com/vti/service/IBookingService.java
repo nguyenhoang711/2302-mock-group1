@@ -12,7 +12,7 @@ import com.vti.entity.Booking;
 
 public interface IBookingService {
 
-	Page<Booking> getAllBookings(Pageable pageable, BookingFilter filter, String search);
+	Page<Booking> getAllBookings(Pageable pageable, String search);
 
 	boolean isBookingExistsById(short id);
 

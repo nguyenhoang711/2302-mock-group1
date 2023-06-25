@@ -31,11 +31,10 @@ public class BookingController {
 
 	@GetMapping()
 	public ResponseEntity<?> getAllBookings(
-			Pageable pageable, 
-			BookingFilter filter,
-			@RequestParam(required = false) 
+			Pageable pageable,
+			@RequestParam(required = false)
 			String search) {
-		Page<Booking> entities = service.getAllBookings(pageable, filter, search);
+		Page<Booking> entities = service.getAllBookings(pageable, search);
 		return new ResponseEntity<>(entities, HttpStatus.OK);
 	}
 

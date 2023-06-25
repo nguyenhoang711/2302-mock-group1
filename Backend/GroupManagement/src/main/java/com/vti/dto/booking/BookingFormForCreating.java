@@ -10,7 +10,7 @@ public class BookingFormForCreating {
 	private short tripId;
 	private short userId;
 	private short numOfPeople;
-	private BigDecimal totalPrice;
+	private int totalPrice;
 	private String details;
 
 	public short getTripId() {
@@ -37,11 +37,11 @@ public class BookingFormForCreating {
 		this.numOfPeople = numOfPeople;
 	}
 
-	public BigDecimal getTotalPrice() {
+	public int getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
+	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 

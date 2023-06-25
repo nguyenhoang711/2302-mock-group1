@@ -3,28 +3,17 @@ package com.vti.entity;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 
-@Data
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name = "Trip")
 //xóa bỏ thuộc tính điểm xuất phát
 //bổ sung thông tin người phụ trách
@@ -38,7 +27,7 @@ public class Trip implements Serializable{
 	private short id;
 
 	@ManyToOne
-	@JoinColumn(name = "tourID")
+	@JoinColumn(name = "tourId", referencedColumnName = "id")
 	private Tour tour;
 
 	@Column(name = "startDate")
@@ -58,8 +47,12 @@ public class Trip implements Serializable{
 
 	@Column(name = "`hotel`", nullable = false, length = 50)
 	private String hotel;
-	
+
+//	@OneToMany(mappedBy = "trip")
+//	private List<Booking> bookings;
+
 	public Trip() {
-		super();
+
 	}
+
 }
