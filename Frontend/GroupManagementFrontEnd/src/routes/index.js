@@ -122,6 +122,9 @@ const Tour = async(() => import("../pages/tour/Tour"));
 // bookings
 const Booking = async(() => import("../pages/booking/Booking"));
 
+// contacts
+const Contact = async(() => import("../pages/pages/Contact"));
+
 // Routes
 // const landingRoutes = {
 //   path: "/",
@@ -200,6 +203,13 @@ const settingRoutes = {
   name: "Settings",
   icon: ListIcon,
   component: Settings
+};
+
+const contactRoutes = {
+  path: "/contacts",
+  name: "Contact",
+  icon: ListIcon,
+  component: Contact
 };
 
 
@@ -644,6 +654,7 @@ export const dashboard = [
   bookingRoutes,
   tourRoutes,
   settingRoutes,
+  contactRoutes,
   // pageRoutes,
   // layoutRoutes,
   // documentationRoutes,
@@ -675,6 +686,7 @@ export default [
   tourRoutes,
   bookingRoutes,
   settingRoutes,
+  contactRoutes,
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,

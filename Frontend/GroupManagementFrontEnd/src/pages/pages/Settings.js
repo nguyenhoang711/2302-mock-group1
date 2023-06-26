@@ -104,7 +104,7 @@ const PublicInfo = () => {
 
   //upload image into server
   const handleSaveEvent = async () => {
-    //B1: upload ảnh lên
+    //B1: upload ảnh lên (trả về tên ảnh)
     const nameImage = await FileApi.uploadImage(previewAvatarFile);
     console.log(nameImage);
     // call api update profile

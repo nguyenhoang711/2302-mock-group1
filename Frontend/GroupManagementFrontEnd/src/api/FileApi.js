@@ -3,6 +3,7 @@ import FormData from 'form-data';
 
 const url = "/files";
 
+// trả về tên ảnh
 const uploadImage = (imageFile) => {
 
     const body = new FormData();
