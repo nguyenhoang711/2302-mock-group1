@@ -72,6 +72,7 @@ import Settings from "../pages/pages/Settings";
 // import Changelog from "../pages/docs/Changelog";
 import NewPassword from "../pages/auth/NewPassword";
 import withAuth from "../HOC/withAuth";
+import Trip from "../pages/trip/Trip";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
@@ -214,6 +215,14 @@ const createBookingRoutes = {
   name: "Booking",
   icon: ListIcon,
   component: CreateBooking
+};
+
+//Trip
+const tripRoutes = {
+  path: "/trips",
+  name: "Trip",
+  icon: ListIcon,
+  component: Trip
 };
 
 const contactRoutes = {
@@ -665,6 +674,7 @@ export const dashboard = [
   bookingRoutes,
   createBookingRoutes,
   tourRoutes,
+  tripRoutes,
   settingRoutes,
   contactRoutes,
   // pageRoutes,
@@ -696,6 +706,7 @@ export default [
   // dashboardRoutes,
   groupRoutes,
   tourRoutes,
+  tripRoutes,
   bookingRoutes,
   createBookingRoutes,
   settingRoutes,

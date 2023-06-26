@@ -212,6 +212,7 @@ li{
 
 .card-content-details p {
     padding: 5px 0;
+    margin-bottom: 10px;
 }
 
 .card-content-details span {
@@ -310,7 +311,7 @@ h3 {
 }
 
 .passenger-container .change{
-    width: 380px;
+    width: 48%;
     height: 60px;
     display: flex;
     align-items: center;

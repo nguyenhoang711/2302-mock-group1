@@ -72,7 +72,7 @@ public class Tour implements Serializable {
     @Column(name = "img4_url", length = 200)
     private String image4;
 
-    @Column(name = "thumbnail_url", length = 200)
+    @Column(name = "thumbnailUrl", length = 200)
     private String thumbnail;
 
     @Column(name = "`details`", length = 900, nullable = false)

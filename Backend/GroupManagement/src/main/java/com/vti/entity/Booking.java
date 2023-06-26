@@ -14,7 +14,7 @@ public class Booking implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private short id;
+	private short id; 
 
 	@ManyToOne
 	@JoinColumn(name = "tripId", referencedColumnName = "id", nullable = false)

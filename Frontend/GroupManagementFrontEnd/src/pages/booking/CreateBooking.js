@@ -1,11 +1,67 @@
 
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom';
 import './createBooking.css';
 import BookingApi from '../../api/BookingApi';
 import axios from "axios";
 import Header from "../../components/Header";
+import moment from 'moment';
+
+const getValueFromURLParam = (paramName) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.get(paramName);
+};
+
+const convertDateToString = (date) => {
+    const momentDate = moment(date);
+    if (momentDate.isValid()) {
+        return momentDate.format('DD/MM/YYYY');
+    } else {
+        return 'Invalid Date';
+    }
+};
+
 
 const CreateBooking = () => {
+
+    const [tripId, setTripId] = useState(1);
+    const [tourName, setTourName] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [duration, setDuration] = useState("");
+    const [startDest, setStartDest] = useState("");
+    const [numOfPeople, setNumOfPeople] = useState("");
+    const [priceTour, setPriceTour] = useState(0);
+    const [tourImg, setTourImg] = useState("");
+
+    useEffect(() => {
+        let tripId = getValueFromURLParam('tripId');
+        setTripId(tripId);
+        const getTripById = async () => {
+            const res = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`);
+            const trip = res.data;
+            const tourName = trip.tour.name;
+            const startDate = trip.startDate;
+            const endDate = trip.endDate;
+            const duration = trip.tour.duration;
+            const startDest = trip.tour.startDest;
+            const numOfPeople = trip.tour.numOfPeople;
+            const priceTour = trip.tour.price;
+            const tourImg = trip.tour.thumbnail;
+            setTourName(tourName);
+            setStartDate(convertDateToString(startDate));
+            setEndDate(convertDateToString(endDate));
+            setDuration(duration);
+            setStartDest(startDest);
+            setNumOfPeople(numOfPeople);
+            setPriceTour(priceTour);
+            setTourImg(tourImg);
+            console.log(tourImg);
+        }
+        getTripById();
+
+    }, [tripId, tourName, startDate, endDate, duration, startDest, numOfPeople, priceTour, tourImg]);
+
     const [countAdult, setCountAdult] = useState(0);
 
     const increaseAgeAdult = () => {
@@ -64,7 +120,7 @@ const CreateBooking = () => {
     }, [countAdult, countChildren, countSmallChildren, countBaby]);
 
     useEffect(() => {
-        const price = 790000;
+        const price = priceTour;
         const totalPrice = countAdult * price + countChildren * price * 0.75 + countSmallChildren * price * 0.5;
         setCountTotalPrice(totalPrice);
     }, [countAdult, countChildren, countSmallChildren]);
@@ -135,6 +191,7 @@ const CreateBooking = () => {
     }
 
 
+
     return (
         <>
             <meta charSet="UTF-8" />
@@ -170,33 +227,33 @@ const CreateBooking = () => {
                 </div>
                 <div className="container2">
                     <div className="card-trip">
-                        <img src='./img/DaLat_tour.jpg' alt="Ảnh" />
+                        <img src={`./img/${tourImg}`} alt="Ảnh" />
                         <div className="card-content">
                             <div className="card-content-title">
                                 <span>
-                                    City Đà Lạt - Săn mây đón bình minh - Thưởng thức Trà Long Đình
+                                    {tourName}
                                 </span>
                             </div>
                             <div className="card-content-details">
                                 <p>
                                     <span>Mã tour: </span>
-                                    <span>DSDLO001-012-240623XE</span>
+                                    <span>{tripId}</span>
                                 </p>
                                 <p>
                                     <span>Khởi hành: </span>
-                                    <span>24/06/2023</span>
+                                    <span>{startDate?.toString()}</span>
                                 </p>
                                 <p>
                                     <span>Thời gian: </span>
-                                    <span>1 ngày</span>
+                                    <span>{duration}</span>
                                 </p>
                                 <p>
                                     <span>Nơi khởi hành: </span>
-                                    <span>Đà Lạt</span>
+                                    <span>{startDest}</span>
                                 </p>
                                 <p>
                                     <span>Số chỗ còn nhận: </span>
-                                    <span>5</span>
+                                    <span>{numOfPeople}</span>
                                 </p>
                             </div>
                         </div>
@@ -441,16 +498,15 @@ const CreateBooking = () => {
                             <div className="group-checkout-container">
                                 <h3>Tóm tắt chuyến đi</h3>
                                 <p className="package-title">
-                                    Tour trọn gói <span> (5 khách)</span>
+                                    Tour trọn gói <span> ({numOfPeople} khách)</span>
                                 </p>
                                 <div className="product">
                                     <div className="product-image">
-                                        <img src="./img/DaLat_tour.jpg" alt="image" />
+                                        <img src={`./img/${tourImg}`} alt="image" />
                                     </div>
                                     <div className="product-content">
                                         <p className="product-title">
-                                            City Đà Lạt - Săn mây đón bình minh - Thưởng thức Trà Long
-                                            Đình
+                                            {tourName}
                                         </p>
                                     </div>
                                 </div>
@@ -459,7 +515,7 @@ const CreateBooking = () => {
                                         <i className="fal fa-calendar-minus" />
                                         <div className="start-content">
                                             <h4>Bắt đầu chuyến đi</h4>
-                                            <p className="time">T7, 24 Tháng 6, 2023</p>
+                                            <p className="time">{startDate}</p>
                                             <p className="from" />
                                         </div>
                                     </div>
@@ -467,7 +523,7 @@ const CreateBooking = () => {
                                         <i className="fal fa-calendar-minus" />
                                         <div className="start-content">
                                             <h4>Kết thúc chuyến đi</h4>
-                                            <p className="time">T7, 24 Tháng 6, 2023</p>
+                                            <p className="time">{endDate}</p>
                                             <p className="from" />
                                         </div>
                                     </div>
@@ -492,25 +548,25 @@ const CreateBooking = () => {
                                             <tr>
                                                 <td>Người lớn</td>
                                                 <td className="t-price text-right" id="AdultPrice">
-                                                    {countAdult} x 790,000₫
+                                                    {countAdult} x {priceTour.toLocaleString("en-US")}đ
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ em</td>
                                                 <td className="t-price text-right" id="ChildrenPrice">
-                                                    {countChildren} x 592,500₫
+                                                    {countChildren} x {(priceTour * 0.75).toLocaleString("en-US")}đ
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ nhỏ</td>
                                                 <td className="t-price text-right" id="SmallChildrenPrice">
-                                                    {countSmallChildren} x 395,000₫
+                                                    {countSmallChildren} x {(priceTour * 0.5).toLocaleString("en-US")}đ
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Em bé</td>
                                                 <td className="t-price text-right" id="BabyPrice">
-                                                    0₫
+                                                    {countBaby} x 0₫
                                                 </td>
                                             </tr>
                                             <tr className="pt">

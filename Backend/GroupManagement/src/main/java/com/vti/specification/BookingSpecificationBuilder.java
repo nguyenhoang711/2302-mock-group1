@@ -6,9 +6,6 @@ import javax.persistence.criteria.Predicate;
 
 import com.vti.entity.Tour;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
-
-import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
 import com.vti.entity.Trip;
 
@@ -19,7 +16,6 @@ public class BookingSpecificationBuilder {
 	public BookingSpecificationBuilder(String search) {
 		this.search = search;
 	}
-
 
 	public Specification<Booking> build() {
 		return (root, query, criteriaBuilder) -> {

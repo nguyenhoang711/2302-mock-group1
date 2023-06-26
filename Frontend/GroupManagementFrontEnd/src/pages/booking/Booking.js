@@ -21,12 +21,10 @@ import BookingApi from '../../api/BookingApi';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import CustomSearch from "./CustomSearch";
 import * as Icon from 'react-feather';
-import CustomFilter from "./CustomFilter";
 import { FastField, Field, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
 import { toastr } from "react-redux-toastr";
-import axios from "axios";
 
 const Booking = (props) => {
 
@@ -101,7 +99,7 @@ const Booking = (props) => {
         const bookings = result.content;
         const totalSize = result.totalElements;
         getListBooking(bookings, page, totalSize, searchText);
-    } 
+    }
 
     // refresh form
     const refreshForm = () => {
@@ -204,10 +202,10 @@ const Booking = (props) => {
     }
 
     var textAreaStyle = {
-        width: "450px", 
-        marginLeft: "10px", 
-        paddingLeft: "12px", 
-        borderRadius: "10px", 
+        width: "450px",
+        marginLeft: "10px",
+        paddingLeft: "12px",
+        borderRadius: "10px",
         border: "1px solid #e7e7e7"
     }
 
@@ -280,8 +278,8 @@ const Booking = (props) => {
                     enableReinitialize
                     initialValues={
                         {
-                            tripName: bookingUpdateInfo && bookingUpdateInfo.trip.name ? bookingUpdateInfo.trip.name : '',
-                            fullName: bookingUpdateInfo && bookingUpdateInfo.user.fullName ? bookingUpdateInfo.user.fullName: '',
+                            tripName: bookingUpdateInfo && bookingUpdateInfo.trip.tour.name ? bookingUpdateInfo.trip.tour.name : '',
+                            fullName: bookingUpdateInfo && bookingUpdateInfo.user.fullName ? bookingUpdateInfo.user.fullName : '',
                             numOfPeople: bookingUpdateInfo && bookingUpdateInfo.numOfPeople ? bookingUpdateInfo.numOfPeople : '',
                             totalPrice: bookingUpdateInfo && bookingUpdateInfo.totalPrice ? bookingUpdateInfo.totalPrice : '',
                             details: bookingUpdateInfo && bookingUpdateInfo.details ? bookingUpdateInfo.details : '',
@@ -301,16 +299,16 @@ const Booking = (props) => {
                     }
 
                     onSubmit={
-                        
+
                         async values => {
                             try {
-                                
+
                                 await BookingApi.update(
                                     bookingUpdateInfo.id,
                                     bookingUpdateInfo.trip.id,
                                     bookingUpdateInfo.user.id,
                                     values.numOfPeople,
-                                    values.totalPrice + (values.numOfPeople - bookingUpdateInfo.numOfPeople)*790000,
+                                    values.totalPrice + (values.numOfPeople - bookingUpdateInfo.numOfPeople) * 790000,
                                     values.details,
                                 );
                                 // show notification
