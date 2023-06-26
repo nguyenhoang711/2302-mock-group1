@@ -31,6 +31,6 @@ public interface IUserService extends UserDetailsService {
 
 	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 	
-//	void changeUserProfile(String username, ChangePublicProfileDTO dto);
+	void changeUserProfile(String username, ChangePublicProfileDTO dto);
 
 }

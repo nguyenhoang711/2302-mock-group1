@@ -122,7 +122,7 @@ const Sidebar = (props) => {
         <PerfectScrollbar>
           <a className="sidebar-brand" href="/">
             <Box className="align-middle text-primary" size={24} />{" "}
-            <span className="align-middle">AppStack</span>
+            <span className="align-middle">Vietravel</span>
           </a>
 
           <ul className="sidebar-nav">

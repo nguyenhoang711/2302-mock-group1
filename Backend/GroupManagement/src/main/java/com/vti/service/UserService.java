@@ -164,14 +164,14 @@ public class UserService implements IUserService {
 				AuthorityUtils.createAuthorityList(user.getRole()));
 	}
 
-//	@Override
-//	public void changeUserProfile(String username, ChangePublicProfileDTO dto) {
-//		User user = userRepository.findByUserName(username);
-//		
-//		user.setAvatarUrl(dto.getAvatarUrl());
-//		userRepository.save(user);
-//		
-//		// TODO other field
-//	}
+	@Override
+	public void changeUserProfile(String username, ChangePublicProfileDTO dto) {
+		User user = userRepository.findByUserName(username);
+		
+		user.setAvatar(dto.getAvatarUrl());
+		userRepository.save(user);
+		
+		// TODO other field
+	}
 
 }

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.vti.dto.booking.BookingFormForCreating;
 import com.vti.dto.booking.BookingFormForUpdating;
-import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
 
 public interface IBookingService {

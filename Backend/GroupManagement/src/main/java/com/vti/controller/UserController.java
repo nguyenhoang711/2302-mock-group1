@@ -49,6 +49,16 @@ public class UserController {
 		// return result
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/findByEmail/{email}")
+	public ResponseEntity<?> findByEmail(@PathVariable(name = "email") String email) {
+		// get entity
+		User result = userService.findUserByEmail(email);
+
+		// return result
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 
 	@PostMapping()
 	public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO dto) {
@@ -129,16 +139,16 @@ public class UserController {
 		return new ResponseEntity<>(profileDto, HttpStatus.OK);
 	}
 	
-//	@PutMapping("/profile")
-//	// validate: check exists, check not expired
-//	public ResponseEntity<?> changeUserProfile(Authentication authentication, @RequestBody ChangePublicProfileDTO dto) {
-//		
-//		// get username from token
-//		String username = authentication.getName();
-//		
-//		userService.changeUserProfile(username, dto);
-//		
-//		return new ResponseEntity<>("Change Profile Successfully!", HttpStatus.OK);
-//	}
+	@PutMapping("/profile")
+	// validate: check exists, check not expired
+	public ResponseEntity<?> changeUserProfile(Authentication authentication, @RequestBody ChangePublicProfileDTO dto) {
+		
+		// get username from token
+		String username = authentication.getName();
+		
+		userService.changeUserProfile(username, dto);
+		
+		return new ResponseEntity<>("Change Profile Successfully!", HttpStatus.OK);
+	}
 
 }

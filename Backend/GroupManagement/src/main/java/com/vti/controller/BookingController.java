@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vti.dto.booking.BookingFormForCreating;
 import com.vti.dto.booking.BookingFormForUpdating;
-import com.vti.dto.filter.BookingFilter;
 import com.vti.entity.Booking;
 import com.vti.service.IBookingService;
 
