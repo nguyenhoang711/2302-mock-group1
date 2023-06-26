@@ -58,5 +58,6 @@ public class ContactService implements IContactService{
     @Override
     public void deleteContacts(List<UUID> ids) {
         repository.deleteByIdIn(ids);
+        System.out.println("Hello");
     }
 }
