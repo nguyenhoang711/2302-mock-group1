@@ -6,6 +6,6 @@ import lombok.Data;
 public class FormUpdateContact {
     private String message;
 
-    private String attachmentUrl;
+    private String file_url;
 
 }

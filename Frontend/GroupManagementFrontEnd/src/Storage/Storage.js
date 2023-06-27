@@ -9,7 +9,7 @@ const isRememberMe = () => {
     }
 
     // convert string to boolean
-    console.log(JSON.parse(localStorage.getItem('isRememberMe')));
+    // console.log(JSON.parse(localStorage.getItem('isRememberMe')));
     return JSON.parse(localStorage.getItem('isRememberMe'));
 };
 

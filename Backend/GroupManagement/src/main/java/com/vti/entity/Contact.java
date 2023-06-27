@@ -26,14 +26,14 @@ public class Contact implements Serializable {
 	private String message;
 
 	@Column(name = "file_url", nullable = false)
-	private String attachmentUrl;
+	private String file_url;
 
 	public Contact() {
 	}
 
-	public Contact(String email, String message, String attachmentUrl) {
+	public Contact(String email, String message, String file_url) {
 		this.email = email;
 		this.message = message;
-		this.attachmentUrl = attachmentUrl;
+		this.file_url = file_url;
 	}
 }

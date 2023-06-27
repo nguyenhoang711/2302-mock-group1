@@ -37,7 +37,6 @@ public class ContactService implements IContactService{
     public void createContact(FormCreateContact form) {
         // convert form to entity
         Contact contact = modelMapper.map(form, Contact.class);
-
         repository.save(contact);
     }
 
@@ -50,7 +49,7 @@ public class ContactService implements IContactService{
     public void updateContact(UUID id, FormUpdateContact form) {
         Contact contact = repository.findById(id).get();
         contact.setMessage(form.getMessage());
-        contact.setAttachmentUrl(form.getAttachmentUrl());
+        contact.setFile_url(form.getFile_url());
 
         repository.save(contact);
     }

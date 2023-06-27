@@ -17,10 +17,10 @@ const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc') => {
 //     return Api.get(`${url}/email/${email}`);
 // };
 
-const create = (email, message, evidence) => {
+const create = (email, message, file_url) => {
 
     const body = {
-        email, message, evidence
+        email, message, file_url
     }
 
     return Api.post(url, body);
@@ -30,12 +30,12 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
-const update = (id, email, message, evidence) => {
+const update = (id, email, message, file_url) => {
 
     const body = {
         email,
         message,
-        evidence
+        file_url
     }
 
     return Api.put(`${url}/${id}`, body);

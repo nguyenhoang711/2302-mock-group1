@@ -8,5 +8,5 @@ public class FormCreateContact {
 
     private String message;
 
-    private String attachmentUrl;
+    private String file_url;
 }

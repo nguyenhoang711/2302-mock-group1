@@ -18,7 +18,7 @@ import { selectContacts, selectPage, selectSelectedRows, selectSize, selectTotal
 import { connect } from "react-redux";
 import { getListContactAction, updateSelectedRowsAction } from '../../redux/actions/ContactActions';
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
+import avatar1 from "../../assets/img/avatars/no-image.jpg";
 import UserApi from '../../api/UserApi';
 import FileApi from '../../api/FileApi';
 import ContactApi from '../../api/ContactApi';
@@ -40,11 +40,11 @@ const Contact = (props) => {
   const getListContact = props.getListContactAction;
   const size = props.size;
 
-  // const [userInfo, setUserInfo] = useState({});
+  const [contactUpdateInfo, setContactUpdateInfo] = useState({});
 
-  // const [previewAvatarUrl, setPreviewAvatarUrl] = useState();
+  const [previewAvatarUrl, setPreviewAvatarUrl] = useState();
 
-  // const [previewAvatarFile, setPreviewAvatarFile] = useState();
+  const [previewAvatarFile, setPreviewAvatarFile] = useState();
 
   useEffect(() => {
     const getAllContact = async () => {
@@ -57,42 +57,46 @@ const Contact = (props) => {
   }, [getListContact, size]);
 
   // avatar
-  // const avatarInputFile = useRef(null);
+  const avatarInputFile = useRef(null);
 
-  // const onChangeAvatarInput = (e) => {
-  //   // Assuming only image
-  //   var file = e.target.files[0];
-  //   var reader = new FileReader();
-  //   reader.readAsDataURL(file);
+  const onChangeAvatarInput = (e) => {
+    // Assuming only image
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
 
-  //   reader.onloadend = (e) => {
-  //     setPreviewAvatarUrl(reader.result);
-  //     setPreviewAvatarFile(file);
-  //   };
-  // };
+    reader.onloadend = (e) => {
+      setPreviewAvatarUrl(reader.result);
+      setPreviewAvatarFile(file);
+    };
+  };
 
   //upload image into server
-  // const handleSaveEvent = async () => {
-  //   //B1: upload ảnh lên (trả về tên ảnh)
-  //   const nameImage = await FileApi.uploadImage(previewAvatarFile);
-  //   console.log(nameImage);
-  //   // call api update profile
-  //   //B2: update info chung lên
-  //   await UserApi.updateProfile(nameImage);
-  //   showSucessNotification("Change Avatar", "Change avatar successfully!")
-  // }
+  const handleSaveEvent = async () => {
+    //B1: upload ảnh lên (trả về tên ảnh)
+    const nameImage = await FileApi.uploadImage(previewAvatarFile);
+    console.log(nameImage);
+    // call api update profile
+    //B2: update info chung lên
+    // await UserApi.updateProfile(nameImage);
+    await ContactApi.update(contactUpdateInfo.id, 
+      contactUpdateInfo.email, 
+      contactUpdateInfo.message, 
+      nameImage);
+    showSucessNotification("Change Contact", "Change contact information successfully!")
+  }
 
-  // const showSucessNotification = (title, message) => {
-  //   const options = {
-  //     timeOut: 3000,
-  //     showCloseButton: false,
-  //     progressBar: false,
-  //     position: "top-right"
-  //   };
+  const showSucessNotification = (title, message) => {
+    const options = {
+      timeOut: 3000,
+      showCloseButton: false,
+      progressBar: false,
+      position: "top-right"
+    };
 
-  //   // show notification
-  //   toastr.success(title, message, options);
-  // }
+    // show notification
+    toastr.success(title, message, options);
+  }
 
   const actionFormatter = (cell, row, rowIndex) => {
 
@@ -100,6 +104,20 @@ const Contact = (props) => {
       <Icon.Edit2 size={16} className="align-middle mr-2" onClick={() => updateContact(row.id)} />
     );
   };
+
+  //hàm chuyển đổi ảnh từ link ra img
+  const ImageFormatter = (cell) => { 
+    return (
+      // <img src={cell} alt="Image" style={{ width: '250px' ,height: '250px'}} />
+      <img src={'http://localhost:8080/api/v1/files/images/' + cell} alt="Image" style={{ width: '250px' ,height: '250px'}} />
+    )
+  };
+
+  const data = [
+    { id: 1, email: 'Image 1', message: 'abc123', file_url: 'https://images.viblo.asia/d11d22d7-cc52-4e12-8f3f-b7c4abe8110e.gif' },
+    { id: 2, email: 'Image 2', message: 'abc456', file_url: 'https://images.viblo.asia/400x400/fda84505-bc44-4e04-b66e-434e7a8e03c0.jpeg'},
+    { id: 3, email: 'Image 3', message: 'abc6789', file_url: '../../assets/img/avatars/avatar-4.jpg' },
+  ]
 
   const tableColumns = [
     {
@@ -113,9 +131,9 @@ const Contact = (props) => {
       sort: true,
     },
     {
-      dataField: "evidence",
+      dataField: "file_url",
       text: "Ảnh đính kèm",
-      sort: true,
+      formatter: ImageFormatter
     },
     {
       dataField: "action",
@@ -184,13 +202,13 @@ const Contact = (props) => {
     // show notification
     toastr.error(title, message, options);
   }
+
   // update contact
-  const [contactUpdateInfo, setContactUpdateInfo] = useState();
 
   const updateContact = async (contactId) => {
     setOpenModalUpdate(true);
-    const contactInfo = await ContactApi.getById(contactId);
-    setContactUpdateInfo(contactInfo);
+    const contact = await ContactApi.getById(contactId);
+    setContactUpdateInfo(contact);
   }
 
   const [isOpenModalUpdate, setOpenModalUpdate] = useState(false);
@@ -254,17 +272,18 @@ const Contact = (props) => {
               <ToolkitProvider
                 keyField="id"
                 data={props.contacts}
+                // data={data}
                 columns={tableColumns}
-                search
+                // search
               >
                 {
                   toolkitprops => (
                     <>
                       {/* Search */}
-                      {/* <Row style={{ alignItems: "center" }}>
-                        <Col lg="3">
+                      <Row style={{ alignItems: "center" }}>
+                        {/* <Col lg="3">
                           <CustomSearch {...toolkitprops.searchProps} />
-                        </Col>
+                        </Col> */}
                         <Col lg="9">
                           <div className="float-right pull-right">
                             <Icon.RefreshCcw className="align-middle mr-2" size={24} onClick={refreshForm} />
@@ -272,7 +291,7 @@ const Contact = (props) => {
                             <Icon.Trash2 className="align-middle mr-2" size={24} onClick={deleteContact} />
                           </div>
                         </Col>
-                      </Row> */}
+                      </Row>
                       <BootstrapTable
                         {...toolkitprops.baseProps}
                         bootstrap4
@@ -308,13 +327,14 @@ const Contact = (props) => {
         </Col>
       </Row>
 
-                {/*Create */}
+      {/*Create */}
       <Modal isOpen={isOpenModalCreate}>
         <Formik
           initialValues={
             {
               email: '',
-              message: ''
+              message: '',
+              file_url: '',
             }
           }
           validationSchema={
@@ -332,8 +352,9 @@ const Contact = (props) => {
 
           onSubmit={
             async values => {
+              const imageName = await FileApi.uploadImage(previewAvatarFile);
               try {
-                await ContactApi.create(values.email, values.message, values.evidence);
+                await ContactApi.create(values.email, values.message, imageName);
                 // show notification
                 showSuccessNotification(
                   "Create Contact",
@@ -365,24 +386,74 @@ const Contact = (props) => {
 
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Contact Name:</label>
+                    <label>Người gửi</label>
                   </Col>
                   <Col>
                     <FastField
                       type="text"
                       bsSize="lg"
-                      name="name"
-                      placeholder="Enter Contact name"
+                      name="email"
+                      placeholder="Email người gửi"
                       component={ReactstrapInput}
                     />
                   </Col>
+                </Row>
+
+                <Row style={{ alignItems: "center" }}>
+                  <Col lg="auto">
+                    <label>Mô tả</label>
+                  </Col>
+                  <Col>
+                    <FastField
+                      type="text"
+                      bsSize="lg"
+                      name="message"
+                      placeholder="Mô tả vấn đề"
+                      component={ReactstrapInput}
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col lg="auto">
+                    <label>Bằng chứng</label>
+                  </Col>
+                  <Col md="4">
+                    <div className="text-center">
+                        <img
+                          alt="Chris Wood"
+                          // name='file_url'
+                          src={previewAvatarUrl ? previewAvatarUrl : avatar1}
+                          className="rounded-circle img-responsive mt-2"
+                          width="250"
+                          height="250"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => avatarInputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            id='evidenceInput'
+                            ref={avatarInputFile}
+                            onChange={onChangeAvatarInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
                 </Row>
 
               </ModalBody>
 
               {/* footer */}
               <ModalFooter>
-                <Button type="submit" color="primary" disabled={isSubmitting}>
+                <Button 
+                  type="submit" 
+                  color="primary" 
+                  disabled={isSubmitting}
+                  // onClick={handleSaveEvent}
+                >
                   Save
                 </Button>{" "}
 
@@ -394,7 +465,7 @@ const Contact = (props) => {
           )}
         </Formik >
       </Modal>
-
+          {/*Update */}
       <Modal isOpen={isOpenModalUpdate}>
         <Formik
           enableReinitialize
@@ -402,6 +473,7 @@ const Contact = (props) => {
             {
               email: contactUpdateInfo && contactUpdateInfo.email ? contactUpdateInfo.email : '',
               message: contactUpdateInfo && contactUpdateInfo.message ? contactUpdateInfo.message : '',
+              file_url: contactUpdateInfo && contactUpdateInfo.file_url ? contactUpdateInfo.file_url :''
             }
           }
           validationSchema={
@@ -425,7 +497,7 @@ const Contact = (props) => {
                   contactUpdateInfo.id,
                   values.email,
                   values.message,
-                  values.evidence
+                  values.file_url
                 );
                 // show notification
                 showSuccessNotification(
@@ -458,7 +530,7 @@ const Contact = (props) => {
 
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Người gửi:</label>
+                    <label>Người gửi</label>
                   </Col>
                   <Col>
                     <FastField
@@ -473,7 +545,7 @@ const Contact = (props) => {
 
                 <Row style={{ alignItems: "center" }}>
                   <Col lg="auto">
-                    <label>Thông điệp</label>
+                    <label>Mô tả </label>
                   </Col>
                   <Col>
                     <FastField
@@ -486,15 +558,15 @@ const Contact = (props) => {
                   </Col>
                 </Row>
 
-                {/* <Row>
+                <Row>
                     <Col md="4">
                     <div className="text-center">
                         <img
-                        alt="Chris Wood"
-                        src={previewAvatarUrl ? previewAvatarUrl : (userInfo.avatarUrl ? `http://127.0.0.1:8887/Avatar/${userInfo.avatarUrl}` : avatar1)}
-                        className="rounded-circle img-responsive mt-2"
-                        width="300"
-                        height="300"
+                          alt="Chris Wood"
+                          src={previewAvatarUrl ? previewAvatarUrl : (contactUpdateInfo.file_url ? `http://localhost:8080/api/v1/files/images/${contactUpdateInfo.file_url}` : avatar1)}
+                          className="rounded-circle img-responsive mt-2"
+                          width="250"
+                          height="250"
                         />
 
                         <div className="mt-2">
@@ -505,21 +577,22 @@ const Contact = (props) => {
                             type='file'
                             id='avatarInput'
                             ref={avatarInputFile}
+                            name='file_url'
                             onChange={onChangeAvatarInput}
                             style={{ display: 'none' }} />
                         </div>
                         <small>
-                        For best results, use an image at least 300px by 300px in .jpg format
+                        For best results, use an image at least 250px by 250px in .jpg format
                     </small>
                     </div>
                     </Col>
-                </Row> */}
+                </Row>
 
               </ModalBody>
 
               {/* footer */}
               <ModalFooter>
-                <Button type="submit" color="primary" disabled={isSubmitting}>
+                <Button type="submit" color="primary" disabled={isSubmitting} onClick={handleSaveEvent}>
                   Save
                 </Button>{" "}
 
