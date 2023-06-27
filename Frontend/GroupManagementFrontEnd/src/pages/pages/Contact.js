@@ -10,6 +10,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  Input
 } from "reactstrap";
 
 import BootstrapTable from "react-bootstrap-table-next";
@@ -19,7 +20,7 @@ import { connect } from "react-redux";
 import { getListContactAction, updateSelectedRowsAction } from '../../redux/actions/ContactActions';
 
 import avatar1 from "../../assets/img/avatars/no-image.jpg";
-import UserApi from '../../api/UserApi';
+// import UserApi from '../../api/UserApi';
 import FileApi from '../../api/FileApi';
 import ContactApi from '../../api/ContactApi';
 
@@ -244,6 +245,7 @@ const Contact = (props) => {
   const deleteContact = async () => {
     if (props.selectedRows.length !== 0) {
       try {
+        // console.log(props.selectedRows);
         await ContactApi.deleteByIds(props.selectedRows);
         showSuccessNotification(
           "Delete Contact",
@@ -362,6 +364,9 @@ const Contact = (props) => {
                 );
                 // close modal
                 setOpenModalCreate(false);
+
+                //set preview link is null
+                setPreviewAvatarUrl(null);
                 // Refresh table
                 refreshForm();
               } catch (error) {
@@ -478,10 +483,6 @@ const Contact = (props) => {
           }
           validationSchema={
             Yup.object({
-              email: Yup.string()
-                .min(6, 'Must be between 6 and 50 characters')
-                .max(50, 'Must be between 6 and 50 characters')
-                .required('Required'),
 
               message: Yup.string()
                 .min(6, 'Must be between 6 and 50 characters')
@@ -495,7 +496,6 @@ const Contact = (props) => {
               try {
                 await ContactApi.update(
                   contactUpdateInfo.id,
-                  values.email,
                   values.message,
                   values.file_url
                 );
@@ -506,6 +506,8 @@ const Contact = (props) => {
                 );
                 // close modal
                 setOpenModalUpdate(false);
+                //set preview avatar link is null
+                setPreviewAvatarUrl(null);
                 // Refresh table
                 refreshForm();
               } catch (error) {
@@ -533,13 +535,13 @@ const Contact = (props) => {
                     <label>Người gửi</label>
                   </Col>
                   <Col>
-                    <FastField
+                    {/* <FastField
                       type="text"
                       bsSize="lg"
                       name="email"
-                      placeholder="Nhập thông tin người gửi"
                       component={ReactstrapInput}
-                    />
+                    /> */}
+                    <Input type='text' value={contactUpdateInfo.email} disabled></Input>
                   </Col>
                 </Row>
 
@@ -560,7 +562,7 @@ const Contact = (props) => {
 
                 <Row>
                     <Col md="4">
-                    <div className="text-center">
+                      <div className="text-center">
                         <img
                           alt="Chris Wood"
                           src={previewAvatarUrl ? previewAvatarUrl : (contactUpdateInfo.file_url ? `http://localhost:8080/api/v1/files/images/${contactUpdateInfo.file_url}` : avatar1)}
@@ -581,10 +583,7 @@ const Contact = (props) => {
                             onChange={onChangeAvatarInput}
                             style={{ display: 'none' }} />
                         </div>
-                        <small>
-                        For best results, use an image at least 250px by 250px in .jpg format
-                    </small>
-                    </div>
+                      </div>
                     </Col>
                 </Row>
 

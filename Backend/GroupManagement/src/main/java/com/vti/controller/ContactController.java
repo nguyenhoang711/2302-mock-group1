@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -41,5 +42,11 @@ public class ContactController {
     public ResponseEntity<?> updateContact(@PathVariable(name = "id") UUID id, @RequestBody FormUpdateContact form) {
         service.updateContact(id, form);
         return new ResponseEntity<String>("Update contact successfully!", HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{ids}")
+    public ResponseEntity<?> deleteContacts(@PathVariable(name = "ids") List<UUID> ids) {
+        service.deleteContacts(ids);
+        return new ResponseEntity<String>("Delete contact successfully!", HttpStatus.OK);
     }
 }

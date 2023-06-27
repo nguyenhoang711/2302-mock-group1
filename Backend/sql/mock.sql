@@ -32,4 +32,9 @@ VALUES
 (2, 1, 5, 3000000, 'Không có'),
 (3, 4, 8, 4000000, 'Không có');
 
+INSERT INTO `contact`(id, email, file_url, message) VALUES
+('13f535f0-67a3-4ffe-8066-b754209019e8','abcxyz@gmail.com','1687799117727.jpg','message 1'),
+('13f535f0-67a3-4ffe-8066-c954209019e8','ghijkl@gmail.com','1687801007763.jpg','message 2'),
+('13f535f0-67a3-4ffe-8066-d854209019e8','phuong@gmail.com','1687806996936.jpg','message 3');
+
 select * from tour;

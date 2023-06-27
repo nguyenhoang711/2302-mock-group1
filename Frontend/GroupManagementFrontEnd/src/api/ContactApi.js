@@ -30,10 +30,9 @@ const getById = (id) => {
     return Api.get(`${url}/${id}`);
 };
 
-const update = (id, email, message, file_url) => {
+const update = (id, message, file_url) => {
 
     const body = {
-        email,
         message,
         file_url
     }
@@ -42,6 +41,7 @@ const update = (id, email, message, file_url) => {
 };
 
 const deleteByIds = (ids) => {
+    console.log(ids.toString());
     return Api.delete(`${url}/${ids.toString()}`);
 };
 

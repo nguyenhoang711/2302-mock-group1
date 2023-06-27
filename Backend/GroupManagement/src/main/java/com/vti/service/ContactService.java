@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,8 +56,9 @@ public class ContactService implements IContactService{
     }
 
     @Override
+    @Transactional
     public void deleteContacts(List<UUID> ids) {
         repository.deleteByIdIn(ids);
-        System.out.println("Hello");
+//        System.out.println("Hello");
     }
 }
