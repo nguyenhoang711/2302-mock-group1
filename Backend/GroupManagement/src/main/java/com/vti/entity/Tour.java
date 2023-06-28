@@ -32,9 +32,13 @@ public class Tour implements Serializable {
     @NonNull
     private double price;
 
-    @Column(name = "`duration`", nullable = false, length = 80)
+    @Column(name = "`day`", nullable = false)
     @NonNull
-    private String duration;
+    private short day;
+
+    @Column(name = "`night`", nullable = false)
+    @NonNull
+    private short night;
 
     @Column(name = "`numOfPeople`", nullable = false)
     @NonNull

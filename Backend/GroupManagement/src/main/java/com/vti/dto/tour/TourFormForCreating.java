@@ -7,7 +7,11 @@ import lombok.Data;
 public class TourFormForCreating {
     private String name;
 
-    private String duration;
+//    private String duration;
+
+    private short day;
+
+    private short night;
 
     private short numOfPeople;
 
@@ -21,13 +25,16 @@ public class TourFormForCreating {
 
     private String details;
 
-    public Tour toEntity(){return new Tour(name,price,duration,numOfPeople, Tour.Type.toEnum(type),startDest,details,saleRate);}
+//    public Tour toEntity(){return new Tour(name,price,duration,numOfPeople, Tour.Type.toEnum(type),startDest,details,saleRate);}
 
+    public Tour toEntity(){return new Tour(name,price,day,night,numOfPeople, Tour.Type.toEnum(type),startDest,details,saleRate);}
     @Override
     public String toString() {
         return "TourFormForCreating{" +
                 "name='" + name + '\'' +
-                ", duration='" + duration + '\'' +
+//                ", duration='" + duration + '\'' +
+                ", day=" + day +
+                ", night=" + night +
                 ", numOfPeople=" + numOfPeople +
                 ", price=" + price +
                 ", type='" + type + '\'' +

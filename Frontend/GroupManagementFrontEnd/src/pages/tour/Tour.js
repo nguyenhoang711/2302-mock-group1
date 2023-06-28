@@ -69,9 +69,19 @@ const Tour = (props) => {
         //   return null;
         // },
       },
+      // {
+      //   dataField: "duration",
+      //   text: "Thời gian",
+      //   sort: true
+      // },
       {
-        dataField: "duration",
-        text: "Thời gian",
+        dataField: "day",
+        text: "Số ngày",
+        sort: true
+      },
+      {
+        dataField: "night",
+        text: "Số đêm",
         sort: true
       },
       {
@@ -211,7 +221,6 @@ const Tour = (props) => {
 
     //create type value
     const handleOptionChange = (event) => {
-      console.log(event.target.value);
       setSelectedOptionValue(event.target.value);
     };
 
@@ -346,12 +355,13 @@ const Tour = (props) => {
               {
                 name: '',
                 price: 0,
-                duration: 0,
-                numOfPeople: 10,
+                day: 0,
+                night: 0,
+                numOfPeople: 0,
                 type: '',
                 startDest: '',
                 saleRate: 0.0,
-                details: 'thông tin chi tiết'
+                details: ''
               }
             }
             validationSchema={
@@ -369,15 +379,21 @@ const Tour = (props) => {
                 price: Yup.number()
                   .min(0, 'The price always more than 0')
                   .required('Required field'),
-                duration: Yup.string()
-                  // .min(0, 'The duration always more than 1 day')
+                // duration: Yup.string()
+                //   .min(0, 'The duration always more than 1 day')
+                //   .required('Required field'),
+                day: Yup.number()
+                  .min(0,'Số ngày luôn lớn hơn 0')
+                  .required('Required field'),
+                night: Yup.number()
+                  .min(0, 'Số đêm luôn lớn hơn 0')
                   .required('Required field'),
                 numOfPeople: Yup.number()
-                  .min(0, 'The number of people always more than 1')
+                  .min(0, 'The number of people always more than 0')
                   .required('Required field'),
-                // type: Yup.string()
-                //   .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
-                //   .required('Required field'),
+                type: Yup.string()
+                  .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
+                  .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
@@ -401,8 +417,11 @@ const Tour = (props) => {
                 //                         return;
                 //                       }})
                 try {
+                  console.log(values);
                   await TourApi.create(values.name, values.price,
-                    values.duration, values.numOfPeople, selectedOptionValue,
+                    // values.duration, 
+                    values.day, values.night,
+                    values.numOfPeople, selectedOptionValue,
                     values.startDest, values.saleRate, values.details);
                   // show notification
                   showSuccessNotification(
@@ -494,14 +513,33 @@ const Tour = (props) => {
                   </Row> */}
 
                   <Row style={{ alignItems: "center" }}>
-                    <Col lg="auto">
+                    {/* <Col lg="auto">
                       <label>Thời gian</label>
+                    </Col> */}
+                    <Col lg="auto">
+                      <label>Số ngày</label>
                     </Col>
                     <Col>
+                      {/* <label>Số ngày</label> */}
                       <FastField
-                        type="text"
+                        type="number"
                         bsSize="lg"
-                        name="duration"
+                        // name="duration"
+                        name="day"
+                        placeholder=""
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                    <Col lg="auto">
+                      <label>Số đêm</label>
+                    </Col>
+                    <Col>
+                      {/* <label>Số đêm</label> */}
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        // name="duration"
+                        name="night"
                         placeholder=""
                         component={ReactstrapInput}
                       />
@@ -579,7 +617,9 @@ const Tour = (props) => {
                 name: tourUpdateInfo && tourUpdateInfo.name ? tourUpdateInfo.name : '',
                 price: tourUpdateInfo && tourUpdateInfo.price !== undefined && tourUpdateInfo.price !== null ? tourUpdateInfo.price : 1000000,
                 numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople !== null ? tourUpdateInfo.numOfPeople: 0,
-                duration: tourUpdateInfo && tourUpdateInfo.duration ? tourUpdateInfo.duration: '',
+                // duration: tourUpdateInfo && tourUpdateInfo.duration ? tourUpdateInfo.duration: '',
+                day: tourUpdateInfo && tourUpdateInfo.day !== undefined && tourUpdateInfo.day !== null ? tourUpdateInfo.day: 0,
+                night: tourUpdateInfo && tourUpdateInfo.night !== undefined && tourUpdateInfo.night !== null ? tourUpdateInfo.night: 0,
                 // type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: '',
                 startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
                 details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
@@ -589,8 +629,8 @@ const Tour = (props) => {
             validationSchema={
               Yup.object({
                 name: Yup.string()
-                  .min(6, 'Must be between 6 and 50 characters')
-                  .max(50, 'Must be between 6 and 50 characters')
+                  .min(6, 'Must be between 6 and 400 characters')
+                  .max(400, 'Must be between 6 and 400 characters')
                   .required('Required')
                   .test('checkUniqueName', 'This name is already registered.', async name => {
                     if (name === tourUpdateInfo.name) {
@@ -604,15 +644,21 @@ const Tour = (props) => {
                 price: Yup.number()
                   .min(0, 'The price always more than 0')
                   .required('Required field'),
-                duration: Yup.string()
-                  // .min(0, 'The duration always more than 1 day')
+                // duration: Yup.string()
+                //   // .min(0, 'The duration always more than 1 day')
+                //   .required('Required field'),
+                day: Yup.number()
+                  .min(0,'Số ngày luôn lớn hơn 0')
+                  .required('Required field'),
+                night: Yup.number()
+                  .min(0, 'Số đêm luôn lớn hơn 0')
                   .required('Required field'),
                 numOfPeople: Yup.number()
                   .min(0, 'The number of people always more than 1')
                   .required('Required field'),
-                // type: Yup.string()
-                //   .oneOf(['Tiêu chuẩn', 'Cao cấp', 'Tiết kiệm', 'Giá tốt'])
-                //   .required('Required field'),
+                type: Yup.string()
+                  .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
+                  .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
@@ -640,8 +686,10 @@ const Tour = (props) => {
                   await TourApi.update(
                     tourUpdateInfo.id,
                     values.name,values.price,
-                    values.duration, values.startDest,
-                    selectUpdateOption, values.numOfPeople, values.details,
+                    // values.duration, 
+                    values.day, values.night,
+                    values.startDest,selectUpdateOption, 
+                    values.numOfPeople, values.details,
                     values.saleRate
                   );
                   // show notification
@@ -745,14 +793,25 @@ const Tour = (props) => {
                   </Row>
 
                   <Row style={{ alignItems: "center" }}>
-                    <Col lg="auto">
+                    {/* <Col lg="auto">
                       <label>Thời gian</label>
+                    </Col> */}
+                    <Col>
+                      <label>Số ngày</label>
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        name="day"
+                        placeholder=""
+                        component={ReactstrapInput}
+                      />
                     </Col>
                     <Col>
+                      <label>Số đêm</label>
                       <FastField
-                        type="text"
+                        type="number"
                         bsSize="lg"
-                        name="duration"
+                        name="night"
                         placeholder=""
                         component={ReactstrapInput}
                       />

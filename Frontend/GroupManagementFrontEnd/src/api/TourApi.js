@@ -40,11 +40,15 @@ const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc', search
 // };
 
 const create = (name, price, 
-    duration, numOfPeople, type, 
+    // duration,
+    day, night,
+     numOfPeople, type, 
     startDest,saleRate, details) => {
     const body = {
         name,price,
-        duration, numOfPeople, type,
+        // duration,
+        day, night,
+         numOfPeople, type,
         startDest, saleRate, details
     }
 
@@ -56,7 +60,9 @@ const getById = (id) => {
 };
 
 const update = (id, name, 
-    price, duration, 
+    price, 
+    // duration, 
+    day, night,
     startDest,type,
     numOfPeople, details,
     saleRate
@@ -65,7 +71,8 @@ const update = (id, name,
     const body = {
         name,
         price,
-        duration,
+        // duration,
+        day, night,
         startDest,
         type,
         numOfPeople,

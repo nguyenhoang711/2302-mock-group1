@@ -49,7 +49,9 @@ public class TourService implements ITourService{
         entity.setName(form.getName());
         entity.setPrice(form.getPrice());
         entity.setNumOfPeople(form.getNumOfPeople());
-        entity.setDuration(form.getDuration());
+//        entity.setDuration(form.getDuration());
+        entity.setDay(form.getDay());
+        entity.setNight(form.getNight());
         entity.setType(form.getType());
         entity.setDetails(form.getDetails());
         entity.setSaleRate(form.getSaleRate());

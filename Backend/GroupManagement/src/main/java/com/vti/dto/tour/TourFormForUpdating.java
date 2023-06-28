@@ -7,7 +7,11 @@ public class TourFormForUpdating {
 
     private double price;
 
-    private String duration;
+//    private String duration;
+
+    private short day;
+
+    private short night;
 
     private short numOfPeople;
 
@@ -33,12 +37,29 @@ public class TourFormForUpdating {
         this.price = price;
     }
 
-    public String getDuration() {
-        return duration;
+//    public String getDuration() {
+//        return duration;
+//    }
+//
+//    public void setDuration(String duration) {
+//        this.duration = duration;
+//    }
+
+
+    public short getDay() {
+        return day;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setDay(short day) {
+        this.day = day;
+    }
+
+    public short getNight() {
+        return night;
+    }
+
+    public void setNight(short night) {
+        this.night = night;
     }
 
     public short getNumOfPeople() {
