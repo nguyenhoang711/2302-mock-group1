@@ -9,6 +9,10 @@ public class TourFilter {
 
     private short maxNumOfPeople;
 
+    private short minDay;
+
+    private short maxDay;
+
     public TourFilter() {
     }
 
@@ -42,5 +46,21 @@ public class TourFilter {
 
     public void setMaxNumOfPeople(short maxNumOfPeople) {
         this.maxNumOfPeople = maxNumOfPeople;
+    }
+
+    public short getMinDay() {
+        return minDay;
+    }
+
+    public void setMinDay(short minDay) {
+        this.minDay = minDay;
+    }
+
+    public short getMaxDay() {
+        return maxDay;
+    }
+
+    public void setMaxDay(short maxDay) {
+        this.maxDay = maxDay;
     }
 }

@@ -44,7 +44,7 @@ import Blank from "../pages/misc/Blank";
 // import Carousel from "../pages/ui-elements/Carousel";
 // import EmbedVideo from "../pages/ui-elements/EmbedVideo";
 // import General from "../pages/ui-elements/General";
-// import Grid from "../pages/ui-elements/Grid";
+import Grid from "../pages/ui-elements/Grid";
 // import Modals from "../pages/ui-elements/Modals";
 // import Tabs from "../pages/ui-elements/Tabs";
 // import Typography from "../pages/ui-elements/Typography";
@@ -178,6 +178,11 @@ const dashboardRoutes = {
   ]
 };
 
+const gridRoutes = {
+  path: "/ui/grid",
+  name: "Grid",
+  component: Grid
+}
 const groupRoutes = {
   path: "/groups",
   name: "Group Management",
@@ -677,6 +682,7 @@ export const dashboard = [
   tripRoutes,
   settingRoutes,
   contactRoutes,
+  gridRoutes,
   // pageRoutes,
   // layoutRoutes,
   // documentationRoutes,
@@ -711,6 +717,7 @@ export default [
   createBookingRoutes,
   settingRoutes,
   contactRoutes,
+  gridRoutes
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,

@@ -20,16 +20,19 @@ public class TourSpecificationBuilder {
 
         SearchCriteria searchCriteria = new SearchCriteria("name", "Like", search);
         SearchCriteria searchCriteria2 = new SearchCriteria("type", "Like", search);
+        SearchCriteria startDestination = new SearchCriteria("startDest", "like", search);
         SearchCriteria minNumOfPeople = new SearchCriteria("numOfPeople", ">=", filter.getMinNumOfPeople());
         SearchCriteria maxNumOfPeople = new SearchCriteria("numOfPeople", "<=", filter.getMaxNumOfPeople());
         SearchCriteria minPrice = new SearchCriteria("price", ">=", filter.getMinPrice());
         SearchCriteria maxPrice = new SearchCriteria("price", "<=", filter.getMaxPrice());
+        SearchCriteria minDay = new SearchCriteria("day", ">=", filter.getMinDay());
+        SearchCriteria maxDay = new SearchCriteria("day", "<=", filter.getMaxDay());
 
         Specification<Tour> where = null;
 
         // search
         if (!StringUtils.isEmpty(search)) {
-            where = new TourSpecification(searchCriteria).and(new TourSpecification(searchCriteria2));
+            where = new TourSpecification(searchCriteria).and(new TourSpecification(searchCriteria2)).and(new TourSpecification(startDestination));
         }
 
 //        min price filter
@@ -67,6 +70,26 @@ public class TourSpecificationBuilder {
                 where = where.and(new TourSpecification(maxNumOfPeople));
             } else {
                 where = new TourSpecification(maxNumOfPeople);
+            }
+        }
+
+        //        min day filter
+        if(filter.getMinDay() != 0){
+            if(where != null){
+                where = where.and(new TourSpecification(minDay));
+            }
+            else{
+                where = new TourSpecification(minDay);
+            }
+        }
+
+//        max day filter
+        if(filter.getMaxDay() != 0){
+            if(where != null){
+                where = where.and(new TourSpecification(maxDay));
+            }
+            else{
+                where = new TourSpecification(maxDay);
             }
         }
 

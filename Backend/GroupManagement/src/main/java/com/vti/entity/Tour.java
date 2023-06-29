@@ -79,12 +79,11 @@ public class Tour implements Serializable {
     @Column(name = "thumbnail_url", length = 200)
     private String thumbnail;
 
-    @Column(name = "`details`", length = 900, nullable = false)
+    @Column(name = "`details`", length = 200000, nullable = false)
     @NonNull
     private String details;
 
     @Column(name = "`saleRate`", nullable = false)
     @NonNull
     private double saleRate;
-
 }

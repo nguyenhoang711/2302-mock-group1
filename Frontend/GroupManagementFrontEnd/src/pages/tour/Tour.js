@@ -35,6 +35,8 @@ const Tour = (props) => {
 
     const getListTour = props.getListTourAction;
     const size = props.size;
+
+    let onPriceFilter;
   
     useEffect(() => {
       const getAllTour = async () => {
@@ -77,7 +79,8 @@ const Tour = (props) => {
       {
         dataField: "day",
         text: "Số ngày",
-        sort: true
+        sort: true,
+        // filter: customFil
       },
       {
         dataField: "night",
@@ -141,14 +144,15 @@ const Tour = (props) => {
     }
   
     // filter
-    // const [isVisiableFilter, setVisiableFilter] = useState(false);
+    const [isVisiableFilter, setVisiableFilter] = useState(false);
   
-    // const handleChangeFilter = (minPrice, maxPrice) => {
-    //   onPriceFilter({
-    //     minPrice,
-    //     maxPrice
-    //   });
-    // }
+    const handleChangeFilter = (minPrice, maxPrice, minDay, maxDay) => {
+      onPriceFilter({
+        minPrice,
+        maxPrice
+      });
+      
+    }
   
     // refresh form
     const refreshForm = () => {
