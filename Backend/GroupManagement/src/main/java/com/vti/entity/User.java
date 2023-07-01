@@ -27,7 +27,7 @@ public class User implements Serializable {
 
 	@Column(name = "`username`", nullable = false, length = 50, unique = true)
 	private String userName;
-	
+
 	@Column(name = "`email`", nullable = false, length = 50, unique = true)
 	private String email;
 
@@ -42,10 +42,10 @@ public class User implements Serializable {
 
 	@Formula("concat(firstName, ' ', lastName)")
 	private String fullName;
-	
+
 	@Column(name = "`address`", length = 50)
 	private String address;
-	
+
 	@Column(name = "`phoneNumber`", length = 20)
 	private String phoneNumber;
 
@@ -77,7 +77,7 @@ public class User implements Serializable {
 			role = Role.ADMIN;
 		}
 	}
-	
+
 //	@Column(name = "`supervisor_id`", nullable = true)
 //	private short supervisor_id;
 
@@ -100,22 +100,22 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-//
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
-//
-//	public short getId() {
-//		return id;
-//	}
-//
-//	public void setId(short id) {
-//		this.id = id;
-//	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public short getId() {
+		return id;
+	}
+
+	public void setId(short id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {

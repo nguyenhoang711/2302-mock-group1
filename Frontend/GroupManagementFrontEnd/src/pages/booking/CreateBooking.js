@@ -1,11 +1,13 @@
 
 import React, { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
 import './createBooking.css';
 import BookingApi from '../../api/BookingApi';
 import axios from "axios";
 import Header from "../../components/Header";
 import moment from 'moment';
+import { useSelector, useDispatch } from "react-redux";
+import { getTripById } from "../../redux/actions/CreateBookingAction";
+import UserApi from '../../api/UserApi';
 
 const getValueFromURLParam = (paramName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -22,91 +24,112 @@ const convertDateToString = (date) => {
 };
 
 
-const CreateBooking = () => {
+const CreateBooking = (props) => {
+
+    const dispatch = useDispatch();
 
     const [tripId, setTripId] = useState(1);
-    const [tourName, setTourName] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [duration, setDuration] = useState("");
-    const [startDest, setStartDest] = useState("");
-    const [numOfPeople, setNumOfPeople] = useState("");
-    const [priceTour, setPriceTour] = useState(0);
-    const [tourImg, setTourImg] = useState("");
+
+    const tourName = useSelector((state) => state.CreateBooking.tripInfo.tourName);
+    const tourImg = useSelector((state) => state.CreateBooking.tripInfo.tourImg);
+    const numOfPeople = useSelector((state) => state.CreateBooking.tripInfo.numOfPeople);
+    const startDate = convertDateToString(useSelector((state) => state.CreateBooking.tripInfo.startDate));
+    const endDate = convertDateToString(useSelector((state) => state.CreateBooking.tripInfo.endDate));
+    const duration = useSelector((state) => state.CreateBooking.tripInfo.duration);
+    const startDest = useSelector((state) => state.CreateBooking.tripInfo.startDest);
+    const priceTour = useSelector((state) => state.CreateBooking.tripInfo.priceTour);
+
+    window.onload = () => {
+        setTimeout(() => {
+            const textarea = document.getElementById('note');
+            textarea.value = textarea.value.replace(/\s/g, '');
+        }, 100);
+    }
 
     useEffect(() => {
         let tripId = getValueFromURLParam('tripId');
         setTripId(tripId);
-        const getTripById = async () => {
-            const res = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`);
-            const trip = res.data;
-            const tourName = trip.tour.name;
-            const startDate = trip.startDate;
-            const endDate = trip.endDate;
-            const duration = trip.tour.duration;
-            const startDest = trip.tour.startDest;
-            const numOfPeople = trip.tour.numOfPeople;
-            const priceTour = trip.tour.price;
-            const tourImg = trip.tour.thumbnail;
-            setTourName(tourName);
-            setStartDate(convertDateToString(startDate));
-            setEndDate(convertDateToString(endDate));
-            setDuration(duration);
-            setStartDest(startDest);
-            setNumOfPeople(numOfPeople);
-            setPriceTour(priceTour);
-            setTourImg(tourImg);
-            console.log(tourImg);
-        }
-        getTripById();
+        dispatch(getTripById(tripId));
 
-    }, [tripId, tourName, startDate, endDate, duration, startDest, numOfPeople, priceTour, tourImg]);
+    }, []);
 
-    const [countAdult, setCountAdult] = useState(0);
+    const [countAdult, setCountAdult] = useState(1);
 
     const increaseAgeAdult = () => {
-        setCountAdult(countAdult + 1);
+        if (countTotalPeople + 1 <= numOfPeople) {
+            setCountAdult(countAdult + 1);
+        }
+        else {
+            alert("Số khách tối đa là: " + numOfPeople);
+        }
     };
 
     const decreaseAgeAdult = () => {
-        if (countAdult > 0) {
+        if (countTotalPeople - 1 > 0) {
             setCountAdult(countAdult - 1);
+        }
+        else {
+            alert("Số lượng khách tối thiểu là 1")
         }
     };
 
     const [countChildren, setCountChildren] = useState(0);
 
     const increaseAgeChildren = () => {
-        setCountChildren(countChildren + 1);
+        if (countTotalPeople + 1 <= numOfPeople) {
+            setCountChildren(countChildren + 1);
+        }
+        else {
+            alert("Số khách tối đa là: " + numOfPeople);
+        }
     };
 
     const decreaseAgeChildren = () => {
-        if (countChildren > 0) {
+        if (countTotalPeople - 1 > 0) {
             setCountChildren(countChildren - 1);
+        }
+        else {
+            alert("Số lượng khách tối thiểu là 1")
         }
     };
 
     const [countSmallChildren, setCountSmallChildren] = useState(0);
 
     const increaseAgeSmallChildren = () => {
-        setCountSmallChildren(countSmallChildren + 1);
+        if (countTotalPeople + 1 <= numOfPeople) {
+            setCountSmallChildren(countSmallChildren + 1);
+        }
+        else {
+            alert("Số khách tối đa là: " + numOfPeople);
+        }
     };
 
     const decreaseAgeSmallChildren = () => {
-        if (countSmallChildren > 0) {
+        if (countTotalPeople - 1 > 0) {
             setCountSmallChildren(countSmallChildren - 1);
+        }
+        else {
+            alert("Số lượng khách tối thiểu là 1")
         }
     };
 
     const [countBaby, setCountBaby] = useState(0);
 
     const increaseAgeBaby = () => {
-        setCountBaby(countBaby + 1);
+        if (countTotalPeople + 1 <= numOfPeople) {
+            setCountBaby(countBaby + 1);
+        }
+        else {
+            alert("Số khách tối đa là: " + numOfPeople);
+        }
     };
 
     const decreaseAgeBaby = () => {
-        if (countBaby > 0) {
+        if (countTotalPeople - 1 > 0) {
             setCountBaby(countBaby - 1);
+        }
+        else {
+            alert("Số lượng khách tối thiểu là 1")
         }
     };
 
@@ -124,6 +147,15 @@ const CreateBooking = () => {
         const totalPrice = countAdult * price + countChildren * price * 0.75 + countSmallChildren * price * 0.5;
         setCountTotalPrice(totalPrice);
     }, [countAdult, countChildren, countSmallChildren]);
+
+    const setCountToLocalStorage = () => {
+        localStorage.setItem('countAdult', countAdult);
+        localStorage.setItem('countChildren', countChildren);
+        localStorage.setItem('countSmallChildren', countSmallChildren);
+        localStorage.setItem('countBaby', countBaby);
+        localStorage.setItem('countTotalPeople', countTotalPeople);
+        localStorage.setItem('countTotalPrice', countTotalPrice);
+    }
 
     const handleNotesChange = () => {
         const checkboxes = document.querySelectorAll('.note-more');
@@ -155,39 +187,79 @@ const CreateBooking = () => {
         return notes;
     }
 
+    const [contactFullName, setContactFullname] = useState("");
+    const [contactEmail, setContactEmail] = useState("");
+    const [contactPhoneNumber, setContactPhoneNumber] = useState("");
+    const [contactAddress, setContactAddress] = useState("");
+    const [userId, setUserId] = useState("");
 
-    const getUserByEmail = async () => {
-        const email = document.getElementById('email').value;
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/users/findByEmail/${email}`);
-            const user = response.data;
-            const userId = user.id;
-            return userId;
-        } catch (error) {
-            console.error('Error:', error);
-            return null;
-        }
-    };
+    useEffect(() => {
+        const getUsersByEmail = async () => {
+            const email = localStorage.getItem('email');
+            try {
+                const res = await UserApi.getUserByEmail(email);
+                const userId = res.id;
+                const fullName = res.fullName;
+                const uemail = res.email;
+                const phoneNumber = res.phoneNumber;
+                const address = res.address;
+                setContactFullname(fullName);
+                setContactEmail(uemail);
+                setContactPhoneNumber(phoneNumber);
+                setContactAddress(address);
+                setUserId(userId)
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        };
+        getUsersByEmail();
+    })
 
 
+    useEffect(() => {
+        const contactFullName = document.getElementById('contact_name').value;
+        const contactEmail = document.getElementById('email').value;
+        const contactPhoneNumber = document.getElementById('mobilephone').value;
+        const contactAddress = document.getElementById('address').value;
+        localStorage.setItem("contactFullName", contactFullName);
+        localStorage.setItem("contactEmail", contactEmail);
+        localStorage.setItem("contactPhoneNumber", contactPhoneNumber);
+        localStorage.setItem("contactAdress", contactAddress);
+    });
+
+
+    const timeBooking = moment();
 
     const createBooking = async () => {
-        const uId = await getUserByEmail();
-        const notes = handleNotesChange();
-        let data = {
-            tripId: 1,
-            userId: uId,
-            numOfPeople: countTotalPeople,
-            totalPrice: countTotalPrice,
-            details: notes
+        try {
+            const uId = userId;
+            const notes = handleNotesChange();
+            // let data = {
+            //     tripId: tripId,
+            //     userId: uId,
+            //     numOfPeople: countTotalPeople,
+            //     timeBooking: timeBooking,
+            //     totalPrice: countTotalPrice,
+            //     details: notes,
+            //     amountPaid: 0,
+            //     bookingStatus: 'Chưa thanh toán'
+            // };
+
+            // await axios.post("http://localhost:8080/api/v1/bookings", data);
+
+            await BookingApi.createBooking(tripId, uId, countTotalPeople, timeBooking, countTotalPrice, notes, 0, 'Chưa thanh toán');
+
+            const result = await BookingApi.getAll(1, 5);
+            const bookings = result.content;
+            const bookingId = bookings[0].id;
+
+            alert("Đặt tour thành công");
+            setCountToLocalStorage();
+            window.location.replace(`http://localhost:3000/bookingCheckout?bookingId=${bookingId}`);
+        } catch (error) {
+            alert("Đặt tour thất bại");
         }
-        axios.post("http://localhost:8080/api/v1/bookings", data)
-            .then(function (response) {
-                alert("Đặt tour thành công")
-            })
-            .catch(function (error) {
-                alert("Đặt tour thất bại");
-            });
     }
 
 
@@ -197,7 +269,7 @@ const CreateBooking = () => {
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Booking Page</title>
-            <link rel="stylesheet" href="createBooking.css" />
+            {/* <link rel="stylesheet" href="createBooking.css" /> */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link
@@ -274,7 +346,8 @@ const CreateBooking = () => {
                                                 id="contact_name"
                                                 name="Fullname"
                                                 type="text"
-                                                defaultValue=""
+                                                defaultValue={contactFullName}
+                                            // onLoad={() => setUserBookingInfoToStorage()}
                                             />
                                         </div>
                                         <div className="mail form-element">
@@ -286,7 +359,8 @@ const CreateBooking = () => {
                                                 id="email"
                                                 name="Email"
                                                 type="text"
-                                                defaultValue=""
+                                                defaultValue={contactEmail}
+                                            // onLoad={() => setUserBookingInfoToStorage()}
                                             />
                                         </div>
                                         <div className="phone form-element">
@@ -298,7 +372,8 @@ const CreateBooking = () => {
                                                 id="mobilephone"
                                                 name="Telephone"
                                                 type="text"
-                                                defaultValue=""
+                                                defaultValue={contactPhoneNumber}
+                                            // onLoad={() => setUserBookingInfoToStorage()}
                                             />
                                         </div>
                                         <div className="addess form-element">
@@ -308,7 +383,8 @@ const CreateBooking = () => {
                                                 id="address"
                                                 name="Address"
                                                 type="text"
-                                                defaultValue=""
+                                                defaultValue={contactAddress}
+                                            // onLoad={() => setUserBookingInfoToStorage()}
                                             />
                                         </div>
                                     </form>
@@ -323,13 +399,13 @@ const CreateBooking = () => {
                                             <p>&gt; 12 tuổi</p>
                                         </div>
                                         <div className="change-number">
-                                            <span onClick={() => { decreaseAgeAdult(); }}>
+                                            <span onClick={() => decreaseAgeAdult()}>
                                                 <i className="fal fa-minus-circle" />
                                             </span>
                                             <span className="number" id="adult">
                                                 {countAdult}
                                             </span>
-                                            <span onClick={() => { increaseAgeAdult(); }}>
+                                            <span onClick={() => increaseAgeAdult()}>
                                                 <i className="fal fa-plus-circle" />
                                             </span>
                                         </div>
@@ -340,13 +416,13 @@ const CreateBooking = () => {
                                             <p>Từ 5-11 tuổi</p>
                                         </div>
                                         <div className="change-number">
-                                            <span onClick={() => { decreaseAgeChildren(); }}>
+                                            <span onClick={() => decreaseAgeChildren()}>
                                                 <i className="fal fa-minus-circle" />
                                             </span>
                                             <span className="number" id="children">
                                                 {countChildren}
                                             </span>
-                                            <span onClick={() => { increaseAgeChildren(); }}>
+                                            <span onClick={() => increaseAgeChildren()}>
                                                 <i className="fal fa-plus-circle" />
                                             </span>
                                         </div>
@@ -357,13 +433,13 @@ const CreateBooking = () => {
                                             <p>Từ 2-4 tuổi</p>
                                         </div>
                                         <div className="change-number">
-                                            <span onClick={() => { decreaseAgeSmallChildren(); }}>
+                                            <span onClick={() => decreaseAgeSmallChildren()}>
                                                 <i className="fal fa-minus-circle" />
                                             </span>
                                             <span className="number" id="smallchildren">
                                                 {countSmallChildren}
                                             </span>
-                                            <span onClick={() => { increaseAgeSmallChildren(); }}>
+                                            <span onClick={() => increaseAgeSmallChildren()}>
                                                 <i className="fal fa-plus-circle" />
                                             </span>
                                         </div>
@@ -374,13 +450,13 @@ const CreateBooking = () => {
                                             <p>Từ 0-2 tuổi</p>
                                         </div>
                                         <div className="change-number">
-                                            <span onClick={() => { decreaseAgeBaby(); }}>
+                                            <span onClick={() => decreaseAgeBaby()}>
                                                 <i className="fal fa-minus-circle" />
                                             </span>
                                             <span className="number" id="baby">
                                                 {countBaby}
                                             </span>
-                                            <span onClick={() => { increaseAgeBaby(); }}>
+                                            <span onClick={() => increaseAgeBaby()}>
                                                 <i className="fal fa-plus-circle" />
                                             </span>
                                         </div>
@@ -471,7 +547,7 @@ const CreateBooking = () => {
                                     <a
                                         href="https://webcall.talking.vn/frame-click-to-call/new?code=tCEZl1-MKPuA6JU-czVAScCb0pPkHmPt"
                                         className="phone"
-                                        onClick="javascript:window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=375,height=667');return false;"
+                                        // onClick="javascript:window.open(this.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=375,height=667');return false;"
                                         target="_blank"
                                     >
                                         <i className="fal fa-phone-alt" />
@@ -548,19 +624,19 @@ const CreateBooking = () => {
                                             <tr>
                                                 <td>Người lớn</td>
                                                 <td className="t-price text-right" id="AdultPrice">
-                                                    {countAdult} x {priceTour.toLocaleString("en-US")}đ
+                                                    {countAdult} x {priceTour ? priceTour.toLocaleString("en-US") : priceTour}đ
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ em</td>
                                                 <td className="t-price text-right" id="ChildrenPrice">
-                                                    {countChildren} x {(priceTour * 0.75).toLocaleString("en-US")}đ
+                                                    {countChildren} x {priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}đ
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ nhỏ</td>
                                                 <td className="t-price text-right" id="SmallChildrenPrice">
-                                                    {countSmallChildren} x {(priceTour * 0.5).toLocaleString("en-US")}đ
+                                                    {countSmallChildren} x {priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}đ
                                                 </td>
                                             </tr>
                                             <tr>
@@ -623,11 +699,6 @@ const CreateBooking = () => {
 
 
     )
-}
-
-window.onload = (event) => {
-    var textarea = document.getElementById('note');
-    textarea.value = textarea.value.replace(/^\s*|\s*$/g, '');
 }
 
 export default CreateBooking;

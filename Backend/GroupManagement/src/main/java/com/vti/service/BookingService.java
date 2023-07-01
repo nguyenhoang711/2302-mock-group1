@@ -1,5 +1,6 @@
 package com.vti.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vti.dto.booking.BookingFormForCreating;
+import com.vti.dto.booking.BookingFormForUpdateStatus;
 import com.vti.dto.booking.BookingFormForUpdating;
 import com.vti.entity.Booking;
 import com.vti.repository.BookingRepository;
@@ -50,7 +52,14 @@ public class BookingService implements IBookingService {
 		entity.setTotalPrice(form.getTotalPrice());
 		entity.setDetails(form.getDetails());
 		repository.save(entity);
+	}
 
+	@Override
+	public void updateBookingStatus(short id, BookingFormForUpdateStatus form) {
+		Booking entity = repository.findById(id).get();
+		entity.setBookingStatus(form.getBookingStatus());
+		entity.setAmountPaid(form.getAmountPaid());
+		repository.save(entity);
 	}
 
 	@Transactional

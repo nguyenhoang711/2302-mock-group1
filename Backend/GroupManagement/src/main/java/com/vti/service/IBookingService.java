@@ -1,11 +1,13 @@
 package com.vti.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.vti.dto.booking.BookingFormForCreating;
+import com.vti.dto.booking.BookingFormForUpdateStatus;
 import com.vti.dto.booking.BookingFormForUpdating;
 import com.vti.entity.Booking;
 
@@ -20,6 +22,8 @@ public interface IBookingService {
 	Booking getBookingByID(short id);
 
 	void updateBooking(short id, BookingFormForUpdating form);
+
+	void updateBookingStatus(short id, BookingFormForUpdateStatus form);
 
 	void deleteBookings(List<Short> ids);
 

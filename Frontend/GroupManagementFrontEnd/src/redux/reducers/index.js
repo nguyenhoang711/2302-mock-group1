@@ -7,6 +7,7 @@ import UserLoginInfo from "./UserLoginInfoReducers";
 import Group from "./GroupReducers";
 import Tour from "./TourReducers";
 import Booking from "./BookingReducers";
+import CreateBooking from "./CreateBookingReducer";
 import Contact from "./ContactReducers";
 
 import { reducer as toastr } from "react-redux-toastr";
@@ -20,5 +21,6 @@ export default combineReducers({
   Group,
   Tour,
   Booking,
+  CreateBooking,
   Contact
 });

@@ -1,0 +1,57 @@
+.col-lg-auto label {
+    display: inline-block;
+    min-width: 70px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.col textarea {
+    width: 100%;
+    padding-left: 12px;
+    border-radius: 10px;
+    border: 1px solid #e7e7e7;
+}
+
+.col textarea:focus {
+    border-color: #afccf7;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 236, 0.25);
+}
+
+.table-striped thead tr th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-striped thead tr th:nth-child(3) {
+    width: 12%;
+}
+
+.table-striped thead tr th:nth-child(4) {
+    width: 7%;
+}
+
+.table-striped thead tr th:nth-child(5) {
+    width: 15%;
+}
+
+.table-striped thead tr th:nth-child(6) {
+    width: 9%;
+}
+
+.table-striped tbody tr td:nth-child(6) {
+    width: 9%;
+    text-align: right;
+}
+
+.table-striped thead tr th:nth-child(7) {
+    width: 15%;
+}
+
+.table-striped thead tr th:nth-child(8) {
+    width: 10%;
+}
+
+.table-striped thead tr th:nth-child(9) {
+    width: 4% !important;
+}

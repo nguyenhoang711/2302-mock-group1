@@ -1,17 +1,43 @@
 package com.vti.dto.booking;
-
-import java.math.BigDecimal;
+import java.util.Date;
 
 import com.vti.entity.Booking;
-import com.vti.entity.Trip;
-import com.vti.entity.User;
 
 public class BookingFormForCreating {
 	private short tripId;
 	private short userId;
 	private short numOfPeople;
 	private int totalPrice;
+	private Date timeBooking;
+	private int amountPaid;
+
+	public int getAmountPaid() {
+		return amountPaid;
+	}
+
+	public void setAmountPaid(int amountPaid) {
+		this.amountPaid = amountPaid;
+	}
+
+	private String bookingStatus;
+
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
+
 	private String details;
+
+	public Date getTimeBooking() {
+		return timeBooking;
+	}
+
+	public void setTimeBooking(Date timeBooking) {
+		this.timeBooking = timeBooking;
+	}
 
 	public short getTripId() {
 		return tripId;
@@ -54,7 +80,6 @@ public class BookingFormForCreating {
 	}
 
 	public Booking toEntity() {
-		return new Booking(tripId, userId, numOfPeople, totalPrice, details);
+		return new Booking(tripId, userId, numOfPeople, totalPrice, timeBooking, amountPaid, bookingStatus, details);
 	}
-
 }

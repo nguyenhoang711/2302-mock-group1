@@ -1,9 +1,7 @@
 package com.vti.dto.booking;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
-import com.vti.entity.Trip;
-import com.vti.entity.User;
 
 public class BookingFormForUpdating {
 	private short tripId;
@@ -11,6 +9,15 @@ public class BookingFormForUpdating {
 	private short numOfPeople;
 	private int totalPrice;
 	private String details;
+	private String bookingStatus;
+
+	public String getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(String bookingStatus) {
+		this.bookingStatus = bookingStatus;
+	}
 
 	public short getTripId() {
 		return tripId;

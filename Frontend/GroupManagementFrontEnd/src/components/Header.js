@@ -1,4 +1,5 @@
 import React from "react";
+import './header.css';
 
 const Header = () => {
 
@@ -12,37 +13,37 @@ const Header = () => {
                     <div className="nav-link">
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     Du lịch
                                     <i className="fas fa-caret-down" />
                                 </a>
                             </li>
                             <li>
-                                <a href="">Vietravel MICE</a>
+                                <a href="#">Vietravel MICE</a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     Vận chuyển
                                     <i className="fas fa-caret-down" />
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     Tin tức
                                     <i className="fas fa-caret-down" />
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="#">
                                     Khuyến mãi
                                     <i className="fas fa-caret-down" />
                                 </a>
                             </li>
                             <li>
-                                <a href="">ViettravelPlus</a>
+                                <a href="#">ViettravelPlus</a>
                             </li>
                             <li>
-                                <a href="">Liên hệ</a>
+                                <a href="#">Liên hệ</a>
                             </li>
                         </ul>
                     </div>

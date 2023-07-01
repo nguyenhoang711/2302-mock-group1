@@ -1,0 +1,204 @@
+@font-face {
+    font-family: Roboto;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Roboto;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 38px;
+    color: #2d4271;
+    width: 100%;
+    margin-bottom: 33px;
+    margin-top: 45px;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 40px;
+    color: #2d4271;
+    width: 100%;
+    margin: 10px 0;
+}
+
+h4{
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    color: #2d4271;
+    margin-bottom: 0;
+}
+
+h5{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #fd5056;
+}
+
+.lable{
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #9a9a9a;
+}
+
+.info{
+    font-size: 15px;
+    font-weight: 700;
+    color: #2d4271;
+}
+
+.heading {
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 16px;
+}
+
+.card{
+    padding: 20px;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+}
+
+.content{
+    font-size: 15px;
+    font-weight: 400;
+    color: #2d4271;
+    text-align: left;
+    line-height: 20px;
+}
+
+.booking-container {
+    width: 100%;
+    height: 100%;
+    padding-right: 0;
+}
+
+
+.container3{
+    width: 100%;
+    height: 100%;
+    /* padding: 100px; */
+    padding: 50px 100px;
+    display: flex;
+}
+
+.container-left{
+    flex-basis: 65%;
+}
+
+
+.contact-detail{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container-left .contact-detail-item{
+    height: 65px;
+}
+
+.contact-name, .contact-email, .contact-address{
+    width: 50%;
+}
+
+.contact-phone-number, .contact-telephone{
+    width: 25%;
+}
+
+.contact-note{
+    width: 100%;
+}
+
+.booking-details{
+    margin-top: 20px;
+}
+
+.booking-row-item{
+    display: flex;
+    height: 80px;
+    padding: 16px 0;
+}
+
+.booking-lable{
+    flex-basis: 25%;
+}
+
+.booking-content{
+    flex-basis: 75%;
+}
+
+.booking-number{
+    font-weight: 700;
+    color: #fd5056;
+}
+
+.container-right{
+    flex-basis: 35%;
+    margin-left: 20px;
+    height: fit-content;
+}
+
+.booking-accept-content-lable{
+    max-width: 70%;
+    text-align: left;
+}
+
+.booking-accept-number{
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d5d5d5;
+    text-align: left;
+}
+
+.booking-accept-item{
+    padding: 16px 0;
+    display: flex;
+}
+
+.booking-accept-lable{
+    flex-basis: 33.33%;
+    text-align: left;
+}
+
+.booking-accept-content{
+    flex-basis: 66.67%;
+    text-align: right;
+}
+
+.booking-payment-detail{
+    padding: 20px 0;
+    text-align: justify
+}
+
+.payment-button{
+    width: 100%;
+    height: 40px;
+    color: white;
+    font-size: 16px;
+    background-color: #fd5056;
+    border: none;
+    outline: none !important;
+    border-radius: 5px;
+}
+
+.payment-button:hover{
+    background-color: #d74449;
+    cursor: pointer;
+}

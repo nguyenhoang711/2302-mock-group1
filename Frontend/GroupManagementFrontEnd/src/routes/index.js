@@ -73,6 +73,8 @@ import Settings from "../pages/pages/Settings";
 import NewPassword from "../pages/auth/NewPassword";
 import withAuth from "../HOC/withAuth";
 import Trip from "../pages/trip/Trip";
+import BookingCheckout from "../pages/booking/BookingChekout";
+import ShowCustomerInfo from "../pages/booking/ShowCustomerInfo";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
@@ -207,19 +209,36 @@ const bookingRoutes = {
   children: null
 };
 
-const settingRoutes = {
-  path: "/settings",
-  name: "Settings",
-  icon: ListIcon,
-  component: Settings
-};
-
 //createBooking
 const createBookingRoutes = {
   path: "/createBooking",
   name: "Booking",
   icon: ListIcon,
   component: CreateBooking
+};
+
+//booking checkout
+const bookingCheckoutRoutes = {
+  path: "/bookingCheckout",
+  name: "Booking Checkout",
+  icon: ListIcon,
+  component: BookingCheckout
+};
+
+//booking checkout
+const showCustomerInfoRoutes = {
+  path: "/showCustomerInfo",
+  name: "Show Customer Info",
+  icon: ListIcon,
+  component: ShowCustomerInfo
+};
+
+
+const settingRoutes = {
+  path: "/settings",
+  name: "Settings",
+  icon: ListIcon,
+  component: Settings
 };
 
 //Trip
@@ -678,6 +697,8 @@ export const dashboard = [
   groupRoutes,
   bookingRoutes,
   createBookingRoutes,
+  bookingCheckoutRoutes,
+  showCustomerInfoRoutes,
   tourRoutes,
   tripRoutes,
   settingRoutes,
@@ -715,6 +736,8 @@ export default [
   tripRoutes,
   bookingRoutes,
   createBookingRoutes,
+  bookingCheckoutRoutes,
+  showCustomerInfoRoutes,
   settingRoutes,
   contactRoutes,
   gridRoutes

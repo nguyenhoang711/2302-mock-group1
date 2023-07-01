@@ -21,7 +21,7 @@ import com.vti.service.ITripService;
 @RestController
 @RequestMapping("/api/v1/trips")
 public class TripController {
-	@Autowired
+    @Autowired
     private ITripService service;
 
     @GetMapping()
@@ -29,7 +29,7 @@ public class TripController {
             Pageable pageable,
 //            TripFilter filter,
             @RequestParam(required = false)
-                    String search) {
+            String search) {
         Page<Trip> entities = service.getAllTrips(pageable, search);
         return new ResponseEntity<>(entities, HttpStatus.OK);
     }
@@ -40,9 +40,9 @@ public class TripController {
     }
 
     @GetMapping(value = "/{id}")
-	public ResponseEntity<?> getTripByID(@PathVariable(name = "id") short id) {
-		return new ResponseEntity<>(service.getTripByID(id), HttpStatus.OK);
-	}
+    public ResponseEntity<?> getTripByID(@PathVariable(name = "id") short id) {
+        return new ResponseEntity<>(service.getTripByID(id), HttpStatus.OK);
+    }
 }
 
 

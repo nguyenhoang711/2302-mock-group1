@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vti.dto.booking.BookingFormForCreating;
+import com.vti.dto.booking.BookingFormForUpdateStatus;
 import com.vti.dto.booking.BookingFormForUpdating;
 import com.vti.entity.Booking;
 import com.vti.service.IBookingService;
@@ -56,6 +57,12 @@ public class BookingController {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> updateBooking(@PathVariable(name = "id") short id, @RequestBody BookingFormForUpdating form) {
 		service.updateBooking(id, form);
+		return new ResponseEntity<String>("Update successfully!", HttpStatus.OK);
+	}
+
+	@PutMapping(value = "/updateStatus/{id}")
+	public ResponseEntity<?> updateBookingStatus(@PathVariable(name = "id") short id, @RequestBody BookingFormForUpdateStatus form) {
+		service.updateBookingStatus(id, form);
 		return new ResponseEntity<String>("Update successfully!", HttpStatus.OK);
 	}
 

@@ -29,24 +29,24 @@ public class Trip implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "tourId", referencedColumnName = "id")
 	private Tour tour;
-	
+
 	@Column(name = "`curatorName`", nullable = false, length = 50)
 	private String curatorName;
 
 	@Column(name = "startDate")
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
-	private Date createDate;
+	private Date startDate;
 
 	@Column(name = "endDate")
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date endDate;
 
-//	@Column(name = "gatherDate")
-//	@Temporal(TemporalType.TIMESTAMP)
-//	@CreationTimestamp
-//	private Date gatherDate;
+	@Column(name = "gatherDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreationTimestamp
+	private Date gatherDate;
 
 	@Column(name = "`hotel`", nullable = false, length = 50)
 	private String hotel;

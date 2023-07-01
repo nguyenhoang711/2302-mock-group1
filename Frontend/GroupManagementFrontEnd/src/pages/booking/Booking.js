@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Card,
@@ -10,7 +10,7 @@ import {
     ModalBody,
     ModalFooter,
     ModalHeader,
-} from "reactstrap";
+} from 'reactstrap';
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
@@ -25,11 +25,43 @@ import { FastField, Field, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
 import { toastr } from "react-redux-toastr";
+import moment from 'moment';
+import './booking.css';
+
+const convertDateToString = (date) => {
+    const momentDate = moment(date);
+    if (momentDate.isValid()) {
+        return momentDate.format('DD/MM/YYYY hh:mm:ss a');
+    } else {
+        return 'Invalid Date';
+    }
+};
 
 const Booking = (props) => {
 
     const getListBooking = props.getListBookingAction;
     const size = props.size;
+
+    window.onload = () => {
+        setTimeout(() => {
+            let tables = document.getElementsByClassName("table-bordered");
+            if (tables.length > 0) {
+                let table = tables[0];
+                let tbodys = table.getElementsByTagName('tbody');
+                if (tbodys.length > 0) {
+                    let tbody = tbodys[0];
+                    let trs = tbody.getElementsByTagName('tr');
+                    for (let i = 0; i < trs.length; i++) {
+                        let tds = trs[i].getElementsByTagName('td');
+                        if (tds.length > 4) {
+                            tds[4].textContent = convertDateToString(tds[4].textContent);
+                            tds[5].textContent = parseInt(tds[5].textContent).toLocaleString("en-US") + ' đ';
+                        }
+                    }
+                }
+            }
+        }, 100);
+    }
 
     useEffect(() => {
         const getAllBooking = async () => {
@@ -62,7 +94,12 @@ const Booking = (props) => {
         },
         {
             dataField: "numOfPeople",
-            text: "Số lượng hành khách",
+            text: "Số lượng khách",
+            sort: true
+        },
+        {
+            dataField: "timeBooking",
+            text: "Thời gian đặt tour",
             sort: true
         },
         {
@@ -73,6 +110,11 @@ const Booking = (props) => {
         {
             dataField: "details",
             text: "Ghi chú",
+            sort: true
+        },
+        {
+            dataField: "bookingStatus",
+            text: "Trạng thái",
             sort: true
         },
         {
@@ -201,18 +243,11 @@ const Booking = (props) => {
         }
     }
 
-    var textAreaStyle = {
-        width: "450px",
-        marginLeft: "10px",
-        paddingLeft: "12px",
-        borderRadius: "10px",
-        border: "1px solid #e7e7e7"
-    }
-
 
     return (
+
         <Container fluid className="p-0">
-            <h1 className="h3 mb-3">Booking Management</h1>
+            <h1 className="h3 mb-3" style={{ padding: "1.25rem 1.25rem 0 1.25rem" }}>Booking Management</h1>
             <Row>
                 <Col>
                     <Card>
@@ -281,8 +316,10 @@ const Booking = (props) => {
                             tripName: bookingUpdateInfo && bookingUpdateInfo.trip.tour.name ? bookingUpdateInfo.trip.tour.name : '',
                             fullName: bookingUpdateInfo && bookingUpdateInfo.user.fullName ? bookingUpdateInfo.user.fullName : '',
                             numOfPeople: bookingUpdateInfo && bookingUpdateInfo.numOfPeople ? bookingUpdateInfo.numOfPeople : '',
+                            // timeBooking: bookingUpdateInfo && bookingUpdateInfo.timeBooking ? bookingUpdateInfo.timeBooking : '',
                             totalPrice: bookingUpdateInfo && bookingUpdateInfo.totalPrice ? bookingUpdateInfo.totalPrice : '',
                             details: bookingUpdateInfo && bookingUpdateInfo.details ? bookingUpdateInfo.details : '',
+                            // bookingStatus: bookingUpdateInfo && bookingUpdateInfo.bookingStatus ? bookingUpdateInfo.bookingStatus : '',
                         }
                     }
                     validationSchema={
@@ -291,8 +328,10 @@ const Booking = (props) => {
                             fullName: Yup.string(),
                             numOfPeople: Yup.number()
                                 .min(1, "Nhập số lượng lơn hơn hoặc bằng 1"),
+                            // timeBooking: Yup.date(),
                             totalPrice: Yup.number(),
-                            details: Yup.string()
+                            details: Yup.string(),
+                            // bookingStatus: Yup.string(),
 
 
                         })
@@ -419,7 +458,7 @@ const Booking = (props) => {
                                             placeholder="Enter total member"
                                             // component={ReactstrapInput}
                                             render={({ field }) => (
-                                                <textarea {...field} id="notes" col="20" rows="5" type="text" placeholder="firstName" style={textAreaStyle}></textarea>
+                                                <textarea {...field} id="notes" col="20" rows="5" type="text" placeholder="firstName"></textarea>
                                             )}
                                         />
                                     </Col>
@@ -456,4 +495,6 @@ const mapGlobalStateToProps = state => {
     };
 };
 
+
 export default connect(mapGlobalStateToProps, { getListBookingAction, updateSelectedRowsAction })(Booking);
+
