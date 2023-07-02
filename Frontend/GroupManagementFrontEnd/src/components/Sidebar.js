@@ -167,15 +167,15 @@ const Sidebar = (props) => {
             })}
           </ul>
 
-          {!props.layout.isBoxed && !props.sidebar.isSticky ? (
+          {/* {!props.layout.isBoxed && !props.sidebar.isSticky ? (
             <div className="sidebar-bottom d-none d-lg-block">
               <div className="media">
                 <img
                   className="rounded-circle mr-3"
                   src={avatar}
                   alt="Chris Wood"
-                  width="40"
-                  height="40"
+                  width="10"
+                  height="10"
                 />
                 <div className="media-body">
                   <h5 className="mb-1">{props.fullName}</h5>
@@ -189,7 +189,7 @@ const Sidebar = (props) => {
                 </div>
               </div>
             </div>
-          ) : null}
+          ) : null} */}
         </PerfectScrollbar>
       </div>
     </nav>

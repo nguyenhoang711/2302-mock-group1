@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import './createBooking.css';
 import BookingApi from '../../api/BookingApi';
-import axios from "axios";
 import Header from "../../components/Header";
 import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
@@ -22,7 +21,6 @@ const convertDateToString = (date) => {
         return 'Invalid Date';
     }
 };
-
 
 const CreateBooking = (props) => {
 
@@ -169,13 +167,13 @@ const CreateBooking = (props) => {
             }
         });
 
-        if (countChecked == 0) {
+        if (countChecked === 0) {
             notesCheckBox = "Các lưu ý: Không có\n";
         }
 
         let moreNote = '';
         const getMoreNote = document.getElementById('note').value;
-        if (getMoreNote == '') {
+        if (getMoreNote === '') {
             moreNote = "Ghi chú thêm: Không có";
         }
         else {
@@ -235,18 +233,6 @@ const CreateBooking = (props) => {
         try {
             const uId = userId;
             const notes = handleNotesChange();
-            // let data = {
-            //     tripId: tripId,
-            //     userId: uId,
-            //     numOfPeople: countTotalPeople,
-            //     timeBooking: timeBooking,
-            //     totalPrice: countTotalPrice,
-            //     details: notes,
-            //     amountPaid: 0,
-            //     bookingStatus: 'Chưa thanh toán'
-            // };
-
-            // await axios.post("http://localhost:8080/api/v1/bookings", data);
 
             await BookingApi.createBooking(tripId, uId, countTotalPeople, timeBooking, countTotalPrice, notes, 0, 'Chưa thanh toán');
 
@@ -269,7 +255,6 @@ const CreateBooking = (props) => {
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Booking Page</title>
-            {/* <link rel="stylesheet" href="createBooking.css" /> */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link
@@ -299,7 +284,9 @@ const CreateBooking = (props) => {
                 </div>
                 <div className="container2">
                     <div className="card-trip">
-                        <img src={`./img/${tourImg}`} alt="Ảnh" />
+                        <div className="card-img">
+                            <img src={`./img/${tourImg}`} alt="Ảnh" />
+                        </div>
                         <div className="card-content">
                             <div className="card-content-title">
                                 <span>
@@ -580,6 +567,7 @@ const CreateBooking = (props) => {
                                     <div className="product-image">
                                         <img src={`./img/${tourImg}`} alt="image" />
                                     </div>
+                                    {/* <img src={`./img/${tourImg}`} alt="image" /> */}
                                     <div className="product-content">
                                         <p className="product-title">
                                             {tourName}

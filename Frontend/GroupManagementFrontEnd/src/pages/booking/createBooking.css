@@ -80,9 +80,14 @@ li{
     display: flex;
 }
 
+.card-img{
+    width: 30%;
+    border-radius: 15px 0 0 15px;
+    overflow: hidden;
+}
+
 .card-trip img {
     height: 100%;
-    border-radius: 15px 0 0 15px;
 }
 
 .card-content {
@@ -418,9 +423,17 @@ h4{
     margin-bottom: 20px;
 }
 
-.product-image img{
-    height: 100px;
+/* .product-image{
+    width: 130px;
+    height: 67px;
     border-radius: 10px;
+    overflow: hidden;
+} */
+
+.product-image img{
+    width: 100px;
+    height: 67px;
+    border-radius: 10px !important;
 }
 
 .product-content{

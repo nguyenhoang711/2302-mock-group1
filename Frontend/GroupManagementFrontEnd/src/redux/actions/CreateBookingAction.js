@@ -20,7 +20,9 @@ export const getTripById = (tripId) => {
       const tourName = trip.tour.name;
       const startDate = trip.startDate;
       const endDate = trip.endDate;
-      const duration = trip.tour.duration;
+      const day = trip.tour.day;
+      const night = trip.tour.night;
+      const duration = day + " ngày " + night + " đêm";
       const startDest = trip.tour.startDest;
       const numOfPeople = trip.tour.numOfPeople;
       const priceTour = trip.tour.price;

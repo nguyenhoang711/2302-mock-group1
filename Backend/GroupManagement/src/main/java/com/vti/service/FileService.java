@@ -14,10 +14,10 @@ import com.vti.utils.FileManager;
 public class FileService implements IFileService {
 
 	private FileManager fileManager = new FileManager();
-//	private String linkFolder = "E:\\VTI\\MockProject\\Demo\\Frontend\\GroupManagementFrontEnd\\src\\assets\\img\\avatars";
+	private String linkFolder = "E:\\VTI\\MockProject\\Demo\\Frontend\\GroupManagementFrontEnd\\src\\assets\\img\\avatars";
 
-	@Value("${myapp.image-folder}")
-	private String linkFolder;
+//	@Value("${myapp.image-folder}")
+//	private String linkFolder;
 
 	@Override
 	public String uploadImage(MultipartFile image) throws IOException {

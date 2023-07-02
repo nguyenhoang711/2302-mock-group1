@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./showCustomerInfo.css";
 import Header from "../../components/Header";
-import axios from "axios";
 import moment from 'moment';
 import BookingApi from '../../api/BookingApi';
 
@@ -81,16 +80,11 @@ const ShowCustomerInfo = () => {
 
     window.onload = () => {
         const ResponseCode = getValueFromURLParam('vnp_ResponseCode') ? getValueFromURLParam('vnp_ResponseCode') : "-1";
-        if (ResponseCode == "00") {
+        if (ResponseCode === "00") {
             const updateBookingStatus = async () => {
                 setAmountPaid(0);
                 setRemainingAmount(totalPrice);
                 setBookingStatus("Đã thanh toán");
-                // const data = {
-                //     bookingStatus: "Đã thanh toán",
-                //     amountPaid: totalPrice
-                // }
-                // const res = await axios.put(`http://localhost:8080/api/v1/bookings/updateStatus/${bookingId}`, data);
                 await BookingApi.updateStatus(bookingId, 'Đã thanh toán', totalPrice);
             }
             updateBookingStatus();
@@ -99,10 +93,8 @@ const ShowCustomerInfo = () => {
 
     const handleOnClickPaymentBtn = async () => {
         try {
-            // const res = await axios.get(`http://localhost:8080/api/v1/payment/create_payment?bookingId=${bookingId}&totalPrice=${totalPrice}`);
             const res = await BookingApi.pay(bookingId, totalPrice);
             console.log(res);
-            // const resData = res.data;
             const url = res.url;
             console.log(url);
             window.location.replace(url);

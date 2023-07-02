@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import moment from 'moment';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import axios from "axios";
 
 import "./bookingCheckout.css"
 import Header from "../../components/Header";
-import MyEditor from "../../components/MyEditor";
 
 const convertDateToString = (date) => {
     const momentDate = moment(date);
@@ -23,20 +19,14 @@ const getValueFromURLParam = (paramName) => {
     return searchParams.get(paramName);
 };
 
-const API_URL = 'http://localhost:8080';
-const UPLOAD_ENDPOINT = 'api/v1/files/image';
 
-const BookingCheckout = (props) => {
-
-    const dispatch = useDispatch();
+const BookingCheckout = () => {
 
     const tourName = useSelector((state) => state.CreateBooking.tripInfo.tourName);
     const tourImg = useSelector((state) => state.CreateBooking.tripInfo.tourImg);
     const numOfPeople = useSelector((state) => state.CreateBooking.tripInfo.numOfPeople);
     const startDate = convertDateToString(useSelector((state) => state.CreateBooking.tripInfo.startDate));
     const endDate = convertDateToString(useSelector((state) => state.CreateBooking.tripInfo.endDate));
-    const duration = useSelector((state) => state.CreateBooking.tripInfo.duration);
-    const startDest = useSelector((state) => state.CreateBooking.tripInfo.startDest);
     const priceTour = useSelector((state) => state.CreateBooking.tripInfo.priceTour);
 
     const countAdult = localStorage.getItem('countAdult');
@@ -66,45 +56,6 @@ const BookingCheckout = (props) => {
             alert("Tính năng đang phát triển");
         }
     }
-
-    function uploadAdapter(loader) {
-        return {
-            upload: async () => {
-                try {
-                    const file = await loader.file;
-                    const body = new FormData();
-                    body.append("image", file);
-                    console.log(file);
-
-                    const response = await axios.post(`${API_URL}/${UPLOAD_ENDPOINT}`, body);
-                    const res = response.data;
-                    console.log(response.data);
-                    return {
-                        default: `./img/${res}`
-                    };
-                } catch (error) {
-                    throw error;
-                }
-            }
-        };
-    }
-
-    function uploadPlugin(editor) {
-        editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-            return uploadAdapter(loader);
-        };
-    }
-
-    const [editorData, setEditorData] = useState('');
-
-    const handleEditorChange = (event, editor) => {
-        const data = editor.getData();
-        setEditorData(data);
-        let term = document.getElementById('term');
-        if (term && term.innerHTML) {
-            term.innerHTML = editorData;
-        }
-    };
 
 
     return (
@@ -206,36 +157,9 @@ const BookingCheckout = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="App">
-                            <CKEditor
-                                config={{
-                                    extraPlugins: [uploadPlugin]
-                                }}
-                                editor={ClassicEditor}
-                                data=""
-                                onReady={editor => {
-                                    // You can store the "editor" and use when it is needed.
-                                    // console.log('Editor is ready to use!', editor);
-                                    editor.ui.view.editable.element.style.maxWidth = "100%";
-                                }}
-                                // onChange={(event, editor) => {
-                                //     const data = editor.getData();
-                                //     // console.log({ event, editor, data });
-                                // }}
-                                onChange={handleEditorChange}
-                                onBlur={(event, editor) => {
-                                    // console.log('Blur.', editor);
-                                }}
-                                onFocus={(event, editor) => {
-                                    // console.log('Focus.', editor);
-                                    editor.ui.view.editable.element.style.maxWidth = "100%";
-                                }}
-                            />
-                        </div>
                         <div className="terms" style={{ maxWidth: "668.48px" }}>
                             <h3>Điều khoản bắt buộc khi đăng ký online</h3>
                             <p id="term" className="scrollable-content fit-content" style={{ maxHeight: "400px", overflow: "auto", maxWidth: "668.48px" }}>
-                                {editorData}
                             </p>
                         </div>
                     </div>
