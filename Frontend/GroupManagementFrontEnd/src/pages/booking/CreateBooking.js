@@ -7,6 +7,9 @@ import moment from 'moment';
 import { useSelector, useDispatch } from "react-redux";
 import { getTripById } from "../../redux/actions/CreateBookingAction";
 import UserApi from '../../api/UserApi';
+import BookingContactApi from '../../api/BookingContactApi';
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const getValueFromURLParam = (paramName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -22,8 +25,7 @@ const convertDateToString = (date) => {
     }
 };
 
-const CreateBooking = (props) => {
-
+const CreateBooking = () => {
     const dispatch = useDispatch();
 
     const [tripId, setTripId] = useState(1);
@@ -41,7 +43,7 @@ const CreateBooking = (props) => {
         setTimeout(() => {
             const textarea = document.getElementById('note');
             textarea.value = textarea.value.replace(/\s/g, '');
-        }, 100);
+        }, 200);
     }
 
     useEffect(() => {
@@ -141,10 +143,12 @@ const CreateBooking = (props) => {
     }, [countAdult, countChildren, countSmallChildren, countBaby]);
 
     useEffect(() => {
-        const price = priceTour;
-        const totalPrice = countAdult * price + countChildren * price * 0.75 + countSmallChildren * price * 0.5;
-        setCountTotalPrice(totalPrice);
-    }, [countAdult, countChildren, countSmallChildren]);
+        setTimeout(() => {
+            const price = priceTour;
+            const totalPrice = countAdult * price + countChildren * price * 0.75 + countSmallChildren * price * 0.5;
+            setCountTotalPrice(totalPrice);
+        }, 200);
+    }, [countAdult, countChildren, countSmallChildren, countTotalPrice]);
 
     const setCountToLocalStorage = () => {
         localStorage.setItem('countAdult', countAdult);
@@ -157,6 +161,7 @@ const CreateBooking = (props) => {
 
     const handleNotesChange = () => {
         const checkboxes = document.querySelectorAll('.note-more');
+        let notes = "";
 
         let notesCheckBox = 'Các lưu ý:\n';
         let countChecked = 0;
@@ -167,20 +172,18 @@ const CreateBooking = (props) => {
             }
         });
 
-        if (countChecked === 0) {
-            notesCheckBox = "Các lưu ý: Không có\n";
-        }
-
         let moreNote = '';
         const getMoreNote = document.getElementById('note').value;
-        if (getMoreNote === '') {
-            moreNote = "Ghi chú thêm: Không có";
-        }
-        else {
+        if (getMoreNote != '') {
             moreNote += "Ghi chú thêm: \n  - " + getMoreNote;
         }
 
-        let notes = notesCheckBox + moreNote;
+        if (countChecked === 0 && getMoreNote === '') {
+            notes = "Không có";
+        }
+        else {
+            notes = notesCheckBox + moreNote;
+        }
 
         return notes;
     }
@@ -193,19 +196,21 @@ const CreateBooking = (props) => {
 
     useEffect(() => {
         const getUsersByEmail = async () => {
-            const email = localStorage.getItem('email');
+            const email = localStorage.getItem('email') ? localStorage.getItem('email') : '';
             try {
-                const res = await UserApi.getUserByEmail(email);
-                const userId = res.id;
-                const fullName = res.fullName;
-                const uemail = res.email;
-                const phoneNumber = res.phoneNumber;
-                const address = res.address;
-                setContactFullname(fullName);
-                setContactEmail(uemail);
-                setContactPhoneNumber(phoneNumber);
-                setContactAddress(address);
-                setUserId(userId)
+                if (email) {
+                    const res = await UserApi.getUserByEmail(email);
+                    const userId = res.id;
+                    const fullName = res.fullName;
+                    const uemail = res.email;
+                    const phoneNumber = res.phoneNumber;
+                    const address = res.address;
+                    setContactFullname(fullName);
+                    setContactEmail(uemail);
+                    setContactPhoneNumber(phoneNumber);
+                    setContactAddress(address);
+                    setUserId(userId)
+                }
             } catch (error) {
                 console.error('Error:', error);
                 return null;
@@ -213,7 +218,6 @@ const CreateBooking = (props) => {
         };
         getUsersByEmail();
     })
-
 
     useEffect(() => {
         const contactFullName = document.getElementById('contact_name').value;
@@ -226,29 +230,95 @@ const CreateBooking = (props) => {
         localStorage.setItem("contactAdress", contactAddress);
     });
 
+    const nameRegex = /^[\s\p{L}]+$/u;
+    const phoneRegex = /^0[0-9]*$/;
+
+    const basicSchema = yup.object().shape({
+        contact_name: yup.string()
+            .matches(nameRegex, "Fullname contains only alphabetic characters")
+            .required("Fullname is a required field"),
+        email: yup.string()
+            .email("Please enter a valid email")
+            .required("Email is a required field"),
+        mobilephone: yup.string()
+            .length(10, "Phone number must be exactly 10 numbers")
+            .matches(phoneRegex, "Please enter a valid phone number")
+            .required("Phone number is a required field"),
+        address: yup.string()
+            .max(100)
+    })
+
+    const { values, errors, touched, handleChange, handleBlur, handleSubmit, setValues } = useFormik({
+        initialValues: {
+            contact_name: "",
+            email: "",
+            mobilephone: "",
+            address: ""
+        },
+        validationSchema: basicSchema,
+        validateOnChange: true,
+        validateOnBlur: true,
+    });
+
+    useEffect(() => {
+        setValues((prevValues) => ({
+            ...prevValues,
+            contact_name: contactFullName,
+            email: contactEmail,
+            mobilephone: contactPhoneNumber,
+            address: contactAddress
+        }));
+    }, [contactFullName, contactEmail, contactPhoneNumber, contactAddress, setValues]);
+
 
     const timeBooking = moment();
 
-    const createBooking = async () => {
+    const handleOnSubmitCreateBooking = async () => {
         try {
-            const uId = userId;
+            if (localStorage.getItem('userName')) {
+                var uId = userId;
+            }
+            else {
+                var uId = 1;
+            }
             const notes = handleNotesChange();
 
-            await BookingApi.createBooking(tripId, uId, countTotalPeople, timeBooking, countTotalPrice, notes, 0, 'Chưa thanh toán');
+            if (errors.contact_name || errors.email || errors.mobilephone || errors.address) {
+                alert("Vui lòng nhập đúng thông tin các trường");
+            }
+            else {
+                const contactFullName = document.getElementById('contact_name').value;
+                const contactEmail = document.getElementById('email').value;
+                const contactPhoneNumber = document.getElementById('mobilephone').value;
+                const contactAddress = document.getElementById('address').value;
+                const checkEmailExist = await BookingContactApi.existsByEmail(contactEmail);
+                if (checkEmailExist) {
+                    const bookingContact = await BookingContactApi.findByEmail(contactEmail);
+                    const bookingContactId = bookingContact.id;
+                    await BookingContactApi.updateBookingContact(bookingContactId, contactFullName, contactPhoneNumber, contactAddress);
 
-            const result = await BookingApi.getAll(1, 5);
-            const bookings = result.content;
-            const bookingId = bookings[0].id;
+                }
+                else {
+                    await BookingContactApi.createBookingContact(contactFullName, contactEmail, contactPhoneNumber, contactAddress);
+                }
+                const bookingContact = await BookingContactApi.findByEmail(contactEmail);
+                const bookingContactId = bookingContact.id;
 
-            alert("Đặt tour thành công");
-            setCountToLocalStorage();
-            window.location.replace(`http://localhost:3000/bookingCheckout?bookingId=${bookingId}`);
+                await BookingApi.createBooking(tripId, uId, bookingContactId, countTotalPeople, timeBooking, countTotalPrice, notes, 0, 'Chưa thanh toán');
+
+                const result = await BookingApi.getAll(1, 5);
+                const bookings = result.content;
+                const bookingId = bookings[0].id;
+
+                alert("Đặt tour thành công");
+                setCountToLocalStorage();
+                localStorage.setItem('isSendMail', 'false');
+                window.location.replace(`http://localhost:3000/bookingCheckout?bookingId=${bookingId}`);
+            }
         } catch (error) {
             alert("Đặt tour thất bại");
         }
     }
-
-
 
     return (
         <>
@@ -323,56 +393,72 @@ const CreateBooking = (props) => {
                             <div className="user-contact">
                                 <h3>Thông tin liên lạc</h3>
                                 <div className="form-contact">
-                                    <form action="#">
+                                    <form action="#" onSubmit={handleSubmit}>
                                         <div className="name form-element">
                                             <label>
                                                 Họ và Tên <b>*</b>
                                             </label>
                                             <input
-                                                className="form-control"
                                                 id="contact_name"
-                                                name="Fullname"
+                                                name="contact_name"
                                                 type="text"
-                                                defaultValue={contactFullName}
-                                            // onLoad={() => setUserBookingInfoToStorage()}
+                                                value={values.contact_name}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className={errors.contact_name && touched.contact_name ? "form-control input-error" : "form-control"}
                                             />
+                                            <div className="form-error">
+                                                {errors.contact_name && touched.contact_name && <p>{errors.contact_name}</p>}
+                                            </div>
                                         </div>
                                         <div className="mail form-element">
                                             <label>
                                                 Email <b>*</b>
                                             </label>
                                             <input
-                                                className="form-control"
                                                 id="email"
-                                                name="Email"
-                                                type="text"
-                                                defaultValue={contactEmail}
-                                            // onLoad={() => setUserBookingInfoToStorage()}
+                                                name="email"
+                                                type="email"
+                                                value={values.email}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className={errors.email && touched.email ? "form-control input-error" : "form-control"}
                                             />
+                                            <div className="form-error">
+                                                {errors.email && touched.email && <p>{errors.email}</p>}
+                                            </div>
                                         </div>
                                         <div className="phone form-element">
                                             <label>
                                                 Số điện thoại <b>*</b>
                                             </label>
                                             <input
-                                                className="form-control"
                                                 id="mobilephone"
-                                                name="Telephone"
+                                                name="mobilephone"
                                                 type="text"
-                                                defaultValue={contactPhoneNumber}
-                                            // onLoad={() => setUserBookingInfoToStorage()}
+                                                value={values.mobilephone}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className={errors.mobilephone && touched.mobilephone ? "form-control input-error" : "form-control"}
                                             />
+                                            <div className="form-error">
+                                                {errors.mobilephone && touched.mobilephone && <p>{errors.mobilephone}</p>}
+                                            </div>
                                         </div>
                                         <div className="addess form-element">
                                             <label>Địa chỉ</label>
                                             <input
-                                                className="form-control"
                                                 id="address"
-                                                name="Address"
+                                                name="address"
                                                 type="text"
-                                                defaultValue={contactAddress}
-                                            // onLoad={() => setUserBookingInfoToStorage()}
+                                                value={values.address}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className={errors.address && touched.address ? "form-control input-error" : "form-control"}
                                             />
+                                            <div className="form-error">
+                                                {errors.address && touched.address && <p>{errors.address}</p>}
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -567,7 +653,6 @@ const CreateBooking = (props) => {
                                     <div className="product-image">
                                         <img src={`./img/${tourImg}`} alt="image" />
                                     </div>
-                                    {/* <img src={`./img/${tourImg}`} alt="image" /> */}
                                     <div className="product-content">
                                         <p className="product-title">
                                             {tourName}
@@ -612,19 +697,19 @@ const CreateBooking = (props) => {
                                             <tr>
                                                 <td>Người lớn</td>
                                                 <td className="t-price text-right" id="AdultPrice">
-                                                    {countAdult} x {priceTour ? priceTour.toLocaleString("en-US") : priceTour}đ
+                                                    {countAdult} x {priceTour ? priceTour.toLocaleString("en-US") : priceTour}₫
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ em</td>
                                                 <td className="t-price text-right" id="ChildrenPrice">
-                                                    {countChildren} x {priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}đ
+                                                    {countChildren} x {priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}₫
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ nhỏ</td>
                                                 <td className="t-price text-right" id="SmallChildrenPrice">
-                                                    {countSmallChildren} x {priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}đ
+                                                    {countSmallChildren} x {priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}₫
                                                 </td>
                                             </tr>
                                             <tr>
@@ -663,7 +748,7 @@ const CreateBooking = (props) => {
                                             <tr className="total">
                                                 <td>Tổng cộng</td>
                                                 <td className="t-price text-right" id="TotalPrice">
-                                                    {countTotalPrice.toLocaleString("en-US")}đ
+                                                    {countTotalPrice.toLocaleString("en-US")}₫
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -672,7 +757,7 @@ const CreateBooking = (props) => {
                                         <button
                                             className="btn btn-primary btn-order"
                                             style={{ width: "100%" }}
-                                            onClick={() => createBooking()}
+                                            onClick={() => handleOnSubmitCreateBooking()}
                                         >
                                             Đặt ngay
                                         </button>

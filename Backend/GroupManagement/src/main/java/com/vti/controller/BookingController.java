@@ -2,6 +2,7 @@ package com.vti.controller;
 
 import java.util.List;
 
+import com.vti.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,8 @@ import com.vti.service.IBookingService;
 public class BookingController {
 	@Autowired
 	private IBookingService service;
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping()
 	public ResponseEntity<?> getAllBookings(
@@ -42,6 +45,13 @@ public class BookingController {
 	public ResponseEntity<?> existsBookingById(@PathVariable(name = "id") short id) {
 		return new ResponseEntity<>(service.isBookingExistsById(id), HttpStatus.OK);
 	}
+
+	@GetMapping(value = "/sendMailConfirm")
+	public ResponseEntity<?> sendConfirmBookingTour(@RequestParam("email") String email, @RequestParam("bookingId") short bookingId) {
+		emailService.sendConfirmBookingTour(email, bookingId);
+		return new ResponseEntity<>("We have sent an email. Please check your email!", HttpStatus.OK);
+	}
+
 
 	@PostMapping()
 	public ResponseEntity<?> createBooking(@RequestBody BookingFormForCreating form) {

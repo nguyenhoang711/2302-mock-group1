@@ -10,19 +10,19 @@
     font-family: Roboto;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
 
-li{
+li {
     list-style: none;
 }
 
-.content{
+.content {
     padding: 0;
 }
 
@@ -44,7 +44,7 @@ li{
     margin-bottom: 20px;
 }
 
-.checkout-head-container{
+.checkout-head-container {
     margin: 0 100px;
 }
 
@@ -80,7 +80,7 @@ li{
     display: flex;
 }
 
-.card-img{
+.card-img {
     width: 30%;
     border-radius: 15px 0 0 15px;
     overflow: hidden;
@@ -173,6 +173,16 @@ h3 {
     margin: 0 30px;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.form-error {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
 .form-contact .form-element label {
@@ -182,14 +192,14 @@ h3 {
     margin-bottom: 5px;
 }
 
-.form-contact .form-element label b{
+.form-contact .form-element label b {
     font-size: 10px;
     color: red;
     margin-top: -2px;
     margin-left: 3px;
 }
 
-.form-contact .form-element input{
+.form-contact .form-element input {
     background: #fff;
     border: 1px solid #e7e7e7;
     border-radius: 5px;
@@ -197,7 +207,7 @@ h3 {
     padding: 0 10px;
 }
 
-.passenger-container{
+.passenger-container {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -205,7 +215,7 @@ h3 {
     align-items: center;
 }
 
-.passenger-container .change{
+.passenger-container .change {
     width: 48%;
     height: 60px;
     display: flex;
@@ -217,7 +227,7 @@ h3 {
     padding: 10px 15px;
 }
 
-h4{
+h4 {
     font-weight: 700;
     font-size: 15px;
     display: flex;
@@ -226,7 +236,7 @@ h4{
     margin-bottom: 0;
 }
 
-.passenger-container .change p{
+.passenger-container .change p {
     font-size: 13px;
     display: flex;
     align-items: center;
@@ -235,14 +245,14 @@ h4{
     margin-top: 5px;
 }
 
-.passenger-container .change span{
+.passenger-container .change span {
     font-size: 25px;
     color: #2d4271;
     margin: 0 5px;
     cursor: pointer;
 }
 
-.passenger-notice{
+.passenger-notice {
     display: flex;
     background: #f4f4f4;
     border-radius: 10px;
@@ -250,11 +260,12 @@ h4{
     margin: 40px 0;
 }
 
-.passenger-notice-left, .passenger-notice-right{
+.passenger-notice-left,
+.passenger-notice-right {
     width: 50%;
 }
 
-.passenger-note h3{
+.passenger-note h3 {
     font-weight: 700;
     font-size: 17px;
     line-height: 20px;
@@ -263,7 +274,7 @@ h4{
     margin-bottom: 20px;
 }
 
-.passenger-note-inner{
+.passenger-note-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -277,30 +288,30 @@ h4{
 
 
 
-.passenger-note-inner label{
+.passenger-note-inner label {
     width: 33.33%;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
 }
 
-.passenger-note-inner input{
+.passenger-note-inner input {
     width: 25px;
     height: 25px;
     border: 1px solid #7d8fab;
     margin-right: 10px;
 }
 
-.passenger-note-inner input:hover{
+.passenger-note-inner input:hover {
     cursor: pointer;
 }
 
-.passenger-note-inner textarea{
+.passenger-note-inner textarea {
     display: block;
     width: 100%;
 }
 
-.passenger-note-inner .more-note{
+.passenger-note-inner .more-note {
     width: 100%;
 }
 
@@ -320,18 +331,24 @@ h4{
     font-size: 17px;
 }
 
-.group-checkout{
+.passenger-note-inner .more-note textarea:focus {
+    border-color: #afccf7;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 236, 0.25);
+}
+
+.group-checkout {
     display: inline-block;
     flex-basis: 35%;
     height: 100%;
 }
 
-.group-checkout-container{
+.group-checkout-container {
     border: 1px solid #d5d5d5;
     padding: 20px;
 }
 
-.box-support{
+.box-support {
     margin-bottom: 33px;
     margin-top: 45px;
 }
@@ -394,7 +411,7 @@ h4{
     line-height: 16px;
 }
 
-.group-checkout h3{
+.group-checkout h3 {
     font-weight: 700;
     font-size: 22px;
     line-height: 28px;
@@ -403,21 +420,21 @@ h4{
 }
 
 
-.package-title{
+.package-title {
     font-weight: 700;
     line-height: 19px;
     color: #2d4271;
     margin-bottom: 15px;
 }
 
-.package-title span{
+.package-title span {
     font-weight: 400;
     font-size: 13px;
     line-height: 16px;
     color: #2d4271;
 }
 
-.product{
+.product {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -430,18 +447,18 @@ h4{
     overflow: hidden;
 } */
 
-.product-image img{
+.product-image img {
     width: 100px;
     height: 67px;
     border-radius: 10px !important;
 }
 
-.product-content{
+.product-content {
     padding-left: 13px;
     height: 100%;
 }
 
-.product-content .product-title{
+.product-content .product-title {
     display: inline;
     font-weight: 700;
     line-height: 19px;
@@ -452,16 +469,17 @@ h4{
 }
 
 
-.go-tour .start, .go-tour .end{
+.go-tour .start,
+.go-tour .end {
     display: flex;
     height: 70px;
 }
 
-.go-tour .start{
+.go-tour .start {
     position: relative;
 }
 
-.go-tour .start::after{
+.go-tour .start::after {
     position: absolute;
     content: "";
     height: 100%;
@@ -470,32 +488,38 @@ h4{
     left: 7px;
 }
 
-.go-tour i{
+.go-tour i {
     font-size: 20px;
     color: #4d4aef;
     margin-right: 15px;
 }
 
-.detail{
+.detail {
     margin-top: 20px;
 }
 
-.detail table{
+.detail table {
     caption-side: bottom;
     border-collapse: collapse;
 }
 
-thead, tbody, tfoot, tr, td, th{
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
 }
 
- .detail table th, .detail table td {
+.detail table th,
+.detail table td {
     padding: 10px 0;
 }
 
-.detail table .l1{
+.detail table .l1 {
     width: 50%;
     font-weight: 700;
     line-height: 19px;
@@ -503,7 +527,7 @@ thead, tbody, tfoot, tr, td, th{
     text-align: left;
 }
 
-.detail table .l2{
+.detail table .l2 {
     width: 50%;
     font-weight: 700;
     line-height: 19px;
@@ -512,36 +536,37 @@ thead, tbody, tfoot, tr, td, th{
 }
 
 
-.detail table .l2 i{
+.detail table .l2 i {
     color: #4d4aef;
     font-size: 25px;
 }
 
-.detail table .l2 .add-more{
+.detail table .l2 .add-more {
     font-weight: 400;
     font-size: 11px;
     line-height: 14px;
     color: #2d4271;
 }
 
-.detail table .text-right{
+.detail table .text-right {
     font-weight: 700;
     line-height: 19px;
     text-align: right;
     color: #2d4271;
 }
 
-.detail table .pt td, .cuppon td {
+.detail table .pt td,
+.cuppon td {
     font-weight: 700;
     color: #2d4271;
 }
 
-.detail table .cuppon td form{
+.detail table .cuppon td form {
     display: flex;
     align-items: center;
 }
 
-.detail table .cuppon td form input{
+.detail table .cuppon td form input {
     border: 1px solid #e7e7e7;
     box-sizing: border-box;
     border-radius: 5px;
@@ -550,13 +575,13 @@ thead, tbody, tfoot, tr, td, th{
     max-width: 125px;
 }
 
-.detail table .cuppon td form input:last-of-type{
+.detail table .cuppon td form input:last-of-type {
     margin-left: 5px;
     background-color: #198754;
     color: white;
 }
 
-.detail table .cuppon td form input:last-of-type:hover{
+.detail table .cuppon td form input:last-of-type:hover {
     background-color: #157347;
     cursor: pointer;
 }
@@ -570,7 +595,7 @@ thead, tbody, tfoot, tr, td, th{
     padding: 20px 0;
 }
 
-.detail table .total td.t-price{
+.detail table .total td.t-price {
     font-weight: 700;
     font-size: 22px;
     line-height: 28px;
@@ -579,8 +604,8 @@ thead, tbody, tfoot, tr, td, th{
     text-transform: lowercase;
 }
 
-.detail .btn-order{
-    background: linear-gradient(64.4deg,#fd5056 21.33%,#fe2214 67.61%);
+.detail .btn-order {
+    background: linear-gradient(64.4deg, #fd5056 21.33%, #fe2214 67.61%);
     border-radius: 10px;
     height: 50px;
     font-weight: 700;
@@ -595,4 +620,56 @@ thead, tbody, tfoot, tr, td, th{
     margin-bottom: 10px;
     cursor: pointer;
     border: none;
+}
+
+.input-error {
+    border: 2px solid red !important;
+}
+
+.confirmation-dialog-container {
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 500px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* .confirmation-dialog {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+} */
+
+.confirmation-dialog p {
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.confirmation-dialog button {
+    margin: 0 20px;
+    display: inline-block;
+    padding: 10px;
+    width: 60px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }

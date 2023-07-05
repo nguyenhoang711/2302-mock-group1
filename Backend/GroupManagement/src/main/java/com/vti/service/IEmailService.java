@@ -6,4 +6,6 @@ public interface IEmailService {
 
 	void sendResetPassword(String email);
 
+	void sendConfirmBookingTour(String email, short id);
+
 }

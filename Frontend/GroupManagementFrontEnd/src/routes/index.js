@@ -17,7 +17,7 @@ import {
 } from "react-feather";
 
 // Landing
-// import Landing from "../pages/landing/Landing";
+import Landing from "../pages/landing/Landing";
 
 // Auth
 import SignIn from "../pages/auth/SignIn";
@@ -140,8 +140,8 @@ const Contact = async(() => import("../pages/pages/Contact"));
 // };
 
 const dashboardRoutes = {
-  // path: "/dashboard",
-  path: "/",
+  path: "/dashboard",
+  // path: "/",
   name: "Trang chủ",
   header: "Pages",
   badgeColor: "primary",
@@ -150,8 +150,8 @@ const dashboardRoutes = {
   containsHome: true,
   children: [
     {
-      // path: "/dashboard/default"
-      path: "/",
+      path: "/dashboard/default",
+      // path: "/",
       name: "Default",
       component: withAuth(Default)
     },
@@ -696,11 +696,11 @@ export const dashboard = [
   dashboardRoutes,
   groupRoutes,
   bookingRoutes,
-  createBookingRoutes,
-  bookingCheckoutRoutes,
-  showCustomerInfoRoutes,
+  // createBookingRoutes,
+  // bookingCheckoutRoutes,
+  // showCustomerInfoRoutes,
   tourRoutes,
-  tripRoutes,
+  // tripRoutes,
   settingRoutes,
   contactRoutes,
   gridRoutes,

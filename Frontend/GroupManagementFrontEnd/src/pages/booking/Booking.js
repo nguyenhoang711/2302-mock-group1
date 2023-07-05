@@ -31,7 +31,7 @@ import './booking.css';
 const convertDateToString = (date) => {
     const momentDate = moment(date);
     if (momentDate.isValid()) {
-        return momentDate.format('DD/MM/YYYY hh:mm:ss a');
+        return momentDate.format('DD/MM/YYYY HH:mm:ss');
     } else {
         return 'Invalid Date';
     }
@@ -41,27 +41,6 @@ const Booking = (props) => {
 
     const getListBooking = props.getListBookingAction;
     const size = props.size;
-
-    window.onload = () => {
-        setTimeout(() => {
-            let tables = document.getElementsByClassName("table-bordered");
-            if (tables.length > 0) {
-                let table = tables[0];
-                let tbodys = table.getElementsByTagName('tbody');
-                if (tbodys.length > 0) {
-                    let tbody = tbodys[0];
-                    let trs = tbody.getElementsByTagName('tr');
-                    for (let i = 0; i < trs.length; i++) {
-                        let tds = trs[i].getElementsByTagName('td');
-                        if (tds.length > 4) {
-                            tds[4].textContent = convertDateToString(tds[4].textContent);
-                            tds[5].textContent = parseInt(tds[5].textContent).toLocaleString("en-US") + ' đ';
-                        }
-                    }
-                }
-            }
-        }, 100);
-    }
 
     useEffect(() => {
         const getAllBooking = async () => {
@@ -81,6 +60,14 @@ const Booking = (props) => {
         );
     };
 
+    const  formatPrice = (price) => {
+        return price.toLocaleString("en-US") + '₫';
+    }
+
+    const formatDate = (date) => {
+        return convertDateToString(date);
+    }
+
     const tableColumns = [
         {
             dataField: "trip.tour.name",
@@ -88,7 +75,7 @@ const Booking = (props) => {
             sort: true
         },
         {
-            dataField: "user.fullName",
+            dataField: "bookingContact.fullName",
             text: "Người đặt",
             sort: true
         },
@@ -100,12 +87,14 @@ const Booking = (props) => {
         {
             dataField: "timeBooking",
             text: "Thời gian đặt tour",
-            sort: true
+            sort: true,
+            formatter: (cell, row) => formatDate(cell)
         },
         {
             dataField: "totalPrice",
             text: "Tổng tiền",
-            sort: true
+            sort: true,
+            formatter: (cell, row) => formatPrice(cell)
         },
         {
             dataField: "details",
@@ -314,7 +303,7 @@ const Booking = (props) => {
                     initialValues={
                         {
                             tripName: bookingUpdateInfo && bookingUpdateInfo.trip.tour.name ? bookingUpdateInfo.trip.tour.name : '',
-                            fullName: bookingUpdateInfo && bookingUpdateInfo.user.fullName ? bookingUpdateInfo.user.fullName : '',
+                            fullName: bookingUpdateInfo && bookingUpdateInfo.bookingContact.fullName ? bookingUpdateInfo.bookingContact.fullName : '',
                             numOfPeople: bookingUpdateInfo && bookingUpdateInfo.numOfPeople ? bookingUpdateInfo.numOfPeople : '',
                             // timeBooking: bookingUpdateInfo && bookingUpdateInfo.timeBooking ? bookingUpdateInfo.timeBooking : '',
                             totalPrice: bookingUpdateInfo && bookingUpdateInfo.totalPrice ? bookingUpdateInfo.totalPrice : '',
@@ -345,9 +334,9 @@ const Booking = (props) => {
                                 await BookingApi.update(
                                     bookingUpdateInfo.id,
                                     bookingUpdateInfo.trip.id,
-                                    bookingUpdateInfo.user.id,
+                                    bookingUpdateInfo.bookingContact.id,
                                     values.numOfPeople,
-                                    values.totalPrice + (values.numOfPeople - bookingUpdateInfo.numOfPeople) * 790000,
+                                    values.totalPrice + (values.numOfPeople - bookingUpdateInfo.numOfPeople) * bookingUpdateInfo.trip.tour.price,
                                     values.details,
                                 );
                                 // show notification
@@ -438,7 +427,7 @@ const Booking = (props) => {
                                             bsSize="lg"
                                             name="totalPrice"
                                             id="totalPrice"
-                                            placeholder="Enter total member"
+                                            placeholder="Enter total price"
                                             component={ReactstrapInput}
                                             disabled="true"
                                         />
@@ -455,7 +444,7 @@ const Booking = (props) => {
                                             bsSize="lg"
                                             name="details"
                                             id="details"
-                                            placeholder="Enter total member"
+                                            placeholder="Enter notes"
                                             // component={ReactstrapInput}
                                             render={({ field }) => (
                                                 <textarea {...field} id="notes" col="20" rows="5" type="text" placeholder="firstName"></textarea>

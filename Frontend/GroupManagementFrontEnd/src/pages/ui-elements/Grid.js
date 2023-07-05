@@ -39,6 +39,11 @@ const Grid = (props) => {
     // [getListTour, size]
     []
     );
+
+    const handleOnClick = () => {
+      window.location.replace("http://localhost:3000/trips");
+    }
+
   return (
     <Container fluid className="p-0">
         <h1 className="h3 text-primary text-center">Du lịch trong nước luôn là lựa chọn tuyệt vời. 
@@ -76,7 +81,7 @@ const Grid = (props) => {
                           Giá tour: <span className="h3 text-danger">{item.price}</span>
                         </CardText>
                       </CardBody>
-                      <Button>
+                      <Button onClick={handleOnClick}>
                         Xem chi tiết
                       </Button>
                       <CardText className="h4 remain">Số chỗ còn nhận: <span className="text-danger">{item.numOfPeople}</span></CardText>

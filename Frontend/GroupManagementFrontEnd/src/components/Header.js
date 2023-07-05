@@ -3,6 +3,10 @@ import './header.css';
 
 const Header = () => {
 
+    const handleOnClickUserIcon = () => {
+        localStorage.clear();
+    }
+
     return (
         <>
             <div className="nav-bar">
@@ -54,7 +58,7 @@ const Header = () => {
                         <i className="fal fa-search" />
                     </div>
                     <div className="nav-login">
-                        <a href="http://localhost:3000/auth/sign-in">
+                        <a href="http://localhost:3000/auth/sign-in" onClick={handleOnClickUserIcon}>
                             <i className="fal fa-user" />
                         </a>
                     </div>

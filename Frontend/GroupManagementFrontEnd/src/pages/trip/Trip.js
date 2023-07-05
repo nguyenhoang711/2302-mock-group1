@@ -1,10 +1,9 @@
 import React, { useEffect, useState }  from "react";
-import { useHistory } from 'react-router-dom';
 
 const Trip = () => {
 
     const handleLinkClick = (tripId) => {
-            window.location = `http://localhost:3000/createBooking?tripId=${tripId}`;
+        window.location.href = `http://localhost:3000/createBooking?tripId=${tripId}`;
       };
     return (
         <>

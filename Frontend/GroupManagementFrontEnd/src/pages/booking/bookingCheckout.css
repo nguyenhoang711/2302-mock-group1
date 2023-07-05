@@ -94,6 +94,7 @@ h4 {
 .overview-container {
     width: 100%;
     display: flex;
+    margin-bottom: 100px;
 }
 
 .payment {
@@ -147,19 +148,38 @@ h4 {
     height: 100%;
 }
 
-.terms{
-    color: red;
+.payment-item-check input:hover{
+    cursor: pointer;
 }
 
-.terms .term-content{
+.terms{
     width: 100%;
-    border: 1px solid #f3f3f3;
+    color: black;
+}
+
+#term{
+    width: 100%;
+    border: 1px solid #e5e4e4 !important;
     border-radius: 10px;
     padding: 22px;
-    max-height: 280px;
+    max-height: 300px;
     overflow: auto;
     margin-bottom: 15px;
-    background-color: rebeccapurple;
+}
+
+#term p {
+    margin: 20px 0;
+    line-height: 24px;
+    text-align: justify;
+}
+
+#term .term-header{
+    font-weight: 700;
+    text-align: center;
+}
+
+.term-title{
+    font-weight: 700;
 }
 
 .scrollable-content{
@@ -179,6 +199,27 @@ h4 {
 .scrollable-content::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #eee;
     border-radius: 10px;
+}
+
+.conditions-accept{
+    display: flex;
+    align-items: center;
+}
+
+.conditions-accept label:hover, #checkbox-accept:hover{
+    cursor: pointer;
+}
+
+#checkbox-accept{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #4d4aef;
+}
+
+.conditions-accept label{
+    margin: 0;
+    padding-left: 10px;
 }
 
 .group-checkout {

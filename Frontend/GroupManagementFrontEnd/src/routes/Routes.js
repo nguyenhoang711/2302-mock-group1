@@ -6,6 +6,12 @@ import {
   page as pageRoutes
 } from "./index";
 
+import Trip from "../pages/trip/Trip";
+import CreateBooking from "../pages/booking/CreateBooking";
+import BookingCheckout from "../pages/booking/BookingChekout";
+import ShowCustomerInfo from "../pages/booking/ShowCustomerInfo";
+import Grid from "../pages/ui-elements/Grid";
+
 import DashboardLayout from "../layouts/Dashboard";
 // import LandingLayout from "../layouts/Landing";
 import AuthLayout from "../layouts/Auth";
@@ -51,6 +57,11 @@ const Routes = () => (
         {/* {childRoutes(LandingLayout, landingRoutes)} */}
         {childRoutes(DashboardLayout, dashboardRoutes)}
         {childRoutes(AuthLayout, pageRoutes)}
+        <Route exact path="/" component={Grid} />
+        <Route path="/trips" component={Trip} />
+        <Route path="/createBooking" component={CreateBooking} />
+        <Route path="/bookingCheckout" component={BookingCheckout} />
+        <Route path="/showCustomerInfo" component={ShowCustomerInfo} />
         <Route
           render={() => (
             <AuthLayout>

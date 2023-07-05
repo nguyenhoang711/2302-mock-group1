@@ -1,5 +1,11 @@
 package com.vti.service;
 
+import com.vti.entity.Booking;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,6 +20,9 @@ public class EmailService implements IEmailService {
 
 	@Autowired
 	private IUserService userService;
+
+	@Autowired
+	private IBookingService bookingService;
 
 	@Autowired
 	private RegistrationUserTokenRepository registrationUserTokenRepository;
@@ -55,13 +64,32 @@ public class EmailService implements IEmailService {
 		sendEmail(email, subject, content);
 	}
 
-	private void sendEmail(final String recipientEmail, final String subject, final String content) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(recipientEmail);
-		message.setSubject(subject);
-		message.setText(content);
+	@Override
+	public void sendConfirmBookingTour(String email, short id){
+		Booking booking = bookingService.getBookingByID(id);
+		String tourName = booking.getTrip().getTour().getName();
+		int bookingId = id;
+		int totalPrice = booking.getTotalPrice();
+		DecimalFormat decimalFormat = new DecimalFormat("#,###");
+		String priceFormat = decimalFormat.format(totalPrice).replace(".", ",") + "đ";
+		int numOfPeople = booking.getNumOfPeople();
+		Date startDate = booking.getTrip().getStartDate();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		String startDateFormat = formatter.format(startDate);
+		String bookingStatus = booking.getBookingStatus();
+//		String url = String.format("http://localhost:3000/showCustomerInfo?bookingId=%d&totalPrice=%d", id, price);
+		String subject = "Xác nhận đặt tour thành công!";
+		String content = "Bạn đã đặt thành công tour du lịch \"" + tourName + "\". " + "\nMã booking: " + bookingId + "\nNgày đi: " + startDateFormat
+							+ "\nSố lượng người tham gia: " + numOfPeople + "\nTổng tiền: " + priceFormat + "\nTrạng thái: " + bookingStatus;
+		sendEmail(email, subject, content);
+	}
 
-		mailSender.send(message);
+		private void sendEmail(final String recipientEmail, final String subject, final String content) {
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(recipientEmail);
+			message.setSubject(subject);
+			message.setText(content);
+			mailSender.send(message);
 	}
 
 }

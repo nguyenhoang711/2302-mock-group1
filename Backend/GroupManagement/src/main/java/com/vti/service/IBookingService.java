@@ -27,4 +27,6 @@ public interface IBookingService {
 
 	void deleteBookings(List<Short> ids);
 
+	void confirmBookingTour(String email, short id);
+
 }

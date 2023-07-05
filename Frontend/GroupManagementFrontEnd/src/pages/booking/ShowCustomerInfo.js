@@ -4,6 +4,7 @@ import "./showCustomerInfo.css";
 import Header from "../../components/Header";
 import moment from 'moment';
 import BookingApi from '../../api/BookingApi';
+import { useHistory } from 'react-router-dom';
 
 const getValueFromURLParam = (paramName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -22,13 +23,13 @@ const convertDateToString = (date) => {
 const convertDateTimeToString = (date) => {
     const momentDate = moment(date);
     if (momentDate.isValid()) {
-        return momentDate.format('DD/MM/YYYY hh:mm:ss a');
+        return momentDate.format('DD/MM/YYYY HH:mm:ss');
     } else {
         return 'Invalid Date';
     }
 };
 
-const addDate =(date, timeAdd) => {
+const addDate = (date, timeAdd) => {
     const momentDate = moment(date);
     if (momentDate.isValid()) {
         return momentDate.add(timeAdd, 'hours');
@@ -43,7 +44,7 @@ const ShowCustomerInfo = () => {
     const contactEmail = localStorage.getItem('contactEmail');
     const contactPhoneNumber = localStorage.getItem('contactPhoneNumber');
     const contactAddress = localStorage.getItem('contactAdress');
-    const totalPrice = getValueFromURLParam('totalPrice') ? getValueFromURLParam('totalPrice') : getValueFromURLParam('vnp_Amount')/100;
+    const totalPrice = getValueFromURLParam('totalPrice') ? getValueFromURLParam('totalPrice') : getValueFromURLParam('vnp_Amount') / 100;
 
     const bookingId = getValueFromURLParam('bookingId') ? getValueFromURLParam('bookingId') : getValueFromURLParam('vnp_OrderInfo');
 
@@ -64,19 +65,36 @@ const ShowCustomerInfo = () => {
     const [remainingAmount, setRemainingAmount] = useState(totalPrice);
 
     useEffect(() => {
-        const getBookingById = async () => {
-            // const res = await axios.get(`http://localhost:8080/api/v1/bookings/${bookingId}`);
-            const res = await BookingApi.getById(bookingId);
-            const amountPaid = res.amountPaid;
-            const remainingAmount = res.totalPrice - amountPaid;
-            const timeBooking = res.timeBooking;
-            setAmountPaid(amountPaid);
-            setRemainingAmount(remainingAmount);
-            setTimeBooking(convertDateTimeToString(timeBooking));
-            setPaymentTerm(convertDateTimeToString(addDate(timeBooking, 1)));
-        }
-        getBookingById();
+        setTimeout(() => {
+            const getBookingById = async () => {
+                const res = await BookingApi.getById(bookingId);
+                const amountPaid = res.amountPaid;
+                const remainingAmount = res.totalPrice - amountPaid;
+                const timeBooking = res.timeBooking;
+                setAmountPaid(amountPaid);
+                setRemainingAmount(remainingAmount);
+                setTimeBooking(convertDateTimeToString(timeBooking));
+                setPaymentTerm(convertDateTimeToString(addDate(timeBooking, 1)));
+            }
+            getBookingById();
+        }, 200);
     }, [amountPaid, remainingAmount, timeBooking]);
+
+    const history = useHistory();
+
+    useEffect(() => {
+      const handlePageChange = () => {
+        localStorage.setItem('isSendMail', 'false');
+      };
+  
+      const unlisten = history.listen(() => {
+        handlePageChange();
+      });
+  
+      return () => {
+        unlisten();
+      };
+    }, [history]);
 
     window.onload = () => {
         const ResponseCode = getValueFromURLParam('vnp_ResponseCode') ? getValueFromURLParam('vnp_ResponseCode') : "-1";
@@ -88,15 +106,24 @@ const ShowCustomerInfo = () => {
                 await BookingApi.updateStatus(bookingId, 'Đã thanh toán', totalPrice);
             }
             updateBookingStatus();
+            let isSendMail = localStorage.getItem('isSendMail') ? localStorage.getItem('isSendMail') : '';
+            if (isSendMail == 'false') {
+                setTimeout(() => {
+                    const sendMail = async () => {
+                        await BookingApi.sendMailConfirm(contactEmail, bookingId);
+                        localStorage.setItem('isSendMail', 'true');
+                    };
+                    sendMail();
+                }, 1000);
+            }
         }
-    }
+    };
+
 
     const handleOnClickPaymentBtn = async () => {
         try {
             const res = await BookingApi.pay(bookingId, totalPrice);
-            console.log(res);
             const url = res.url;
-            console.log(url);
             window.location.replace(url);
         } catch (error) {
             console.log(error);

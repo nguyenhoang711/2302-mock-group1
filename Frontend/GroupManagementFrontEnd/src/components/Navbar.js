@@ -295,7 +295,9 @@ const NavbarComponent = (props) => {
               <DropdownItem onClick={() => history.push("/settings")}>Settings & Privacy</DropdownItem>
               {/* <DropdownItem>Help</DropdownItem> */}
               <DropdownItem onClick={() => {
-                  storage.clearAll();
+                  // storage.clearAll();
+                  localStorage.clear();
+                  sessionStorage.clear()
                   history.push("/auth/sign-in");
                 }
                 }>Sign out

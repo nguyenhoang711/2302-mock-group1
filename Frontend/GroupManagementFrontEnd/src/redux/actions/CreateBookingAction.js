@@ -1,5 +1,6 @@
 import * as types from "../constants";
-import axios from "axios";
+import TripApi from '../../api/TripApi';
+
 
 export function setBookingCheckout(numOfPeople) {
   return {
@@ -14,8 +15,7 @@ export const getTripById = (tripId) => {
 
   return async (dispatch, getState) => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`);
-      const trip = res.data;
+      const trip = await TripApi.getById(tripId);
       const tourId = trip.tour.id;
       const tourName = trip.tour.name;
       const startDate = trip.startDate;
