@@ -12,6 +12,11 @@ const uploadImage = (imageFile) => {
     return Api.post(`${url}/image`, body);
 };
 
+// up nhieu anh
+const upImages = (files) => {
+    return Api.post(`${url}/images`, files);
+}
+
 // export
-const api = { uploadImage }
+const api = { uploadImage, upImages }
 export default api;

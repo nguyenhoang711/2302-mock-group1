@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Button,
-  Card,
-  CardBody,
+  // Card,
+  // CardBody,
   Col,
   Container,
   Row,
@@ -21,7 +21,13 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { selectTours, selectPage, selectSelectedRows, selectSize, selectTotalSize } from "../../redux/selectors/TourSelector";
 import { connect } from "react-redux";
 import { getListTourAction, updateSelectedRowsAction } from '../../redux/actions/TourActions';
+
+import avatar1 from "../../assets/img/avatars/no-image.jpg";
 import TourApi from '../../api/TourApi';
+import FileApi from '../../api/FileApi';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import CustomSearch from "./CustomSearch";
 import * as Icon from 'react-feather';
@@ -36,8 +42,51 @@ const Tour = (props) => {
     const getListTour = props.getListTourAction;
     const size = props.size;
 
-    let onPriceFilter;
-  
+    const MAX_FILE_COUNT = 5;
+
+    // let onPriceFilter;
+
+    
+    //hàm chuyển đổi ảnh từ link ra img
+    const ImageFormatter = (cell) => { 
+      return (
+        // <img src={cell} alt="Image" style={{ width: '250px' ,height: '250px'}} />
+        <img src={'http://localhost:8080/api/v1/files/images/' + cell} alt="Image" style={{ width: '120px' ,height: '80px'}} />
+      )
+    };
+
+    const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const [previewThumbnailUrl, setPreviewThumbnailUrl] = useState();
+
+    const [previewThumbnailFile, setPreviewThumbnailFile] = useState();
+
+    const [previewImage1Url, setPreviewImage1Url] = useState();
+
+    const [previewImage1File, setPreviewImage1File] = useState();
+
+    const [previewImage2Url, setPreviewImage2Url] = useState();
+
+    const [previewImage2File, setPreviewImage2File] = useState();
+
+    const [previewImage3Url, setPreviewImage3Url] = useState();
+
+    const [previewImage3File, setPreviewImage3File] = useState();
+
+    const [previewImage4Url, setPreviewImage4Url] = useState();
+
+    const [previewImage4File, setPreviewImage4File] = useState();
+
+    const thumbnailInputFile = useRef(null);
+
+    const image1InputFile = useRef(null);
+
+    const image2InputFile = useRef(null);
+
+    const image3InputFile = useRef(null);
+
+    const image4InputFile = useRef(null);
+
     useEffect(() => {
       const getAllTour = async () => {
         const result = await TourApi.getAll(1, size);
@@ -47,19 +96,88 @@ const Tour = (props) => {
       }
       getAllTour();
     }, [getListTour, size]);
-  
+
+    //choose files
+    const handleFileChange = (e) => {
+      const files = Array.from(e.target.files);
+
+      if (files.length > MAX_FILE_COUNT) {
+        // Display an error message or handle the validation as per your requirements
+        showErrorNotification('Upload error!',`Please select up to ${MAX_FILE_COUNT} files.`);
+        return;
+      }
+      // Formik.setFieldValue('files', files);
+      setSelectedFiles(files);
+    }
+
+    const onChangeImageInput = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      console.log(e.target.name);
+      reader.readAsDataURL(file);
+
+      reader.onloadend = (e) => {
+        switch (e.target.name) {
+          case 'thumbnail': 
+          {
+            setPreviewThumbnailUrl(reader.result);
+            setPreviewThumbnailFile(file);
+          }
+          case 'image1': 
+          {
+            setPreviewImage1Url(reader.result);
+            setPreviewImage1File(file);
+          }
+          case 'image2': 
+          {
+            setPreviewImage2Url(reader.result);
+            setPreviewImage2File(file);
+          }
+          case 'image3': 
+          {
+            setPreviewImage3Url(reader.result);
+            setPreviewImage3File(file);
+          }
+          default: {
+            setPreviewImage4Url(reader.result);
+            setPreviewImage4File(file);
+          }
+        }
+      }
+    }
+
+    const handleSaveEvent = async (name, price,day, night, startDest, type, numOfPeople, details) => {
+      const thumbnail = await FileApi.uploadImage(previewThumbnailFile);
+      const image1 = await FileApi.uploadImage(previewImage1File);
+      const image2 = await FileApi.uploadImage(previewImage2File);
+      const image3 = await FileApi.uploadImage(previewImage3File);
+      const image4 = await FileApi.uploadImage(previewImage4File);
+      await TourApi.update(tourUpdateInfo.id,name,
+        price,day,
+        night, startDest, type,
+        thumbnail,image1,image2,image3,image4,
+        numOfPeople, details
+      );
+      showSuccessNotification("Change Tour", "Change tour information successfully!")
+    }
+
     const actionFormatter = (cell, row, rowIndex) => {
   
       return (
         <Icon.Edit2 size={16} className="align-middle mr-2" onClick={() => updateTour(row.id)} />
       );
     };
-  
+
     const tableColumns = [
       {
         dataField: "name",
         text: "Name",
         sort: true
+      },
+      {
+        dataField: "thumbnail",
+        text: "Ảnh tour",
+        formatter: ImageFormatter
       },
       {
         dataField: "price",
@@ -102,16 +220,16 @@ const Tour = (props) => {
         text: "Số chỗ còn nhận",
         sort: true
       },
-      {
-        dataField: "saleRate",
-        text: "Giảm giá",
-        sort: true
-      },
-      {
-        dataField: "details",
-        text: "Chi tiết",
-        sort: true
-      },
+      // {
+      //   dataField: "saleRate",
+      //   text: "Giảm giá",
+      //   sort: true
+      // },
+      // {
+      //   dataField: "details",
+      //   text: "Chi tiết",
+      //   sort: true
+      // },
       {
         dataField: "action",
         text: "",
@@ -133,26 +251,28 @@ const Tour = (props) => {
       }
   
       // filter
-      const filter = filters && filters.price && filters.price.filterPrice ? filters.price.filterVal : null;
-      const minPrice = filter && filter.minPrice ? filter.minPrice : null;
-      const maxPrice = filter && filter.maxPrice ? filter.maxPrice : null;
+      // const filter = filters && filters.price && filters.price.filterPrice ? filters.price.filterVal : null;
+      // const minPrice = filter && filter.minPrice ? filter.minPrice : null;
+      // const maxPrice = filter && filter.maxPrice ? filter.maxPrice : null;
   
       const result = await TourApi.getAll(page, size, sortField, sortOrder, searchText);
       const tours = result.content;
       const totalSize = result.totalElements;
-      getListTour(tours, page, totalSize, minPrice, maxPrice, searchText);
+      getListTour(tours, page, totalSize
+        // minPrice, maxPrice, searchText
+      );
     }
   
     // filter
-    const [isVisiableFilter, setVisiableFilter] = useState(false);
+    // const [isVisiableFilter, setVisiableFilter] = useState(false);
   
-    const handleChangeFilter = (minPrice, maxPrice, minDay, maxDay) => {
-      onPriceFilter({
-        minPrice,
-        maxPrice
-      });
+    // const handleChangeFilter = (minPrice, maxPrice, minDay, maxDay) => {
+    //   onPriceFilter({
+    //     minPrice,
+    //     maxPrice
+    //   });
       
-    }
+    // }
   
     // refresh form
     const refreshForm = () => {
@@ -221,7 +341,8 @@ const Tour = (props) => {
   
     const [isOpenModalUpdate, setOpenModalUpdate] = useState(false);
 
-    const [selectedOptionValue, setSelectedOptionValue] = useState('');
+    const [selectedOptionValue, setSelectedOptionValue] = useState('STANDARD');
+
 
     //create type value
     const handleOptionChange = (event) => {
@@ -238,8 +359,6 @@ const Tour = (props) => {
       } else {
         selected = props.selectedRows.filter(x => x !== row.id)
       }
-
-      console.log(selected);
       props.updateSelectedRowsAction(selected);
     }
   
@@ -281,11 +400,7 @@ const Tour = (props) => {
     return (
       <Container fluid className="p-0">
         <h1 className="h3 mb-3">Tour Management</h1>
-        <Row>
-          <Col>
-            <Card>
-              <CardBody>
-                <ToolkitProvider
+        <ToolkitProvider
                   keyField="id"
                   data={props.tours}
                   columns={tableColumns}
@@ -346,30 +461,26 @@ const Tour = (props) => {
                       </>
                     )
                   }
-                </ToolkitProvider>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-                  
+        </ToolkitProvider>
+
         {/*Validate create tour form */}
         <Modal isOpen={isOpenModalCreate}>
           <Formik
             initialValues={
               {
-                name: '',
+                name: "",
                 price: 0,
                 day: 0,
                 night: 0,
                 numOfPeople: 0,
-                type: '',
-                startDest: '',
+                type: "",
+                startDest: "",
                 saleRate: 0.0,
-                details: ''
+                details: ""
               }
             }
             validationSchema={
-              Yup.object({
+              Yup.object().shape({
                 name: Yup.string()
                   .min(6, 'Must be between 6 and 400 characters')
                   .max(400, 'Must be between 6 and 400 characters')
@@ -383,9 +494,6 @@ const Tour = (props) => {
                 price: Yup.number()
                   .min(0, 'The price always more than 0')
                   .required('Required field'),
-                // duration: Yup.string()
-                //   .min(0, 'The duration always more than 1 day')
-                //   .required('Required field'),
                 day: Yup.number()
                   .min(0,'Số ngày luôn lớn hơn 0')
                   .required('Required field'),
@@ -395,9 +503,9 @@ const Tour = (props) => {
                 numOfPeople: Yup.number()
                   .min(0, 'The number of people always more than 0')
                   .required('Required field'),
-                type: Yup.string()
-                  .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
-                  .required('Required field'),
+                // type: Yup.string()
+                  // .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
+                  // .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
@@ -406,26 +514,33 @@ const Tour = (props) => {
                   .min(0, 'Sale rate always more than or equal to zero')
                   .max(100, 'Sale rate always less than 100 percent'),
                 details: Yup.string()
-                  .required('Required field'),
+                  .required('Required field')
+                // thumbnail: Yup.string()
+                //   .required('Required field'),
+                // image1: Yup.string()
+                //   .required('Required field'),
+                // image2: Yup.string()
+                //   .required('Required field'),
+                // image3: Yup.string()
+                //   .required('Required field'),
+                // image4: Yup.string()
+                //   .required('Required field'),
               })
             }
   
             onSubmit={
               async values => {
-                // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
-                // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
-                // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
-                // else values.type = 'GOOD_PRICE';
-                // Object.keys(Type).forEach(k => {if(Type[k] == values.type) {
-                //                         values.type = k;
-                //                         return;
-                //                       }})
+                const formData = new FormData();
+                for (let i = 0; i < selectedFiles.length; i++) {
+                  formData.append('images', selectedFiles[i]);
+                }
+                const urls = await FileApi.upImages(formData);
                 try {
-                  console.log(values);
                   await TourApi.create(values.name, values.price,
                     // values.duration, 
                     values.day, values.night,
                     values.numOfPeople, selectedOptionValue,
+                    urls[0],urls[1],urls[2],urls[3],urls[4],
                     values.startDest, values.saleRate, values.details);
                   // show notification
                   showSuccessNotification(
@@ -434,6 +549,8 @@ const Tour = (props) => {
                   );
                   // close modal
                   setOpenModalCreate(false);
+
+                  setSelectedFiles([]);
                   // Refresh table
                   refreshForm();
                 } catch (error) {
@@ -471,6 +588,17 @@ const Tour = (props) => {
                     </Col>
                   </Row>
 
+                  <Row>
+                    <label htmlFor="file">Upload anh</label>
+                    <input
+                      id="file"
+                      type="file"
+                      onChange={handleFileChange}
+                      accept="image/png, image/jpg, image/jpeg"
+                      multiple
+                    />
+                  </Row>
+
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
                       <label>Nhập giá tour</label>
@@ -486,12 +614,12 @@ const Tour = (props) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Label for="type">Hạng tour</Label>
+                    <Label htmlFor="type">Hạng tour</Label>
                     <Input 
                       type="select" 
                       name="type" 
                       id="type"
-                      value= {selectedOptionValue}
+                      value={selectedOptionValue}
                       onChange={handleOptionChange}
                     >
                         <option value={'STANDARD'}>Tiêu chuẩn</option>
@@ -500,21 +628,6 @@ const Tour = (props) => {
                         <option value={'PAY_LESS'}>Tiết kiệm</option>
                     </Input>
                   </Row>
-                  {/* <Row style={{ alignItems: "center" }}>
-                    <Col lg="auto">
-                      <label>Hạng tour</label>
-                    </Col>
-                    <Col>
-                      
-                      <FastField
-                        type="text"
-                        bsSize="lg"
-                        name="type"
-                        placeholder="Hạng tour"
-                        component={ReactstrapInput}
-                      />
-                    </Col>
-                  </Row> */}
 
                   <Row style={{ alignItems: "center" }}>
                     {/* <Col lg="auto">
@@ -621,9 +734,13 @@ const Tour = (props) => {
                 name: tourUpdateInfo && tourUpdateInfo.name ? tourUpdateInfo.name : '',
                 price: tourUpdateInfo && tourUpdateInfo.price !== undefined && tourUpdateInfo.price !== null ? tourUpdateInfo.price : 1000000,
                 numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople !== null ? tourUpdateInfo.numOfPeople: 0,
-                // duration: tourUpdateInfo && tourUpdateInfo.duration ? tourUpdateInfo.duration: '',
                 day: tourUpdateInfo && tourUpdateInfo.day !== undefined && tourUpdateInfo.day !== null ? tourUpdateInfo.day: 0,
                 night: tourUpdateInfo && tourUpdateInfo.night !== undefined && tourUpdateInfo.night !== null ? tourUpdateInfo.night: 0,
+                thumbnail: tourUpdateInfo && tourUpdateInfo.thumbnail ? tourUpdateInfo.thumbnail :'',
+                image1: tourUpdateInfo && tourUpdateInfo.image1 ? tourUpdateInfo.image1 :'',
+                image2: tourUpdateInfo && tourUpdateInfo.image2 ? tourUpdateInfo.image2 :'',
+                image3: tourUpdateInfo && tourUpdateInfo.image3 ? tourUpdateInfo.image3 :'',
+                image4: tourUpdateInfo && tourUpdateInfo.image4 ? tourUpdateInfo.image4 :'',
                 // type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: '',
                 startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
                 details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
@@ -648,9 +765,6 @@ const Tour = (props) => {
                 price: Yup.number()
                   .min(0, 'The price always more than 0')
                   .required('Required field'),
-                // duration: Yup.string()
-                //   // .min(0, 'The duration always more than 1 day')
-                //   .required('Required field'),
                 day: Yup.number()
                   .min(0,'Số ngày luôn lớn hơn 0')
                   .required('Required field'),
@@ -687,22 +801,16 @@ const Tour = (props) => {
                 //   return;
                 // }})
                 try {
-                  await TourApi.update(
-                    tourUpdateInfo.id,
-                    values.name,values.price,
-                    // values.duration, 
-                    values.day, values.night,
-                    values.startDest,selectUpdateOption, 
-                    values.numOfPeople, values.details,
-                    values.saleRate
-                  );
-                  // show notification
-                  showSuccessNotification(
-                    "Update Tour",
-                    "Update Tour Successfully!"
-                  );
+                  handleSaveEvent(values.name, values.price, values.day,
+                    values.night, values.startDest, selectUpdateOption,
+                    values.numOfPeople, values.details);
                   // close modal
                   setOpenModalUpdate(false);
+                  setPreviewThumbnailUrl(null);
+                  setPreviewImage1Url(null);
+                  setPreviewImage2Url(null);
+                  setPreviewImage3Url(null);
+                  setPreviewImage4Url(null);
                   // Refresh table
                   refreshForm();
                 } catch (error) {
@@ -739,6 +847,136 @@ const Tour = (props) => {
                       />
                     </Col>
                   </Row>
+
+                  <Row>
+                    <Col md="4">
+                      <div className="text-center">
+                        <img
+                          alt="Thumbnail pic"
+                          src={previewThumbnailUrl ? previewThumbnailUrl: (tourUpdateInfo.thumbnail ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.thumbnail}`: avatar1)}
+                          className="img-responsive mt-2"
+                          width="220"
+                          height="180"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => thumbnailInputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            ref={thumbnailInputFile}
+                            name='thumbnail'
+                            onChange={onChangeImageInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col md="4">
+                      <div className="text-center">
+                        <img
+                          alt="Mô tả 1"
+                          src={previewImage1Url ? previewImage1Url : avatar1}
+                          className="img-responsive mt-2"
+                          width="220"
+                          height="180"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => image1InputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            ref={image1InputFile}
+                            name='image1'
+                            onChange={onChangeImageInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col md="4">
+                      <div className="text-center">
+                        <img
+                          alt="Mô tả 2"
+                          src={tourUpdateInfo && tourUpdateInfo.image2 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image2}` : avatar1}
+                          className="img-responsive mt-2"
+                          width="220"
+                          height="180"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => image2InputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            ref={image2InputFile}
+                            name='thumbnail'
+                            onChange={onChangeImageInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col md="4">
+                      <div className="text-center">
+                        <img
+                          alt="Mô tả 2"
+                          src={tourUpdateInfo && tourUpdateInfo.image3 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image3}` : avatar1}
+                          className="img-responsive mt-2"
+                          width="220"
+                          height="180"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => image3InputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            ref={image3InputFile}
+                            name='thumbnail'
+                            onChange={onChangeImageInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col md="4">
+                      <div className="text-center">
+                        <img
+                          alt="Mô tả 2"
+                          src={tourUpdateInfo && tourUpdateInfo.image4 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image4}` : avatar1}
+                          className="img-responsive mt-2"
+                          width="220"
+                          height="180"
+                        />
+
+                        <div className="mt-2">
+                        <Button color="primary" onClick={() => image4InputFile.current.click()}>
+                            <FontAwesomeIcon icon={faUpload} /> Upload
+                        </Button>
+                        <input
+                            type='file'
+                            ref={image4InputFile}
+                            name='thumbnail'
+                            onChange={onChangeImageInput}
+                            style={{ display: 'none' }} />
+                        </div>
+                      </div>
+                    </Col>
+                </Row>
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">

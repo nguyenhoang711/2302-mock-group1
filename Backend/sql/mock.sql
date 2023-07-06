@@ -55,7 +55,7 @@ Mua sắm đặc sản phố biển tại Hương Đà hoặc Quà Miền Trung 
  Miền Trung và các vùng miền lân cận, nổi bật nhất là chả bò, bò khô, mực rim me, mực khô, ghẹ sữa sốt và đầy đủ các loại khô cá,...
 Xe tiễn Quý khách ra sân bay Đà Nẵng đón chuyến bay trở về Tp.Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình du lịch tại sân bay Tân Sơn Nhất.',
  5, 4,'Đà Nẵng - Huế - Đầm Lập An - La Vang - Động Phong Nha & Thiên Đường - KDL Bà Nà - Cầu Vàng -Sơn Trà - Hội An - Đà Nẵng',
- 8,'1688026278968.jpg','','','','',9990000,'TP Hồ Chí Minh',0.0,'GOOD_PRICE'),
+ 8,'1688026278968.jpg','1688137991967.jpg','1688138070699.jpg','1688138037243.jpg','1688138011191.jpg',9990000,'TP Hồ Chí Minh',0.0,'GOOD_PRICE'),
  
 ('Ngày 1 - TP. HỒ CHÍ MINH - ĐÀ LẠT Số bữa ăn: 3 bữa (Ăn sáng, trưa, tối)
 Quý khách tập trung tại Vietravel (190 Pasteur, phường Võ Thị Sáu, quận 3, TP.HCM), xe đưa đoàn khởi hành đi Đà Lạt. 
@@ -96,7 +96,7 @@ những rừng thông xanh biếc. Cùng với đó lại nằm cách xa vị tr
  trở nên thơ mộng và yên bình hơn bao giờ hết.
 Đoàn dừng tại Bảo Lộc dùng cơm trưa, sau đó khởi hành về điểm đón ban đầu. Chia tay đoàn và kết thúc chương trình du lịch.'
 ,3,2,'Đà Lạt - Thác Bobla - KDL Cao Nguyên Hoa - Trang Trại rau và hoa Vạn Thành'
-,9, '1688009593169.jpg','','','','',2790000,'TP. Hồ Chí Minh',0,'PAY_LESS'),
+,9, '1688009593169.jpg','1688137819945.jpg','1688137916565.jpg','1688137939059.jpg','1688137953415.jpg',2790000,'TP. Hồ Chí Minh',0,'PAY_LESS'),
 
 ('Ngày 1 - TP.HỒ CHÍ MINH – PHÚ YÊN Số bữa ăn: 2 bữa (trưa, tối)
 Quý khách tập trung tại Cột A17 ga đi trong nước Sân bay Tân Sơn Nhất, hướng dẫn viên hỗ trợ làm thủ tục cho 
@@ -146,7 +146,7 @@ Sau khi dùng bữa sáng và trả phòng khách sạn. Xe đưa đoàn đi tha
 - Chùa Thiên Hưng: vẻ đẹp của “Phượng Hoàng cổ trấn” phiên bản Việt, là một trong những nơi không thể bỏ qua khi đến Quy Nhơn – Bình Định.
 
 Xe đưa đoàn ra sân bay Phù Cát đáp chuyến bay về Tp.Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình tại sân bay Tân Sơn Nhất.',4,3,
-'Phú Yên - Quy Nhơn - Eo Gió - Biển Kỳ Co',8,'1688026200613.jpg','','','','',7790000,'TP. Hồ Chí Minh',0,'STANDARD');
+'Phú Yên - Quy Nhơn - Eo Gió - Biển Kỳ Co',8,'1688026200613.jpg','1688138146082.jpg','1688138196939.jpg','1688138212220.jpg','1688138225088.jpg',7790000,'TP. Hồ Chí Minh',0,'STANDARD');
 
 INSERT INTO `Trip` (tourId, startDate, endDate, curatorName, hotel)
 VALUES
@@ -166,10 +166,5 @@ VALUES
 (1, 2, 10, 2000000, 'Không có'),
 (2, 1, 5, 3000000, 'Không có'),
 (3, 4, 8, 4000000, 'Không có');
-
-INSERT INTO `contact`(id, email, file_url, message) VALUES
-('13f535f0-67a3-4ffe-8066-b754209019e8','abcxyz@gmail.com','1687799117727.jpg','message 1'),
-('13f535f0-67a3-4ffe-8066-c954209019e8','ghijkl@gmail.com','1687801007763.jpg','message 2'),
-('13f535f0-67a3-4ffe-8066-d854209019e8','phuong@gmail.com','1687806996936.jpg','message 3');
 
 select * from tour;

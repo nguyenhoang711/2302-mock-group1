@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -84,6 +87,18 @@ public class FileController {
 		}
 		
 		return new ResponseEntity<>(fileService.uploadImage(image), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/images")
+	public ResponseEntity<?> upLoadImages(@RequestParam(name = "images") @NonNull List<MultipartFile> images) throws IOException {
+		List<String> result = new ArrayList<>();
+		for(int i = 0;i<images.size();i++) {
+			if (!new FileManager().isTypeFileImage(images.get(i))) {
+				return new ResponseEntity<>("File must be image!", HttpStatus.UNPROCESSABLE_ENTITY);
+			}
+			result.add(fileService.uploadImage(images.get(i)));
+		}
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	//add new product

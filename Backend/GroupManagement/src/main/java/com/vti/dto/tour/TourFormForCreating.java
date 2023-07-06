@@ -25,22 +25,19 @@ public class TourFormForCreating {
 
     private String details;
 
+    private String thumbnail;
+
+    private String image1;
+
+    private String image2;
+
+    private String image3;
+
+    private String image4;
+
 //    public Tour toEntity(){return new Tour(name,price,duration,numOfPeople, Tour.Type.toEnum(type),startDest,details,saleRate);}
 
-    public Tour toEntity(){return new Tour(name,price,day,night,numOfPeople, Tour.Type.toEnum(type),startDest,details,saleRate);}
-    @Override
-    public String toString() {
-        return "TourFormForCreating{" +
-                "name='" + name + '\'' +
-//                ", duration='" + duration + '\'' +
-                ", day=" + day +
-                ", night=" + night +
-                ", numOfPeople=" + numOfPeople +
-                ", price=" + price +
-                ", type='" + type + '\'' +
-                ", saleRate=" + saleRate +
-                ", startDest='" + startDest + '\'' +
-                ", details='" + details + '\'' +
-                '}';
-    }
+    public Tour toEntity(){return new Tour(name,price,day,night,numOfPeople, Tour.Type.toEnum(type), startDest,
+            thumbnail, image1,image2,image3,image4,
+            details,saleRate);}
 }

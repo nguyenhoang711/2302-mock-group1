@@ -42,13 +42,15 @@ const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc', search
 const create = (name, price, 
     // duration,
     day, night,
-     numOfPeople, type, 
+    numOfPeople, type,
+    thumbnail, image1, image2, image3, image4,
     startDest,saleRate, details) => {
     const body = {
         name,price,
         // duration,
         day, night,
-         numOfPeople, type,
+        numOfPeople, type,
+        thumbnail, image1, image2, image3, image4,
         startDest, saleRate, details
     }
 
@@ -64,20 +66,17 @@ const update = (id, name,
     // duration, 
     day, night,
     startDest,type,
+    thumbnail, image1, image2, image3, image4,
     numOfPeople, details,
     saleRate
     ) => {
 
     const body = {
-        name,
-        price,
-        // duration,
+        name,price,
         day, night,
-        startDest,
-        type,
-        numOfPeople,
-        details,
-        saleRate
+        startDest,type,
+        thumbnail, image1, image2, image3, image4,
+        numOfPeople,details,saleRate
     }
 
     return Api.put(`${url}/${id}`, body);

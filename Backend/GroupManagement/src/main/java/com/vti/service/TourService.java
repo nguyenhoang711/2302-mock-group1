@@ -34,7 +34,6 @@ public class TourService implements ITourService{
     public boolean isTourExistsByName(String name) { return repository.existsByName(name);}
     @Override
     public void createTour(TourFormForCreating tour) {
-        System.out.println(tour);
         repository.save(tour.toEntity());
     }
 
@@ -55,6 +54,11 @@ public class TourService implements ITourService{
         entity.setType(form.getType());
         entity.setDetails(form.getDetails());
         entity.setSaleRate(form.getSaleRate());
+//        entity.setThumbnail(form.getThumbnail());
+//        entity.setImage1(form.getImage1());
+//        entity.setImage2(form.getImage2());
+//        entity.setImage3(form.getImage3());
+//        entity.setImage4(form.getImage4());
         repository.save(entity);
     }
 

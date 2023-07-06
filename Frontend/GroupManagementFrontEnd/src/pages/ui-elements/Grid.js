@@ -89,7 +89,7 @@ const Grid = (props) => {
                 </Card>
               </Col>
         ))}
-          {/* <Col xs="20" sm="16" md="12" lg="4">
+          <Col xs="20" sm="16" md="12" lg="4">
               <Card className="item">
               <CardBody>
                   <img
@@ -200,8 +200,8 @@ const Grid = (props) => {
                   <CardText className="h4 remain">Số chỗ còn nhận: <span className="text-danger">10</span></CardText>
               </CardBody>
             </Card>
-          </Col> */}
-          {/* <Col xs="20" sm="16" md="12" lg="4">
+          </Col>
+          <Col xs="20" sm="16" md="12" lg="4">
               <Card className="item">
               <CardBody>
                   <img
@@ -256,7 +256,7 @@ const Grid = (props) => {
                   <CardText className="h4 remain">Số chỗ còn nhận: <span className="text-danger">10</span></CardText>
               </CardBody>
             </Card>
-          </Col> */}
+          </Col>
         </Row>
     </Container>
   )

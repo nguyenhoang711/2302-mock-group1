@@ -1,6 +1,8 @@
 import * as types from "../constants";
 
-export function getListTourAction(tours, page, totalSize, minPrice, maxPrice, search) {
+export function getListTourAction(tours, page, totalSize,
+  //  minPrice, maxPrice,
+    search) {
   return {
     type: types.GET_LIST_TOUR,
     payload: {
@@ -8,8 +10,8 @@ export function getListTourAction(tours, page, totalSize, minPrice, maxPrice, se
       page,
       totalSize,
       // filter
-      minPrice,
-      maxPrice,
+      // minPrice,
+      // maxPrice,
       // search
       search
     }

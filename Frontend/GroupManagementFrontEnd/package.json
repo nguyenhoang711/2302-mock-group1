@@ -77,6 +77,7 @@
     "reactstrap": "8.6.0",
     "reactstrap-formik": "^1.0.9",
     "redux": "4.0.5",
+    "redux-devtools-extension": "^2.13.9",
     "smartwizard": "5.1.1",
     "underscore": "^1.13.6",
     "yup": "^0.32.8"

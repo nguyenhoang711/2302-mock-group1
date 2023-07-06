@@ -64,19 +64,34 @@ public class Tour implements Serializable {
     @NonNull
     private String startDest;
 
-    @Column(name = "img1_url", length = 200)
+    @Column(name = "img1_url", length = 200
+//            ,nullable = false
+    )
+    @NonNull
     private String image1;
 
-    @Column(name = "img2_url", length = 200)
+    @Column(name = "img2_url", length = 200
+//            ,nullable = false
+    )
+    @NonNull
     private String image2;
 
-    @Column(name = "img3_url", length = 200)
+    @Column(name = "img3_url", length = 200
+//            ,nullable = false
+    )
+    @NonNull
     private String image3;
 
-    @Column(name = "img4_url", length = 200)
+    @Column(name = "img4_url", length = 200
+//            , nullable = false
+    )
+    @NonNull
     private String image4;
 
-    @Column(name = "thumbnail_url", length = 200)
+    @Column(name = "thumbnail_url", length = 200
+//            , nullable = false
+    )
+    @NonNull
     private String thumbnail;
 
     @Column(name = "`details`", length = 200000, nullable = false)

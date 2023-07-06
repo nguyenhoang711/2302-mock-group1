@@ -76,12 +76,10 @@ const Contact = (props) => {
   const handleSaveEvent = async () => {
     //B1: upload ảnh lên (trả về tên ảnh)
     const nameImage = await FileApi.uploadImage(previewAvatarFile);
-    console.log(nameImage);
     // call api update profile
     //B2: update info chung lên
     // await UserApi.updateProfile(nameImage);
     await ContactApi.update(contactUpdateInfo.id, 
-      contactUpdateInfo.email, 
       contactUpdateInfo.message, 
       nameImage);
     showSucessNotification("Change Contact", "Change contact information successfully!")
@@ -267,9 +265,7 @@ const Contact = (props) => {
   return (
     <Container fluid className="p-0">
       <h1 className="h3 mb-3">Contact Management</h1>
-      <Row>
-        <Col>
-          <Card>
+      <Card>
             <CardBody>
               <ToolkitProvider
                 keyField="id"
@@ -326,10 +322,13 @@ const Contact = (props) => {
               </ToolkitProvider>
             </CardBody>
           </Card>
+      {/* <Row>
+        <Col>
+          
         </Col>
-      </Row>
+      </Row> */}
 
-      {/*Create */}
+      {/* Create */}
       <Modal isOpen={isOpenModalCreate}>
         <Formik
           initialValues={
@@ -370,7 +369,8 @@ const Contact = (props) => {
                 // Refresh table
                 refreshForm();
               } catch (error) {
-                console.log(error);
+                // console.log(error);
+                // console.error(error);
                 setOpenModalCreate(false);
                 // redirect page error server
                 props.history.push("/auth/500");
@@ -435,18 +435,17 @@ const Contact = (props) => {
                         />
 
                         <div className="mt-2">
-                        <Button color="primary" onClick={() => avatarInputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            id='evidenceInput'
-                            ref={avatarInputFile}
-                            onChange={onChangeAvatarInput}
-                            style={{ display: 'none' }} />
+                          <Button color="primary" onClick={() => avatarInputFile.current.click()}>
+                              <FontAwesomeIcon icon={faUpload} /> Upload
+                          </Button>
+                          <input
+                              type='file'
+                              ref={avatarInputFile}
+                              onChange={onChangeAvatarInput}
+                              style={{ display: 'none' }} />
                         </div>
-                      </div>
-                    </Col>
+                    </div>
+                  </Col>
                 </Row>
 
               </ModalBody>
@@ -470,7 +469,7 @@ const Contact = (props) => {
           )}
         </Formik >
       </Modal>
-          {/*Update */}
+      {/*Update */}
       <Modal isOpen={isOpenModalUpdate}>
         <Formik
           enableReinitialize
@@ -483,7 +482,10 @@ const Contact = (props) => {
           }
           validationSchema={
             Yup.object({
-
+              // email: Yup.string()
+              //   .min(6, 'Must be between 6 and 50 characters')
+              //   .max(50, 'Must be between 6 and 50 characters')
+              //   .required('Required'),
               message: Yup.string()
                 .min(6, 'Must be between 6 and 50 characters')
                 .max(50, 'Must be between 6 and 50 characters')
@@ -591,7 +593,9 @@ const Contact = (props) => {
 
               {/* footer */}
               <ModalFooter>
-                <Button type="submit" color="primary" disabled={isSubmitting} onClick={handleSaveEvent}>
+                <Button type="submit" color="primary" disabled={isSubmitting} 
+                onClick={handleSaveEvent}
+                >
                   Save
                 </Button>{" "}
 
