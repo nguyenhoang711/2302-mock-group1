@@ -11,38 +11,27 @@ import {
   Container,
   Row
 } from "reactstrap";
-
-import { selectTours, selectPage, selectSelectedRows, selectSize, selectTotalSize } from "../../redux/selectors/TourSelector";
-import { connect } from "react-redux";
-import { getListTourAction, updateSelectedRowsAction } from '../../redux/actions/TourActions';
 import TourApi from '../../api/TourApi';
 // import CustomSearch from "./CustomSearch";
 // import CustomFilter from "./CustomFilter";
 import './test1.css';
 
 const Grid = (props) => {
-  // const getListTour = props.getListTourAction;
   const size = props.size
   const [data, setData] = useState([]);
 
   useEffect(() => {
       const getAllTour = async () => {
         const result = await TourApi.getAll(1, size);
-        // const tours = result.content;
         setData(result.content);
         console.log(result.content);
-        // const totalSize = result.totalElements;
-        // getListTour(tours, 1, totalSize);
       }
       getAllTour();
-    }, 
-    // [getListTour, size]
-    []
-    );
+    },[]);
 
-    const handleOnClick = () => {
-      window.location.replace("http://localhost:3000/trips");
-    }
+    // const handleOnClick = () => {
+    //   window.location.replace("http://localhost:3000/trips");
+    // }
 
   return (
     <Container fluid className="p-0">
@@ -81,7 +70,7 @@ const Grid = (props) => {
                           Giá tour: <span className="h3 text-danger">{item.price}</span>
                         </CardText>
                       </CardBody>
-                      <Button onClick={handleOnClick}>
+                      <Button onClick={() => props.history.push(`/trips/${item.id}`)}>
                         Xem chi tiết
                       </Button>
                       <CardText className="h4 remain">Số chỗ còn nhận: <span className="text-danger">{item.numOfPeople}</span></CardText>
@@ -262,14 +251,14 @@ const Grid = (props) => {
   )
 };
 
-const mapGlobalStateToProps = state => {
-  return {
-    tours: selectTours(state),
-    page: selectPage(state),
-    size: selectSize(state),
-    totalSize: selectTotalSize(state),
-    selectedRows: selectSelectedRows(state)
-  };
-};
+// const mapGlobalStateToProps = state => {
+//   return {
+//     tours: selectTours(state),
+//     page: selectPage(state),
+//     size: selectSize(state),
+//     totalSize: selectTotalSize(state),
+//     selectedRows: selectSelectedRows(state)
+//   };
+// };
 
 export default Grid;

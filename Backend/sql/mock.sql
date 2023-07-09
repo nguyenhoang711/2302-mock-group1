@@ -146,7 +146,61 @@ Sau khi dùng bữa sáng và trả phòng khách sạn. Xe đưa đoàn đi tha
 - Chùa Thiên Hưng: vẻ đẹp của “Phượng Hoàng cổ trấn” phiên bản Việt, là một trong những nơi không thể bỏ qua khi đến Quy Nhơn – Bình Định.
 
 Xe đưa đoàn ra sân bay Phù Cát đáp chuyến bay về Tp.Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình tại sân bay Tân Sơn Nhất.',4,3,
-'Phú Yên - Quy Nhơn - Eo Gió - Biển Kỳ Co',8,'1688026200613.jpg','1688138146082.jpg','1688138196939.jpg','1688138212220.jpg','1688138225088.jpg',7790000,'TP. Hồ Chí Minh',0,'STANDARD');
+'Phú Yên - Quy Nhơn - Eo Gió - Biển Kỳ Co',8,'1688026200613.jpg','1688138146082.jpg','1688138196939.jpg','1688138212220.jpg','1688138225088.jpg',7790000,'TP. Hồ Chí Minh',0,'STANDARD'),
+('Ngày 1 - TP HỒ CHÍ MINH - PHÚ QUỐC - HÒN THƠM - THỊ TRẤN HOÀNG HÔN - GRANDWORLD (Ăn trưa, chiều)
+Quý khách tập trung tại Sân bay Tân Sơn Nhất, ga đi Trong Nước, hướng dẫn viên hỗ trợ làm thủ tục đáp chuyến bay đi Phú Quốc. 
+
+Xe đón đoàn tại sân bay đưa đến nhà ga cáp treo An Thới tham quan Sun World Hon Thom Nature Park với những hoạt động thú vị:
+- Trải nghiệm cáp treo 3 dây vượt biển dài nhất thế giới - 7.899.9 mét.
+- Phấn khích tột độ cùng thử thách "Mộc Xà thịnh nộ" - trò chơi tàu lượn bằng gỗ đầu tiên tại Việt Nam, có tốc độ tối đa 80km/h với nhiều góc lượn ngoạn mục; đài quan sát "Mắt đại bàng" cao 120m - du khách như được bay lên không trung, thưởng ngoạn đại dương xanh ngắt bao la, những cánh rừng nhiệt đới xanh mướt, những đảo nhỏ nhấp nhô giữa biển trời khoáng đạt (trò chơi có thể tạm dừng vì lịch bảo trì)
+- Thỏa thích tắm biển Hòn Thơm: một trong những bãi biển “quyến rũ nhất hành tinh”, với bãi cát trắng mịn, hoang sơ, hàng dừa nghiêng soi bóng, màu nước biển xanh màu ngọc bích, phản chiếu long lanh dưới ánh nắng mặt trời.
+- Tham gia các hoạt động giải trí trên biển: kayak, jetski, dù lượn, phao chuối (chi phí tự túc).
+- Vui chơi tại công viên nước Aquatopia: một trong những công viên nước chủ đề hàng đầu Đông Nam Á, trải nghiệm 6 khu check-in chủ đề hấp dẫn mang phong cách thổ dân huyền bí.
+
+Lãng du trên con đường Thị trấn Hoàng Hôn - được thiết kế với kiến trúc độc đáo, rực rỡ sắc màu của một thị trấn châu Âu cổ kính: check-in ‘1001’ kiểu bậc thang, Quảng trường La Mã, “kỳ quan” Khải Hoàn Môn, Tháp đồng hồ cao 75m - lấy ý tưởng từ tháp chuông St. Mark’s Campanile của Ý; chiêm ngưỡng Kiss Bridge - cây cầu nổi lên như một dải lụa giữa bờ biển trong xanh, với hai nhịp cầu vươn mình ôm trọn bờ cát trắng, hướng đến nhau, hợp vào làm một thể thống nhất nhưng không chạm nhau.
+
+Buổi tối, Quý khách có thể tự do khám phá một số hạng mục nổi bật tại “thành phố không ngủ” Grand World như: 
+- Công viên Nghệ Thuật Đương Đại: sự giao thoa đặc sắc giữa nghệ thuật đương đại và thiên nhiên Đảo Ngọc.
+- Huyền thoại Tre: công trình tre lớn nhất Việt Nam.
+- Tản bộ bên dòng “kênh đào Venice” và nhìn ngắm những chiếc thuyền Gondola, khu phố shophouse lộng lẫy sắc màu, cổng lâu đài tráng lệ, ba cây cầu vòm bán nguyệt mang đậm kiến trúc châu Âu ...
+- Tham quan bảo tàng Gấu Teddy: lưu giữ nhiều hiện vật quý giá và tái hiện chuyến phiêu lưu hài hước của “nhà thám hiểm tài ba” Teddy Jones (chi phí tự túc)
+- Mãn nhãn với show diễn thực cảnh “Tinh Hoa Việt Nam” quy tụ hơn 200 diễn viên (chi phí tự túc)
+- Thưởng thức bữa tiệc ánh sáng đỉnh cao với show diễn “Sắc màu Venice”
+
+Nghỉ đêm tại Phú Quốc. 
+ 
+
+Ngày 2 - VUI CHƠI THỎA THÍCH TẠI CÔNG VIÊN CHỦ ĐỀ VINWONDERS PHÚ QUỐC - KHU BẢO TỒN THIÊN NHIÊN SAFARI (Ăn sáng, trưa, chiều)
+Quý khách bắt đầu hành trình trở về với thiên nhiên tại Vinpearl Safari Phú Quốc - Vườn thú bán hoang dã đầu tiên tại Việt Nam: với quy mô 180 ha, hơn 130 loài động vật quý hiếm, du khách thưởng thức các chương trình biểu diễn, chụp ảnh với động vật; trải nghiệm vườn thú mở trong rừng tự nhiên, gần gũi và thân thiện với con người.
+
+Buổi chiều, Quý khách tham quan khám phá Khu vui chơi giải trí VinWonders - Công viên chủ đề lớn nhất Việt Nam, quy mô hàng đầu Châu Á, du khách sẽ được:
+- Trải nghiệm 12 nền văn minh nhân loại từ cổ chí kim;
+- Khám phá 06 phân khu với hơn 100 hoạt động giải trí siêu độc lạ;
+- Cuồng nhiệt tại Công Viên Nước lớn nhất Đông Nam Á;
+- Chinh phục 20 trò chơi mạo hiểm khủng nhất hành tinh như đường trượt nhanh nhất thế giới “Cơn thịnh nộ của Zeus”, đường trượt khô “Cuộc chiến Chằn tinh” cao 15m đầu tiên của Việt Nam, đường trượt trong nhà tối “Chiến binh Đại bàng” và “Lời nguyền Ác long” - trò chơi tương tác trong nhà tối đầu tiên của Việt Nam,…
+- Ngỡ ngàng với show diễn triệu đô Once đẳng cấp thế giới;
+- Choáng ngợp trước thế giới đại dương huyền ảo với tầm nhìn vô cực qua tấm kính acrylic khổng lồ 8x25m bên trong Cung điện Hải vương - thủy cung hình rùa lớn nhất thế giới.
+
+Quý khách thưởng thức bữa tối tại VinWonders. 
+
+Nghỉ đêm tại Phú Quốc.
+ 
+
+Ngày 3 - PHÚ QUỐC - TP HỒ CHÍ MINH (Ăn sáng)
+Qúy khách dùng bữa sáng, thư giãn tại khách sạn đến giờ trả phòng. Sau đó, xe đưa đoàn tham quan và mua sắm đặc sản nổi tiếng tại Nhà thùng nước mắm Hồng Đức 1, Đặc sản Đức Thạnh, Cơ sở sản xuất ngọc trai Phú Quốc - Trưng bày các trang sức bằng ngọc trai chính hiệu được nuôi cấy tại Phú Quốc.
+
+Xe đưa Quý khách ra sân bay đáp chuyến bay trở về TP Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình du lịch tại sân bay Tân Sơn Nhất.
+ 
+
+*Lưu ý: 
+Khách có quốc tịch nước ngoài (tên nước ngoài & việt kiều đã đổi tên hoàn toàn) 
+- Phụ thu 850,000 VNĐ/khách * 2 khách/phòng
+- Trường hợp 1 khách quốc tịch Việt Nam + 1 khách quốc tịch nước ngoài vẫn phụ thu 850,000 VNĐ/khách * 2 khách/phòng
+- Giờ bay phụ thuộc vào hãng hàng không, số bữa ăn phụ thuộc vào giờ bay. Các bữa ăn có thể hoán đổi để phù hợp với chương trình.
+- Hành trình có thể thay đổi thứ tự điểm đến tùy vào điều kiện thực tế
+- Đây là chương trình du lịch trọn gói, Vietravel không có trách nhiệm hoàn trả chi phí chênh lệch cho các khách hàng thuộc diện miễn giảm hoặc đối tượng ưu tiên như trẻ nhỏ, người lớn tuổi, người có công với cách mạng… Chính sách miễn giảm, ưu tiên (nếu có) chỉ dành cho khách lẻ của các điểm tham quan'
+,3,2,'Phú Quốc: VinWonders - Vinpearl Safari - Hòn Thơm Nature Park - Cáp Treo Vượt Biển - Công Viên Nước Aquatopia',
+'Phú Quốc: VinWonders - Vinpearl Safari - Hòn Thơm Nature Park - Cáp Treo Vượt Biển - Công Viên Nước Aquatopia',6,'','','','','','TP Hồ Chí Minh');
 
 INSERT INTO `Trip` (tourId, startDate, endDate, curatorName, hotel)
 VALUES

@@ -36,6 +36,7 @@ import { FastField, Form, Formik } from "formik";
 import { ReactstrapInput } from "reactstrap-formik";
 import * as Yup from 'yup';
 import { toastr } from "react-redux-toastr";
+import Editor from "./CKEditor";
 
 const Tour = (props) => {
 
@@ -54,6 +55,8 @@ const Tour = (props) => {
         <img src={'http://localhost:8080/api/v1/files/images/' + cell} alt="Image" style={{ width: '120px' ,height: '80px'}} />
       )
     };
+
+    const [dataEditor, setDataEditor] = useState('');
 
     const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -146,16 +149,16 @@ const Tour = (props) => {
       }
     }
 
-    const handleSaveEvent = async (name, price,day, night, startDest, type, numOfPeople, details) => {
-      const thumbnail = await FileApi.uploadImage(previewThumbnailFile);
-      const image1 = await FileApi.uploadImage(previewImage1File);
-      const image2 = await FileApi.uploadImage(previewImage2File);
-      const image3 = await FileApi.uploadImage(previewImage3File);
-      const image4 = await FileApi.uploadImage(previewImage4File);
-      await TourApi.update(tourUpdateInfo.id,name,
-        price,day,
+    const handleSaveEvent = async (id, name, price, day, night, startDest, type, numOfPeople, details) => {
+      // const thumbnail = await FileApi.uploadImage(previewThumbnailFile);
+      // const image1 = await FileApi.uploadImage(previewImage1File);
+      // const image2 = await FileApi.uploadImage(previewImage2File);
+      // const image3 = await FileApi.uploadImage(previewImage3File);
+      // const image4 = await FileApi.uploadImage(previewImage4File);
+      await TourApi.update(id, name,
+        price, day,
         night, startDest, type,
-        thumbnail,image1,image2,image3,image4,
+        '','','','','',
         numOfPeople, details
       );
       showSuccessNotification("Change Tour", "Change tour information successfully!")
@@ -331,6 +334,7 @@ const Tour = (props) => {
       setOpenModalUpdate(true);
       const tourInfo = await TourApi.getById(tourId);
       setSelectedUpdateOption(tourInfo['type']);
+      setDataEditor(tourInfo.details);
       // tourInfo['type'] = Type[tourInfo['type']]
       // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
       // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
@@ -476,7 +480,7 @@ const Tour = (props) => {
                 type: "",
                 startDest: "",
                 saleRate: 0.0,
-                details: ""
+                // details: ""
               }
             }
             validationSchema={
@@ -513,8 +517,8 @@ const Tour = (props) => {
                 saleRate: Yup.number()
                   .min(0, 'Sale rate always more than or equal to zero')
                   .max(100, 'Sale rate always less than 100 percent'),
-                details: Yup.string()
-                  .required('Required field')
+                // details: Yup.string()
+                //   .required('Required field')
                 // thumbnail: Yup.string()
                 //   .required('Required field'),
                 // image1: Yup.string()
@@ -541,7 +545,10 @@ const Tour = (props) => {
                     values.day, values.night,
                     values.numOfPeople, selectedOptionValue,
                     urls[0],urls[1],urls[2],urls[3],urls[4],
-                    values.startDest, values.saleRate, values.details);
+                    values.startDest, values.saleRate,
+                    // values.details
+                    dataEditor
+                    );
                   // show notification
                   showSuccessNotification(
                     "Create Tour",
@@ -695,16 +702,10 @@ const Tour = (props) => {
 
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
-                      <label>Mô tả</label>
+                      <label>Mô tả lộ trình</label>
                     </Col>
                     <Col>
-                      <FastField
-                        type="text"
-                        bsSize="lg"
-                        name="details"
-                        placeholder="Thông tin tour"
-                        component={ReactstrapInput}
-                      />
+                      <Editor dataEditor={dataEditor} setDataEditor={setDataEditor}/>
                     </Col>
                   </Row>
   
@@ -737,13 +738,12 @@ const Tour = (props) => {
                 day: tourUpdateInfo && tourUpdateInfo.day !== undefined && tourUpdateInfo.day !== null ? tourUpdateInfo.day: 0,
                 night: tourUpdateInfo && tourUpdateInfo.night !== undefined && tourUpdateInfo.night !== null ? tourUpdateInfo.night: 0,
                 thumbnail: tourUpdateInfo && tourUpdateInfo.thumbnail ? tourUpdateInfo.thumbnail :'',
-                image1: tourUpdateInfo && tourUpdateInfo.image1 ? tourUpdateInfo.image1 :'',
-                image2: tourUpdateInfo && tourUpdateInfo.image2 ? tourUpdateInfo.image2 :'',
-                image3: tourUpdateInfo && tourUpdateInfo.image3 ? tourUpdateInfo.image3 :'',
-                image4: tourUpdateInfo && tourUpdateInfo.image4 ? tourUpdateInfo.image4 :'',
-                // type: tourUpdateInfo && tourUpdateInfo.type ? tourUpdateInfo.type: '',
+                // image1: tourUpdateInfo && tourUpdateInfo.image1 ? tourUpdateInfo.image1 :'',
+                // image2: tourUpdateInfo && tourUpdateInfo.image2 ? tourUpdateInfo.image2 :'',
+                // image3: tourUpdateInfo && tourUpdateInfo.image3 ? tourUpdateInfo.image3 :'',
+                // image4: tourUpdateInfo && tourUpdateInfo.image4 ? tourUpdateInfo.image4 :'',
                 startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
-                details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
+                // details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
                 saleRate: tourUpdateInfo && tourUpdateInfo.saleRate !== undefined && tourUpdateInfo.saleRate != null ? tourUpdateInfo.saleRate : 0
               }
             }
@@ -772,20 +772,18 @@ const Tour = (props) => {
                   .min(0, 'Số đêm luôn lớn hơn 0')
                   .required('Required field'),
                 numOfPeople: Yup.number()
-                  .min(0, 'The number of people always more than 1')
+                  .min(0, 'The number of people always more than 0')
                   .required('Required field'),
-                type: Yup.string()
-                  .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
-                  .required('Required field'),
+                // type: Yup.string()
+                //   .oneOf(['STANDARD', 'LUXURY', 'GOOD_PRICE', 'PAY_LESS'])
+                //   .required('Required field'),
                 startDest: Yup.string()
                   .min(5, 'Must be greater than 5 characters')
                   .max(50, 'Must be smaller than 50 characters')
                   .required('Required field'),
                 saleRate: Yup.number()
                   .min(0, 'Sale rate always more than or equal to zero')
-                  .max(100, 'Sale rate always less than 100 percent'),
-                details: Yup.string()
-                  .required('Required field'),
+                  .max(100, 'Sale rate always less than 100 percent')
               })
             }
   
@@ -801,18 +799,15 @@ const Tour = (props) => {
                 //   return;
                 // }})
                 try {
-                  handleSaveEvent(values.name, values.price, values.day,
+                  handleSaveEvent(tourUpdateInfo.id, values.name, values.price, values.day,
                     values.night, values.startDest, selectUpdateOption,
-                    values.numOfPeople, values.details);
+                    values.numOfPeople, dataEditor);
                   // close modal
                   setOpenModalUpdate(false);
-                  setPreviewThumbnailUrl(null);
-                  setPreviewImage1Url(null);
-                  setPreviewImage2Url(null);
-                  setPreviewImage3Url(null);
-                  setPreviewImage4Url(null);
                   // Refresh table
                   refreshForm();
+                  // setSelectedUpdateOption('');
+                  setDataEditor('');
                 } catch (error) {
                   console.log(error);
                   setOpenModalUpdate(false);
@@ -848,7 +843,7 @@ const Tour = (props) => {
                     </Col>
                   </Row>
 
-                  <Row>
+                  {/* <Row>
                     <Col md="4">
                       <div className="text-center">
                         <img
@@ -976,7 +971,7 @@ const Tour = (props) => {
                         </div>
                       </div>
                     </Col>
-                </Row>
+                </Row> */}
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
@@ -993,37 +988,11 @@ const Tour = (props) => {
                     </Col>
                   </Row>
 
-                  {/* <Row style={{ alignItems: "center" }}>
-                    <Col lg="auto">
-                      <label>Nhập loại tour</label>
-                    </Col>
-                    <Col> */}
-                      {/* <ButtonDropdown isOpen={true}>
-                        <DropdownToggle className="bg-secondary">
-                          Different Props Applied</DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem header>Header Item</DropdownItem>
-                          <DropdownItem active>Active Item</DropdownItem>
-                          <DropdownItem disabled>Disabled Item</DropdownItem>
-                          <DropdownItem divider>Divider Item</DropdownItem>
-                        </DropdownMenu>
-                      </ButtonDropdown> */}
-                      {/* <FastField
-                        type="text"
-                        bsSize="lg"
-                        name="type"
-                        placeholder="Hạng tour"
-                        component={ReactstrapInput}
-                      />
-                    </Col>
-                  </Row> */}
-
                   <Row>
-                    <Label for="type">Hạng tour</Label>
+                    <Label>Hạng tour</Label>
                     <Input 
                       type="select" 
                       name="type" 
-                      id="type"
                       value= {selectUpdateOption}
                       onChange={handleUpdateOptionChange}
                     >
@@ -1092,16 +1061,10 @@ const Tour = (props) => {
 
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
-                      <label>Mô tả</label>
+                      <label>Mô tả lịch trình</label>
                     </Col>
                     <Col>
-                      <FastField
-                        type="text"
-                        bsSize="lg"
-                        name="details"
-                        placeholder="Thông tin tour"
-                        component={ReactstrapInput}
-                      />
+                      <Editor dataEditor={dataEditor} setDataEditor={setDataEditor}/>
                     </Col>
                   </Row>
   
@@ -1113,7 +1076,11 @@ const Tour = (props) => {
                     Save
                   </Button>{" "}
   
-                  <Button color="primary" onClick={() => setOpenModalUpdate(false)}>
+                  <Button color="primary" onClick={() => {
+                      setOpenModalUpdate(false);
+                      setDataEditor('');
+                    }
+                  }>
                     Close
                   </Button>
                 </ModalFooter>
