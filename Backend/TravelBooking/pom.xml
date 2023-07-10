@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vti</groupId>
-	<artifactId>GroupManagement</artifactId>
+	<artifactId>TravelBooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>GroupManagement</name>
+	<name>TravelBooking</name>
 	<description>Group Management</description>
 	<properties>
 		<java.version>1.8</java.version>
