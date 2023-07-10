@@ -1,0 +1,21 @@
+.detailOfTrip {
+    text-align: left;
+    color: black;
+    font-family: "Nunito";
+}
+
+/* .imgTrip{
+    
+} */
+.image {
+    padding: auto;
+}
+
+.rowPage {
+    margin: 40px 0;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}
