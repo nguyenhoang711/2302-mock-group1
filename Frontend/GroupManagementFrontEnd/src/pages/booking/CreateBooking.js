@@ -10,6 +10,7 @@ import UserApi from '../../api/UserApi';
 import BookingContactApi from '../../api/BookingContactApi';
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Footer2 from "../../components/Footer2";
 
 const getValueFromURLParam = (paramName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -65,7 +66,10 @@ const CreateBooking = () => {
     };
 
     const decreaseAgeAdult = () => {
-        if (countTotalPeople - 1 > 0) {
+        if (countAdult <= 0) {
+            alert("Số lượng phải >= 0");
+        }
+        else if (countTotalPeople - 1 > 0) {
             setCountAdult(countAdult - 1);
         }
         else {
@@ -85,7 +89,10 @@ const CreateBooking = () => {
     };
 
     const decreaseAgeChildren = () => {
-        if (countTotalPeople - 1 > 0) {
+        if (countChildren <= 0) {
+            alert("Số lượng phải >= 0");
+        }
+        else if (countTotalPeople - 1 > 0) {
             setCountChildren(countChildren - 1);
         }
         else {
@@ -105,7 +112,10 @@ const CreateBooking = () => {
     };
 
     const decreaseAgeSmallChildren = () => {
-        if (countTotalPeople - 1 > 0) {
+        if(countSmallChildren <= 0){
+            alert("Số lượng phải >= 0");
+        }
+        else if (countTotalPeople - 1 > 0) {
             setCountSmallChildren(countSmallChildren - 1);
         }
         else {
@@ -125,7 +135,10 @@ const CreateBooking = () => {
     };
 
     const decreaseAgeBaby = () => {
-        if (countTotalPeople - 1 > 0) {
+        if(countBaby <= 0){
+            alert("Số lượng phải >= 0");
+        }
+        else if (countTotalPeople - 1 > 0) {
             setCountBaby(countBaby - 1);
         }
         else {
@@ -321,7 +334,7 @@ const CreateBooking = () => {
     }
 
     return (
-        <>
+        <div>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Booking Page</title>
@@ -355,7 +368,8 @@ const CreateBooking = () => {
                 <div className="container2">
                     <div className="card-trip">
                         <div className="card-img">
-                            <img src={`./img/${tourImg}`} alt="Ảnh" />
+                            {/* <img src={`./img/${tourImg}`} alt="Ảnh" /> */}
+                            <img src={`http://localhost:8080/api/v1/files/images/${tourImg}`} alt="Ảnh" />
                         </div>
                         <div className="card-content">
                             <div className="card-content-title">
@@ -406,6 +420,7 @@ const CreateBooking = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className={errors.contact_name && touched.contact_name ? "form-control input-error" : "form-control"}
+                                                placeholder="Nhập họ tên..."
                                             />
                                             <div className="form-error">
                                                 {errors.contact_name && touched.contact_name && <p>{errors.contact_name}</p>}
@@ -423,6 +438,7 @@ const CreateBooking = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className={errors.email && touched.email ? "form-control input-error" : "form-control"}
+                                                placeholder="Nhập email..."
                                             />
                                             <div className="form-error">
                                                 {errors.email && touched.email && <p>{errors.email}</p>}
@@ -440,6 +456,7 @@ const CreateBooking = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className={errors.mobilephone && touched.mobilephone ? "form-control input-error" : "form-control"}
+                                                placeholder="Nhập số điện thoại..."
                                             />
                                             <div className="form-error">
                                                 {errors.mobilephone && touched.mobilephone && <p>{errors.mobilephone}</p>}
@@ -455,6 +472,7 @@ const CreateBooking = () => {
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className={errors.address && touched.address ? "form-control input-error" : "form-control"}
+                                                placeholder="Nhập địa chỉ..."
                                             />
                                             <div className="form-error">
                                                 {errors.address && touched.address && <p>{errors.address}</p>}
@@ -651,7 +669,7 @@ const CreateBooking = () => {
                                 </p>
                                 <div className="product">
                                     <div className="product-image">
-                                        <img src={`./img/${tourImg}`} alt="image" />
+                                        <img src={`http://localhost:8080/api/v1/files/images/${tourImg}`} alt="image" />
                                     </div>
                                     <div className="product-content">
                                         <p className="product-title">
@@ -697,25 +715,25 @@ const CreateBooking = () => {
                                             <tr>
                                                 <td>Người lớn</td>
                                                 <td className="t-price text-right" id="AdultPrice">
-                                                    {countAdult} x {priceTour ? priceTour.toLocaleString("en-US") : priceTour}₫
+                                                    {countAdult > 0 ? `${countAdult} x ${priceTour ? priceTour.toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ em</td>
                                                 <td className="t-price text-right" id="ChildrenPrice">
-                                                    {countChildren} x {priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}₫
+                                                    {countChildren > 0 ? `${countChildren} x ${priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Trẻ nhỏ</td>
                                                 <td className="t-price text-right" id="SmallChildrenPrice">
-                                                    {countSmallChildren} x {priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}₫
+                                                    {countSmallChildren > 0 ? `${countSmallChildren} x ${priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Em bé</td>
                                                 <td className="t-price text-right" id="BabyPrice">
-                                                    {countBaby} x 0₫
+                                                    {countBaby > 0 ? `${countBaby} x 0₫` : '0₫'}
                                                 </td>
                                             </tr>
                                             <tr className="pt">
@@ -767,8 +785,9 @@ const CreateBooking = () => {
                         </div>
                     </div>
                 </div>
+                <Footer2 />
             </div>
-        </>
+        </div>
 
 
     )

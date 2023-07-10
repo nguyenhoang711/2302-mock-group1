@@ -694,7 +694,7 @@ const ProfileRoutes = {
 // Dashboard specific routes
 export const dashboard = [
   dashboardRoutes,
-  groupRoutes,
+  // groupRoutes,
   bookingRoutes,
   // createBookingRoutes,
   // bookingCheckoutRoutes,
@@ -731,16 +731,16 @@ export const page = [authRoutes];
 // All routes
 export default [
   // dashboardRoutes,
-  groupRoutes,
+  // groupRoutes,
   tourRoutes,
-  tripRoutes,
+  // tripRoutes,
   bookingRoutes,
-  createBookingRoutes,
-  bookingCheckoutRoutes,
-  showCustomerInfoRoutes,
+  // createBookingRoutes,
+  // bookingCheckoutRoutes,
+  // showCustomerInfoRoutes,
   settingRoutes,
   contactRoutes,
-  gridRoutes
+  // gridRoutes
   // pageRoutes,
   // authRoutes,
   // layoutRoutes,

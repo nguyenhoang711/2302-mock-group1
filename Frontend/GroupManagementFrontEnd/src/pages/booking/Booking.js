@@ -305,10 +305,8 @@ const Booking = (props) => {
                             tripName: bookingUpdateInfo && bookingUpdateInfo.trip.tour.name ? bookingUpdateInfo.trip.tour.name : '',
                             fullName: bookingUpdateInfo && bookingUpdateInfo.bookingContact.fullName ? bookingUpdateInfo.bookingContact.fullName : '',
                             numOfPeople: bookingUpdateInfo && bookingUpdateInfo.numOfPeople ? bookingUpdateInfo.numOfPeople : '',
-                            // timeBooking: bookingUpdateInfo && bookingUpdateInfo.timeBooking ? bookingUpdateInfo.timeBooking : '',
                             totalPrice: bookingUpdateInfo && bookingUpdateInfo.totalPrice ? bookingUpdateInfo.totalPrice : '',
                             details: bookingUpdateInfo && bookingUpdateInfo.details ? bookingUpdateInfo.details : '',
-                            // bookingStatus: bookingUpdateInfo && bookingUpdateInfo.bookingStatus ? bookingUpdateInfo.bookingStatus : '',
                         }
                     }
                     validationSchema={

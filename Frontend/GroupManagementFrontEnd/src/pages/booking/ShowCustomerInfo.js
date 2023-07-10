@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import moment from 'moment';
 import BookingApi from '../../api/BookingApi';
 import { useHistory } from 'react-router-dom';
+import Footer2 from "../../components/Footer2";
 
 const getValueFromURLParam = (paramName) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -83,17 +84,17 @@ const ShowCustomerInfo = () => {
     const history = useHistory();
 
     useEffect(() => {
-      const handlePageChange = () => {
-        localStorage.setItem('isSendMail', 'false');
-      };
-  
-      const unlisten = history.listen(() => {
-        handlePageChange();
-      });
-  
-      return () => {
-        unlisten();
-      };
+        const handlePageChange = () => {
+            localStorage.setItem('isSendMail', 'false');
+        };
+
+        const unlisten = history.listen(() => {
+            handlePageChange();
+        });
+
+        return () => {
+            unlisten();
+        };
     }, [history]);
 
     window.onload = () => {
@@ -131,7 +132,7 @@ const ShowCustomerInfo = () => {
     }
 
     return (
-        <>
+        <div>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Booking Page</title>
@@ -316,8 +317,9 @@ const ShowCustomerInfo = () => {
                         </div>
                     </div>
                 </div>
+                <Footer2/>
             </div>
-        </>
+        </div>
     )
 }
 

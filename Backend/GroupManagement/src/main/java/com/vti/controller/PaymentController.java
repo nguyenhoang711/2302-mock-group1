@@ -1,6 +1,5 @@
 package com.vti.controller;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -27,18 +26,19 @@ import com.vti.dto.PaymentDTO;
 
 @RestController
 @RequestMapping(value = "api/v1/payment")
+
 public class PaymentController {
+	
 	@GetMapping("/create_payment")
 	public ResponseEntity<?> createPayment(@RequestParam(name = "bookingId") String bookingId,
-			@RequestParam(name = "totalPrice") long totalPrice) throws UnsupportedEncodingException {
+			@RequestParam(name = "totalPrice") long totalPrice, HttpServletRequest req) throws UnsupportedEncodingException {
 
 		String orderType = bookingId;
 		long amount = totalPrice * 100;
 	
 
 		String vnp_TxnRef = Config.getRandomNumber(8);
-//		String vnp_IpAddr = Config.getIpAddress(req);
-		String vnp_IpAddr = "171.229.215.8";
+		String vnp_IpAddr = Config.getIpAddress(req);
 		String vnp_TmnCode = Config.vnp_TmnCode;
 
 		Map<String, String> vnp_Params = new HashMap<>();
@@ -49,20 +49,9 @@ public class PaymentController {
 		vnp_Params.put("vnp_CurrCode", "VND");
 		vnp_Params.put("vnp_BankCode", "NCB");
 		vnp_Params.put("vnp_Locale", "vn");
-
-//	        if (bankCode != null && !bankCode.isEmpty()) {
-//	            vnp_Params.put("vnp_BankCode", bankCode);
-//	        }
 		vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
 		vnp_Params.put("vnp_OrderInfo", "" + orderType);
 		vnp_Params.put("vnp_OrderType", orderType);
-
-//		String locate = req.getParameter("language");
-//	        if (locate != null && !locate.isEmpty()) {
-//	            vnp_Params.put("vnp_Locale", locate);
-//	        } else {
-//	            vnp_Params.put("vnp_Locale", "vn");
-//	        }
 		vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
 		vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 

@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import "./bookingCheckout.css"
 import Header from "../../components/Header";
+import Footer2 from "../../components/Footer2";
 
 const convertDateToString = (date) => {
     const momentDate = moment(date);
@@ -50,7 +51,7 @@ const BookingCheckout = () => {
         if (count == 0) {
             alert("Vui lòng chọn 1 phương thức thanh toán");
         }
-        else if(!checkbox.checked){
+        else if (!checkbox.checked) {
             alert("Vui lòng đồng ý với các điều khoản");
         }
         else if (vnpayBtn.checked) {
@@ -63,7 +64,7 @@ const BookingCheckout = () => {
 
 
     return (
-        <>
+        <div>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Booking Checkout</title>
@@ -80,6 +81,19 @@ const BookingCheckout = () => {
                 crossOrigin="anonymous"
             />
             <Header />
+            <div className="checkout-head">
+                <div className="checkout-head-container">
+                    <div className="row">
+                        <ul className="head col-12">
+                            <li className="checked">1. Nhập thông tin</li>
+                            <li className="checked">
+                                <i className="fal fa-angle-right" />
+                            </li>
+                            <li className="checked">2. Thanh toán</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div className="container2">
                 <div className="overview-container">
                     <div className="payment">
@@ -129,7 +143,7 @@ const BookingCheckout = () => {
                                         <span>Thanh toán VNPAY</span>
                                     </div>
                                     <div className="payment-item-check">
-                                        <input type="radio" id="vnpayRb" name="payment-item-check" defaultChecked="true"/>
+                                        <input type="radio" id="vnpayRb" name="payment-item-check" defaultChecked="true" />
                                     </div>
                                 </div>
                                 <div className="payment-item">
@@ -270,7 +284,7 @@ const BookingCheckout = () => {
                             </p>
                             <div className="product">
                                 <div className="product-image">
-                                    <img src={`./img/${tourImg}`} alt="image" />
+                                    <img src={`http://localhost:8080/api/v1/files/images/${tourImg}`} alt="image" />
                                 </div>
                                 <div className="product-content">
                                     <p className="product-title">
@@ -316,25 +330,25 @@ const BookingCheckout = () => {
                                         <tr>
                                             <td>Người lớn</td>
                                             <td className="t-price text-right" id="AdultPrice">
-                                                {countAdult} x {priceTour.toLocaleString("en-US")}₫
+                                                {countAdult > 0 ? `${countAdult} x ${priceTour ? priceTour.toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Trẻ em</td>
                                             <td className="t-price text-right" id="ChildrenPrice">
-                                                {countChildren} x {(priceTour * 0.75).toLocaleString("en-US")}₫
+                                                {countChildren > 0 ? `${countChildren} x ${priceTour ? (priceTour * 0.75).toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Trẻ nhỏ</td>
                                             <td className="t-price text-right" id="SmallChildrenPrice">
-                                                {countSmallChildren} x {(priceTour * 0.5).toLocaleString("en-US")}₫
+                                                {countSmallChildren > 0 ? `${countSmallChildren} x ${priceTour ? (priceTour * 0.5).toLocaleString("en-US") : priceTour}₫` : '0₫'}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Em bé</td>
                                             <td className="t-price text-right" id="BabyPrice">
-                                                {countBaby} x0₫
+                                                {countBaby > 0 ? `${countBaby} x 0₫` : '0₫'}
                                             </td>
                                         </tr>
                                         <tr className="pt">
@@ -386,7 +400,8 @@ const BookingCheckout = () => {
                     </div>
                 </div>
             </div>
-        </>
+            <Footer2 />
+        </div>
     )
 }
 

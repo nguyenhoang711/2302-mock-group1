@@ -62,8 +62,6 @@ public class Booking implements Serializable {
 
 	public Booking(short tripId, short userId, short bookingContactId, short numOfPeople, int totalPrice, Date timeBooking, int amountPaid,
 				   String bookingStatus, String details) {
-//	public Booking(short tripId, short userId, short numOfPeople, int totalPrice, Date timeBooking, int amountPaid,
-//			   String bookingStatus, String details) {
 		super();
 		this.trip = new Trip();
 		this.trip.setId(tripId);

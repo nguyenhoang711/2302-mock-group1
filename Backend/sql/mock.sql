@@ -209,16 +209,23 @@ VALUES
 (3, '2023-06-20', '2023-06-24', 'Nguyễn Văn C', 'Khách sạn 4*');
 
 INSERT INTO `User` 	(`username`,			`email`,						`password`,														`firstName`,		`lastName`,		address,		phoneNumber, 	`status`, 	`role`)
-VALUE				('hanh.havan@vti',		'hanhhanoi1999@gmail.com',		'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',		'Ha Noi',		'0987654678',		1, 		'ADMIN' 	), 
+VALUE				('',					'',								'',																''	,				'',				'',				'',					1, 		'CUSTOMER' 	), 
+					('hanh.havan@vti',		'hanhhanoi1999@gmail.com',		'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Hà'	,		'Văn Hanh',		'Ha Noi',		'0987654678',		1, 		'ADMIN' 	), 
 					('thanhhung12@vti',		'hung122112@gmail.com',			'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Thanh Hưng',	'Ha Nam',		'0987884678',		1, 		'CUSTOMER' 	), 
 					('can.tuananh@vti',		'cananh.tuan12@vti.com',		'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Cấn'	,		'Tuấn Anh',		'Nam Dinh',		'0387654678',		1, 		'CUSTOMER'	), 
 					('toananh123@vti',		'toananh123@vti.com',			'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn',		'Anh Toàn',		'Thai Binh',	'0887654678',		1, 		'EMPLOYEE' 	),
-					('minhduc',			'minhduc@gmail.com',				'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn'	,	'Minh Đức',		'Ha Noi',		'0987654678',		1, 		'ADMIN' 	);
+					('minhduc',				'minhduchauik15@gmail.com',		'$2a$10$W2neF9.6Agi6kAKVq8q3fec5dHW8KUA.b0VSIGdIZyUravfLpyIFi',		'Nguyễn'	,	'Minh Đức',		'Hà Nội',		'0987654678',		1, 		'ADMIN' 	);
 
-INSERT INTO `Booking` (tripId, userId, numOfPeople, totalPrice, details)
+INSERT INTO `BookingContact` (fullName, email, phoneNumber, address)
+VALUES
+('Nguyễn Minh Đức', 'minhduc@gmail.com', '0987654321', 'Hà Nội'),
+('Nguyễn Anh Toàn', 'toananh123@vti.com', '0887654678', 'Hà Nội'),
+('Hà Văn Hanh', 'hanhhanoi1999@gmail.com', '0887654678', 'Hà Nội');
+
+INSERT INTO `Booking` (tripId, userId, bookingContactId, numOfPeople, totalPrice, bookingStatus, amountPaid, timeBooking, details)
 VALUES 
-(1, 2, 10, 2000000, 'Không có'),
-(2, 1, 5, 3000000, 'Không có'),
-(3, 4, 8, 4000000, 'Không có');
+(1, 2, 1, 10, 2000000, 'Đã thanh toán', 1000000, '2023-06-20 10:10:10', 'Không có'),
+(2, 1, 2, 5, 3000000, 'Đã thanh toán', 2000000, '2023-06-20 10:10:10', 'Không có'),
+(3, 4, 3, 8, 4000000, 'Đã thanh toán', 3000000, '2023-06-20 10:10:10', 'Không có');
 
 select * from tour;
