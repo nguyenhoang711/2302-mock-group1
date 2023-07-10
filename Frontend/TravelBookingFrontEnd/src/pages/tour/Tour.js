@@ -113,52 +113,67 @@ const Tour = (props) => {
       setSelectedFiles(files);
     }
 
-    const onChangeImageInput = (e) => {
+    const onChangeThumbnailInput = (e) => {
       var file = e.target.files[0];
       var reader = new FileReader();
-      console.log(e.target.name);
       reader.readAsDataURL(file);
 
       reader.onloadend = (e) => {
-        switch (e.target.name) {
-          case 'thumbnail': 
-          {
-            setPreviewThumbnailUrl(reader.result);
-            setPreviewThumbnailFile(file);
-          }
-          case 'image1': 
-          {
-            setPreviewImage1Url(reader.result);
-            setPreviewImage1File(file);
-          }
-          case 'image2': 
-          {
-            setPreviewImage2Url(reader.result);
-            setPreviewImage2File(file);
-          }
-          case 'image3': 
-          {
-            setPreviewImage3Url(reader.result);
-            setPreviewImage3File(file);
-          }
-          default: {
-            setPreviewImage4Url(reader.result);
-            setPreviewImage4File(file);
-          }
-        }
+        setPreviewThumbnailUrl(reader.result);
+        setPreviewThumbnailFile(file);
       }
     }
 
-    const handleSaveEvent = async (id, name, price, day, night, startDest, type, numOfPeople, details) => {
-      // const thumbnail = await FileApi.uploadImage(previewThumbnailFile);
-      // const image1 = await FileApi.uploadImage(previewImage1File);
-      // const image2 = await FileApi.uploadImage(previewImage2File);
-      // const image3 = await FileApi.uploadImage(previewImage3File);
-      // const image4 = await FileApi.uploadImage(previewImage4File);
+    const onChangeImage1Input = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = (e) => {
+        setPreviewImage1Url(reader.result);
+        setPreviewImage1File(file);
+      }
+    }
+
+    const onChangeImage2Input = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = (e) => {
+        setPreviewImage2Url(reader.result);
+        setPreviewImage2File(file);
+      }
+    }
+
+    const onChangeImage3Input = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = (e) => {
+        setPreviewImage3Url(reader.result);
+        setPreviewImage3File(file);
+      }
+    }
+
+    const onChangeImage4Input = (e) => {
+      var file = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = (e) => {
+        setPreviewImage4Url(reader.result);
+        setPreviewImage4File(file);
+      }
+    }
+
+    const handleSaveEvent = async (id, name, price, saleRate, day, night, startDest, type, numOfPeople, details) => {
+      const urls = await FileApi.upImages([previewThumbnailFile, previewImage1File, previewImage2File, previewImage3File, previewImage4File])
       await TourApi.update(id, name,
-        price, day,
+        price, saleRate, day,
         night, startDest, type,
-        '','','','','',
+        ...urls,
         numOfPeople, details
       );
       showSuccessNotification("Change Tour", "Change tour information successfully!")
@@ -192,11 +207,6 @@ const Tour = (props) => {
         //   return null;
         // },
       },
-      // {
-      //   dataField: "duration",
-      //   text: "Thời gian",
-      //   sort: true
-      // },
       {
         dataField: "day",
         text: "Số ngày",
@@ -223,16 +233,6 @@ const Tour = (props) => {
         text: "Số chỗ còn nhận",
         sort: true
       },
-      // {
-      //   dataField: "saleRate",
-      //   text: "Giảm giá",
-      //   sort: true
-      // },
-      // {
-      //   dataField: "details",
-      //   text: "Chi tiết",
-      //   sort: true
-      // },
       {
         dataField: "action",
         text: "",
@@ -321,7 +321,7 @@ const Tour = (props) => {
       toastr.error(title, message, options);
     }
     // update tour
-    const [tourUpdateInfo, setTourUpdateInfo] = useState();
+    const [tourUpdateInfo, setTourUpdateInfo] = useState({});
 
     const [selectUpdateOption, setSelectedUpdateOption] = useState('');
 
@@ -335,11 +335,6 @@ const Tour = (props) => {
       const tourInfo = await TourApi.getById(tourId);
       setSelectedUpdateOption(tourInfo['type']);
       setDataEditor(tourInfo.details);
-      // tourInfo['type'] = Type[tourInfo['type']]
-      // if(values.type == 'Tiêu chuẩn') values.type = 'STANDARD';
-      // else if (values.type == 'Cao cấp') values.type = 'LUXURY';
-      // else if(values.type == 'Tiết kiệm') values.type = 'PAY_LESS';
-      // else values.type = 'GOOD_PRICE';
       setTourUpdateInfo(tourInfo);
     }
   
@@ -479,8 +474,7 @@ const Tour = (props) => {
                 numOfPeople: 0,
                 type: "",
                 startDest: "",
-                saleRate: 0.0,
-                // details: ""
+                saleRate: 0.0
               }
             }
             validationSchema={
@@ -492,7 +486,6 @@ const Tour = (props) => {
                   .test('checkUniqueName', 'This name is already registered.', async name => {
                     // call api
                     const isExists = await TourApi.existsByName(name);
-                    // console.log(isExists);
                     return !isExists;
                   }),
                 price: Yup.number()
@@ -517,36 +510,18 @@ const Tour = (props) => {
                 saleRate: Yup.number()
                   .min(0, 'Sale rate always more than or equal to zero')
                   .max(100, 'Sale rate always less than 100 percent'),
-                // details: Yup.string()
-                //   .required('Required field')
-                // thumbnail: Yup.string()
-                //   .required('Required field'),
-                // image1: Yup.string()
-                //   .required('Required field'),
-                // image2: Yup.string()
-                //   .required('Required field'),
-                // image3: Yup.string()
-                //   .required('Required field'),
-                // image4: Yup.string()
-                //   .required('Required field'),
               })
             }
   
             onSubmit={
               async values => {
-                const formData = new FormData();
-                for (let i = 0; i < selectedFiles.length; i++) {
-                  formData.append('images', selectedFiles[i]);
-                }
-                const urls = await FileApi.upImages(formData);
+                const urls = await FileApi.upImages([previewThumbnailFile, previewImage1File, previewImage2File, previewImage3File, previewImage4File]);
                 try {
                   await TourApi.create(values.name, values.price,
-                    // values.duration, 
                     values.day, values.night,
                     values.numOfPeople, selectedOptionValue,
-                    urls[0],urls[1],urls[2],urls[3],urls[4],
+                    ...urls,
                     values.startDest, values.saleRate,
-                    // values.details
                     dataEditor
                     );
                   // show notification
@@ -556,8 +531,13 @@ const Tour = (props) => {
                   );
                   // close modal
                   setOpenModalCreate(false);
+                  setPreviewImage1Url(null);
+                  setPreviewImage2Url(null);
+                  setPreviewImage3Url(null);
+                  setPreviewImage4Url(null);
+                  setPreviewThumbnailUrl(null);
 
-                  setSelectedFiles([]);
+                  // setSelectedFiles([]);
                   // Refresh table
                   refreshForm();
                 } catch (error) {
@@ -596,6 +576,146 @@ const Tour = (props) => {
                   </Row>
 
                   <Row>
+                    <Col lg="auto">
+                      <label>Ảnh nền</label>
+                    </Col>
+                    <Col md="4">
+                      <div className="text-center">
+                          <img
+                            alt="Thumbnail pic"
+                            src={previewThumbnailUrl ? previewThumbnailUrl : avatar1}
+                            className="img-responsive mt-2"
+                            width="220"
+                            height="180"
+                          />
+
+                          <div className="mt-2">
+                            <Button color="primary" onClick={() => thumbnailInputFile.current.click()}>
+                                <FontAwesomeIcon icon={faUpload} /> Upload
+                            </Button>
+                            <input
+                                type='file'
+                                ref={thumbnailInputFile}
+                                onChange={onChangeThumbnailInput}
+                                style={{ display: 'none' }} />
+                          </div>
+                      </div>
+                    </Col>
+                  </Row>
+
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 1</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo"
+                              src={previewImage1Url ? previewImage1Url : avatar1}
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
+
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image1InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image1InputFile}
+                                  onChange={onChangeImage1Input}
+                                  style={{ display: 'none' }} />
+                            </div>
+                        </div>
+                      </Col>
+                  </Row>
+
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 2</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo 2"
+                              src={previewImage2Url ? previewImage2Url : avatar1}
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
+
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image2InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image2InputFile}
+                                  onChange={onChangeImage2Input}
+                                  style={{ display: 'none' }} />
+                            </div>
+                        </div>
+                      </Col>
+                  </Row>
+
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 3</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo 3"
+                              src={previewImage3Url ? previewImage3Url : avatar1}
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
+
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image3InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image3InputFile}
+                                  onChange={onChangeImage3Input}
+                                  style={{ display: 'none' }} />
+                            </div>
+                        </div>
+                      </Col>
+                  </Row>
+
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 4</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo"
+                              src={previewImage4Url ? previewImage4Url : avatar1}
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
+
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image4InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image4InputFile}
+                                  onChange={onChangeImage4Input}
+                                  style={{ display: 'none' }} />
+                            </div>
+                        </div>
+                      </Col>
+                  </Row>
+
+                  {/* <Row>
                     <label htmlFor="file">Upload anh</label>
                     <input
                       id="file"
@@ -604,7 +724,7 @@ const Tour = (props) => {
                       accept="image/png, image/jpg, image/jpeg"
                       multiple
                     />
-                  </Row>
+                  </Row> */}
 
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
@@ -737,13 +857,7 @@ const Tour = (props) => {
                 numOfPeople: tourUpdateInfo && tourUpdateInfo.numOfPeople !== undefined && tourUpdateInfo.numOfPeople !== null ? tourUpdateInfo.numOfPeople: 0,
                 day: tourUpdateInfo && tourUpdateInfo.day !== undefined && tourUpdateInfo.day !== null ? tourUpdateInfo.day: 0,
                 night: tourUpdateInfo && tourUpdateInfo.night !== undefined && tourUpdateInfo.night !== null ? tourUpdateInfo.night: 0,
-                thumbnail: tourUpdateInfo && tourUpdateInfo.thumbnail ? tourUpdateInfo.thumbnail :'',
-                // image1: tourUpdateInfo && tourUpdateInfo.image1 ? tourUpdateInfo.image1 :'',
-                // image2: tourUpdateInfo && tourUpdateInfo.image2 ? tourUpdateInfo.image2 :'',
-                // image3: tourUpdateInfo && tourUpdateInfo.image3 ? tourUpdateInfo.image3 :'',
-                // image4: tourUpdateInfo && tourUpdateInfo.image4 ? tourUpdateInfo.image4 :'',
                 startDest: tourUpdateInfo && tourUpdateInfo.startDest ? tourUpdateInfo.startDest: '',
-                // details: tourUpdateInfo && tourUpdateInfo.details ? tourUpdateInfo.details: '',
                 saleRate: tourUpdateInfo && tourUpdateInfo.saleRate !== undefined && tourUpdateInfo.saleRate != null ? tourUpdateInfo.saleRate : 0
               }
             }
@@ -799,7 +913,7 @@ const Tour = (props) => {
                 //   return;
                 // }})
                 try {
-                  handleSaveEvent(tourUpdateInfo.id, values.name, values.price, values.day,
+                  await handleSaveEvent(tourUpdateInfo.id, values.name, values.price, values.saleRate, values.day,
                     values.night, values.startDest, selectUpdateOption,
                     values.numOfPeople, dataEditor);
                   // close modal
@@ -843,135 +957,145 @@ const Tour = (props) => {
                     </Col>
                   </Row>
 
-                  {/* <Row>
+                  <Row>
+                    <Col lg="auto">
+                      <label>Ảnh nền</label>
+                    </Col>
                     <Col md="4">
                       <div className="text-center">
-                        <img
-                          alt="Thumbnail pic"
-                          src={previewThumbnailUrl ? previewThumbnailUrl: (tourUpdateInfo.thumbnail ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.thumbnail}`: avatar1)}
-                          className="img-responsive mt-2"
-                          width="220"
-                          height="180"
-                        />
+                          <img
+                            alt="Thumbnail pic"
+                            src={previewThumbnailUrl ? previewThumbnailUrl :(tourUpdateInfo.thumbnail ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.thumbnail}` : avatar1) }
+                            className="img-responsive mt-2"
+                            width="220"
+                            height="180"
+                          />
 
-                        <div className="mt-2">
-                        <Button color="primary" onClick={() => thumbnailInputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            ref={thumbnailInputFile}
-                            name='thumbnail'
-                            onChange={onChangeImageInput}
-                            style={{ display: 'none' }} />
-                        </div>
+                          <div className="mt-2">
+                            <Button color="primary" onClick={() => thumbnailInputFile.current.click()}>
+                                <FontAwesomeIcon icon={faUpload} /> Upload
+                            </Button>
+                            <input
+                                type='file'
+                                ref={thumbnailInputFile}
+                                onChange={onChangeThumbnailInput}
+                                style={{ display: 'none' }} />
+                          </div>
                       </div>
                     </Col>
-                </Row>
+                  </Row>
 
-                <Row>
-                    <Col md="4">
-                      <div className="text-center">
-                        <img
-                          alt="Mô tả 1"
-                          src={previewImage1Url ? previewImage1Url : avatar1}
-                          className="img-responsive mt-2"
-                          width="220"
-                          height="180"
-                        />
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 1</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo"
+                              src={previewImage1Url ? previewImage1Url :(tourUpdateInfo.image1 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image1}` : avatar1) }
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
 
-                        <div className="mt-2">
-                        <Button color="primary" onClick={() => image1InputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            ref={image1InputFile}
-                            name='image1'
-                            onChange={onChangeImageInput}
-                            style={{ display: 'none' }} />
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image1InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image1InputFile}
+                                  onChange={onChangeImage1Input}
+                                  style={{ display: 'none' }} />
+                            </div>
                         </div>
-                      </div>
-                    </Col>
-                </Row>
+                      </Col>
+                  </Row>
 
-                <Row>
-                    <Col md="4">
-                      <div className="text-center">
-                        <img
-                          alt="Mô tả 2"
-                          src={tourUpdateInfo && tourUpdateInfo.image2 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image2}` : avatar1}
-                          className="img-responsive mt-2"
-                          width="220"
-                          height="180"
-                        />
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 2</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo 2"
+                              src={previewImage2Url ? previewImage2Url :(tourUpdateInfo.image2 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image2}` : avatar1) }
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
 
-                        <div className="mt-2">
-                        <Button color="primary" onClick={() => image2InputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            ref={image2InputFile}
-                            name='thumbnail'
-                            onChange={onChangeImageInput}
-                            style={{ display: 'none' }} />
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image2InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image2InputFile}
+                                  onChange={onChangeImage2Input}
+                                  style={{ display: 'none' }} />
+                            </div>
                         </div>
-                      </div>
-                    </Col>
-                </Row>
+                      </Col>
+                  </Row>
 
-                <Row>
-                    <Col md="4">
-                      <div className="text-center">
-                        <img
-                          alt="Mô tả 2"
-                          src={tourUpdateInfo && tourUpdateInfo.image3 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image3}` : avatar1}
-                          className="img-responsive mt-2"
-                          width="220"
-                          height="180"
-                        />
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 3</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo 3"
+                              src={previewImage3Url ? previewImage3Url :(tourUpdateInfo.image1 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image3}` : avatar1) }
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
 
-                        <div className="mt-2">
-                        <Button color="primary" onClick={() => image3InputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            ref={image3InputFile}
-                            name='thumbnail'
-                            onChange={onChangeImageInput}
-                            style={{ display: 'none' }} />
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image3InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image3InputFile}
+                                  onChange={onChangeImage3Input}
+                                  style={{ display: 'none' }} />
+                            </div>
                         </div>
-                      </div>
-                    </Col>
-                </Row>
+                      </Col>
+                  </Row>
 
-                <Row>
-                    <Col md="4">
-                      <div className="text-center">
-                        <img
-                          alt="Mô tả 2"
-                          src={tourUpdateInfo && tourUpdateInfo.image4 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image4}` : avatar1}
-                          className="img-responsive mt-2"
-                          width="220"
-                          height="180"
-                        />
+                  <Row>
+                      <Col lg="auto">
+                        <label>Ảnh mô tả 4</label>
+                      </Col>
+                      <Col md="4">
+                        <div className="text-center">
+                            <img
+                              alt="Description photo"
+                              src={previewImage4Url ? previewImage4Url :(tourUpdateInfo.image4 ? `http://localhost:8080/api/v1/files/images/${tourUpdateInfo.image4}` : avatar1) }
+                              className="img-responsive mt-2"
+                              width="220"
+                              height="180"
+                            />
 
-                        <div className="mt-2">
-                        <Button color="primary" onClick={() => image4InputFile.current.click()}>
-                            <FontAwesomeIcon icon={faUpload} /> Upload
-                        </Button>
-                        <input
-                            type='file'
-                            ref={image4InputFile}
-                            name='thumbnail'
-                            onChange={onChangeImageInput}
-                            style={{ display: 'none' }} />
+                            <div className="mt-2">
+                              <Button color="primary" onClick={() => image4InputFile.current.click()}>
+                                  <FontAwesomeIcon icon={faUpload} /> Upload
+                              </Button>
+                              <input
+                                  type='file'
+                                  ref={image4InputFile}
+                                  onChange={onChangeImage4Input}
+                                  style={{ display: 'none' }} />
+                            </div>
                         </div>
-                      </div>
-                    </Col>
-                </Row> */}
+                      </Col>
+                  </Row>
   
                   <Row style={{ alignItems: "center" }}>
                     <Col lg="auto">
@@ -983,6 +1107,21 @@ const Tour = (props) => {
                         bsSize="lg"
                         name="price"
                         placeholder="Nhập giá tour/ người"
+                        component={ReactstrapInput}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row style={{ alignItems: "center" }}>
+                    <Col>
+                      <label>giảm giá (%)</label>
+                    </Col>
+                    <Col>
+                      <FastField
+                        type="number"
+                        bsSize="lg"
+                        name="saleRate"
+                        placeholder="Giá trị từ 0 đến 100"
                         component={ReactstrapInput}
                       />
                     </Col>

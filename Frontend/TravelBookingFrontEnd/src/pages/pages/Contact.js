@@ -73,15 +73,14 @@ const Contact = (props) => {
   };
 
   //upload image into server
-  const handleSaveEvent = async () => {
+  const handleSaveEvent = async (message) => {
     //B1: upload ảnh lên (trả về tên ảnh)
     const nameImage = await FileApi.uploadImage(previewAvatarFile);
     // call api update profile
     //B2: update info chung lên
     // await UserApi.updateProfile(nameImage);
     await ContactApi.update(contactUpdateInfo.id, 
-      contactUpdateInfo.message, 
-      nameImage);
+      message, nameImage);
     showSucessNotification("Change Contact", "Change contact information successfully!")
   }
 
@@ -496,11 +495,12 @@ const Contact = (props) => {
           onSubmit={
             async values => {
               try {
-                await ContactApi.update(
-                  contactUpdateInfo.id,
-                  values.message,
-                  values.file_url
-                );
+                // await ContactApi.update(
+                //   contactUpdateInfo.id,
+                //   values.message,
+                //   values.file_url
+                // );
+                await handleSaveEvent(values.message);
                 // show notification
                 showSuccessNotification(
                   "Update contact",
@@ -579,9 +579,7 @@ const Contact = (props) => {
                         </Button>
                         <input
                             type='file'
-                            id='avatarInput'
                             ref={avatarInputFile}
-                            name='file_url'
                             onChange={onChangeAvatarInput}
                             style={{ display: 'none' }} />
                         </div>
@@ -594,7 +592,7 @@ const Contact = (props) => {
               {/* footer */}
               <ModalFooter>
                 <Button type="submit" color="primary" disabled={isSubmitting} 
-                onClick={handleSaveEvent}
+                // onClick={handleSaveEvent}
                 >
                   Save
                 </Button>{" "}

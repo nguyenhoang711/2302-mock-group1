@@ -2,7 +2,7 @@ import Api from './Api';
 
 const url = "/tours";
 
-const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc', search = '', minPrice, maxPrice) => {
+const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc', search = '') => {
 
     const parameters = {
         page,
@@ -16,13 +16,13 @@ const getAll = (page = 1, size = 10, sortField = 'id', sortType = 'desc', search
     }
 
     // filter: price, duration, numOfPeople
-    if (minPrice !== null && minPrice !== undefined) {
-        parameters.minPrice = minPrice;
-    }
+    // if (minPrice !== null && minPrice !== undefined) {
+    //     parameters.minPrice = minPrice;
+    // }
 
-    if (maxPrice !== null && maxPrice !== undefined) {
-        parameters.maxPrice = maxPrice;
-    }
+    // if (maxPrice !== null && maxPrice !== undefined) {
+    //     parameters.maxPrice = maxPrice;
+    // }
 
     // if (minDays !== null && minDays !== undefined) {
     //     parameters.minDays = minDays;
@@ -62,21 +62,20 @@ const getById = (id) => {
 };
 
 const update = (id, name, 
-    price, 
+    price, saleRate,
     // duration, 
     day, night,
     startDest,type,
     thumbnail, image1, image2, image3, image4,
-    numOfPeople, details,
-    saleRate
+    numOfPeople, details
     ) => {
 
     const body = {
-        name,price,
+        name, price, saleRate,
         day, night,
         startDest,type,
         thumbnail, image1, image2, image3, image4,
-        numOfPeople,details,saleRate
+        numOfPeople,details
     }
 
     return Api.put(`${url}/${id}`, body);

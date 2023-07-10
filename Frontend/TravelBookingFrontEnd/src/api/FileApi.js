@@ -14,7 +14,11 @@ const uploadImage = (imageFile) => {
 
 // up nhieu anh
 const upImages = (files) => {
-    return Api.post(`${url}/images`, files);
+    const body = new FormData();
+    for (let i = 0; i < files.length; i++) {
+        body.append('images', files[i]);
+    }
+    return Api.post(`${url}/images`, body);
 }
 
 // export
