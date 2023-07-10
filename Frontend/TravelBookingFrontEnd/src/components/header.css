@@ -44,6 +44,10 @@ li{
     overflow: hidden;
 }
 
+.nav-logo:hover{
+    cursor: pointer;
+}
+
 .nav-logo img{
     height: 100%;
     padding: 20px;
@@ -129,4 +133,8 @@ li{
 .nav-login i{
     font-size: 24px;
 
+}
+
+.username{
+    margin-left: 20px;
 }
