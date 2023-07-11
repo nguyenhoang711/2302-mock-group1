@@ -1,5 +1,7 @@
 package com.vti.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,8 +11,6 @@ import com.vti.specification.TripSpecificationBuilder;
 
 import com.vti.entity.Trip;
 import com.vti.repository.ITripRepository;
-
-import java.util.List;
 
 
 @Service
@@ -35,9 +35,9 @@ public class TripService implements ITripService{
 	public Trip getTripByID(short id) {
 		return repository.findById(id).get();
 	}
-
+	
 	@Override
-	public Trip getTripByTourId(short id) {
+	public List<Trip> getTripByTourId(short id) {
 		return repository.findByTourId(id);
 	}
 }

@@ -1,11 +1,11 @@
 package com.vti.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.vti.entity.Trip;
-
-import java.util.List;
 
 public interface ITripService {
 	
@@ -15,6 +15,5 @@ public interface ITripService {
 	
 	Trip getTripByID(short id);
 
-	Trip getTripByTourId(short id);
-	
+	List<Trip> getTripByTourId(short id);
 }

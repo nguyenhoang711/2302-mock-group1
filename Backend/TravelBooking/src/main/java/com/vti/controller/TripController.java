@@ -40,12 +40,12 @@ public class TripController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getTripByID(@PathVariable(name = "id") short id){
+    public ResponseEntity<?> getTripByID(@PathVariable(name = "id") short id) {
         return new ResponseEntity<>(service.getTripByID(id), HttpStatus.OK);
     }
-
-    @GetMapping(value = "/{tourId}")
-    public ResponseEntity<?> getTripByTourID(@PathVariable(name = "tourId") short id) {
+    
+    @GetMapping(value = "/tourId/{id}")
+    public ResponseEntity<?> getTripByTourId(@PathVariable(name = "id") short id) {
         return new ResponseEntity<>(service.getTripByTourId(id), HttpStatus.OK);
     }
 }
