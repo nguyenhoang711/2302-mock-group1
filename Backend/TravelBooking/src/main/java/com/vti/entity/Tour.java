@@ -101,4 +101,7 @@ public class Tour implements Serializable {
     @Column(name = "`saleRate`", nullable = false)
     @NonNull
     private double saleRate;
+
+    @OneToMany(mappedBy = "tour")
+    private List<Trip> trips;
 }

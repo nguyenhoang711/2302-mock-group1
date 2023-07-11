@@ -27,7 +27,7 @@ public class Trip implements Serializable{
 	private short id;
 
 	@ManyToOne
-	@JoinColumn(name = "tourId", referencedColumnName = "id")
+	@JoinColumn(name = "tourId")
 	private Tour tour;
 
 	@Column(name = "`curatorName`", nullable = false, length = 50)

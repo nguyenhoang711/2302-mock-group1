@@ -51,14 +51,14 @@ public class TourService implements ITourService{
 //        entity.setDuration(form.getDuration());
         entity.setDay(form.getDay());
         entity.setNight(form.getNight());
-        entity.setType(form.getType());
+        entity.setType(Tour.Type.toEnum(form.getType()));
         entity.setDetails(form.getDetails());
         entity.setSaleRate(form.getSaleRate());
-//        entity.setThumbnail(form.getThumbnail());
-//        entity.setImage1(form.getImage1());
-//        entity.setImage2(form.getImage2());
-//        entity.setImage3(form.getImage3());
-//        entity.setImage4(form.getImage4());
+        entity.setThumbnail(form.getThumbnail());
+        entity.setImage1(form.getImage1());
+        entity.setImage2(form.getImage2());
+        entity.setImage3(form.getImage3());
+        entity.setImage4(form.getImage4());
         repository.save(entity);
     }
 

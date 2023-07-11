@@ -63,7 +63,6 @@ const getById = (id) => {
 
 const update = (id, name, 
     price, saleRate,
-    // duration, 
     day, night,
     startDest,type,
     thumbnail, image1, image2, image3, image4,

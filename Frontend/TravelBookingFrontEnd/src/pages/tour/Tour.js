@@ -211,7 +211,6 @@ const Tour = (props) => {
         dataField: "day",
         text: "Số ngày",
         sort: true,
-        // filter: customFil
       },
       {
         dataField: "night",

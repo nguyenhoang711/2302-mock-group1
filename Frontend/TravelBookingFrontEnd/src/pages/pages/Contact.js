@@ -476,7 +476,7 @@ const Contact = (props) => {
             {
               email: contactUpdateInfo && contactUpdateInfo.email ? contactUpdateInfo.email : '',
               message: contactUpdateInfo && contactUpdateInfo.message ? contactUpdateInfo.message : '',
-              file_url: contactUpdateInfo && contactUpdateInfo.file_url ? contactUpdateInfo.file_url :''
+              // file_url: contactUpdateInfo && contactUpdateInfo.file_url ? contactUpdateInfo.file_url :''
             }
           }
           validationSchema={

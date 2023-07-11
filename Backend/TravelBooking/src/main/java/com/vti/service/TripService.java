@@ -10,6 +10,8 @@ import com.vti.specification.TripSpecificationBuilder;
 import com.vti.entity.Trip;
 import com.vti.repository.ITripRepository;
 
+import java.util.List;
+
 
 @Service
 public class TripService implements ITripService{
@@ -32,5 +34,10 @@ public class TripService implements ITripService{
 	@Override
 	public Trip getTripByID(short id) {
 		return repository.findById(id).get();
+	}
+
+	@Override
+	public Trip getTripByTourId(short id) {
+		return repository.findByTourId(id);
 	}
 }

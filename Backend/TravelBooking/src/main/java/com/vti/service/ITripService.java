@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 
 import com.vti.entity.Trip;
 
+import java.util.List;
+
 public interface ITripService {
 	
 	Page<Trip> getAllTrips(Pageable pageable, String search);
@@ -13,5 +15,6 @@ public interface ITripService {
 	
 	Trip getTripByID(short id);
 
+	Trip getTripByTourId(short id);
 	
 }

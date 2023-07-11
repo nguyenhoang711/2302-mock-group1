@@ -15,7 +15,7 @@ public class TourFormForUpdating {
 
     private short numOfPeople;
 
-    private Tour.Type type;
+    private String type;
 
     private String thumbnail;
 
@@ -80,11 +80,11 @@ public class TourFormForUpdating {
         this.numOfPeople = numOfPeople;
     }
 
-    public Tour.Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Tour.Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
