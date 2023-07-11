@@ -1,6 +1,6 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
+import routes, {
   // landing as landingRoutes,
   dashboard as dashboardRoutes,
   page as pageRoutes
@@ -50,28 +50,32 @@ const childRoutes = (Layout, routes) =>
     )
   );
 
-const Routes = () => (
-  <Router>
-    <ScrollToTop>
-      <Switch>
-        {/* {childRoutes(LandingLayout, landingRoutes)} */}
-        {childRoutes(DashboardLayout, dashboardRoutes)}
-        {childRoutes(AuthLayout, pageRoutes)}
-        <Route exact path="/" component={Grid} />
-        <Route path="/trips" component={Trip} />
-        <Route path="/createBooking" component={CreateBooking} />
-        <Route path="/bookingCheckout" component={BookingCheckout} />
-        <Route path="/showCustomerInfo" component={ShowCustomerInfo} />
-        <Route
-          render={() => (
-            <AuthLayout>
-              <Page404 />
-            </AuthLayout>
-          )}
-        />
-      </Switch>
-    </ScrollToTop>
-  </Router>
-);
+const Routes = () => {
+  const role = 0;
+  return (
+    <Router>
+      <ScrollToTop>
+        <Switch>
+          {/* {childRoutes(LandingLayout, landingRoutes)} */}
+          {childRoutes(DashboardLayout, dashboardRoutes)}
+          {childRoutes(AuthLayout, pageRoutes)}
+          <Route exact path="/" component={Grid} />
+          {role == 1 ? <Route path="/dashboard/default" component={DashboardLayout} /> : <Route exact path="/" component={Grid} />}
+          <Route path="/trips" component={Trip} />
+          <Route path="/createBooking" component={CreateBooking} />
+          <Route path="/bookingCheckout" component={BookingCheckout} />
+          <Route path="/showCustomerInfo" component={ShowCustomerInfo} />
+          <Route
+            render={() => (
+              <AuthLayout>
+                <Page404 />
+              </AuthLayout>
+            )}
+          />
+        </Switch>
+      </ScrollToTop>
+    </Router>
+  );
+};
 
 export default Routes;

@@ -25,6 +25,7 @@ import UserApi from "../../api/UserApi";
 
 import { setUserLoginInfo, setTokenInfo } from "../../redux/actions/UserLoginInfoActions";
 import { connect } from 'react-redux';
+import Header from "../../components/Header";
 
 const showErrorNotification = (title, message) => {
   const options = {
@@ -56,6 +57,7 @@ const SignIn = (props) => {
 
   return (
     <React.Fragment>
+      {/* <Header/> */}
       <div className="text-center mt-4">
         <h2>Chào mừng đến với Việt Travel</h2>
         <p className="lead">Sign in to your account to continue</p>
@@ -122,7 +124,13 @@ const SignIn = (props) => {
 
                 // redirect to home page
                 // props.history.push("/dashboard/default");
-                props.history.push("/");
+                if(result.role == 'ADMIN'){
+                  props.history.push("/dashboard/default");
+                }
+                else{
+                  props.history.push("/");
+                }
+
               }
 
             } catch (error) {
@@ -148,8 +156,7 @@ const SignIn = (props) => {
                     src={avatar}
                     alt="Chris Wood"
                     className="img-fluid rounded-circle"
-                    width="132"
-                    height="132"
+                    style={{width: '30%'}}
                   />
                 </div>
                 <Form>

@@ -15,6 +15,8 @@ import TourApi from '../../api/TourApi';
 // import CustomSearch from "./CustomSearch";
 // import CustomFilter from "./CustomFilter";
 import './test1.css';
+import Header from "../../components/Header";
+import Footer2 from "../../components/Footer2";
 
 const Grid = (props) => {
   const size = props.size
@@ -35,6 +37,7 @@ const Grid = (props) => {
 
   return (
     <Container fluid className="p-0">
+      <Header/>
         <h1 className="h3 text-primary text-center">Du lịch trong nước luôn là lựa chọn tuyệt vời. 
           Đường bờ biển dài hơn 3260km, những khu bảo tồn thiên 
           nhiên tuyệt vời, những thành phố nhộn nhịp, những di tích
@@ -70,7 +73,7 @@ const Grid = (props) => {
                           Giá tour: <span className="h3 text-danger">{item.price}</span>
                         </CardText>
                       </CardBody>
-                      <Button onClick={() => props.history.push(`/trips/${item.id}`)}>
+                      <Button onClick={() => props.history.push(`/trips?tourId=${item.id}`)}>
                         Xem chi tiết
                       </Button>
                       <CardText className="h4 remain">Số chỗ còn nhận: <span className="text-danger">{item.numOfPeople}</span></CardText>
@@ -247,6 +250,7 @@ const Grid = (props) => {
             </Card>
           </Col>
         </Row>
+        <Footer2/>
     </Container>
   )
 };

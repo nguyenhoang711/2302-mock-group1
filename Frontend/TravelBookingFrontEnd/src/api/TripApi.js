@@ -28,7 +28,9 @@ const existsById = (id) => {
     return Api.get(`${url}/id/${id}`);
 };
 
+const getByTourId = (id) => {
+    return Api.get(`${url}/tourId/${id}`);
+}
 
-
-const api = { getById, getAll, existsById }
+const api = { getById, getAll, existsById, getByTourId }
 export default api;

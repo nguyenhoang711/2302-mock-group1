@@ -48,6 +48,7 @@ import Grid from "../pages/ui-elements/Grid";
 // import Modals from "../pages/ui-elements/Modals";
 // import Tabs from "../pages/ui-elements/Tabs";
 // import Typography from "../pages/ui-elements/Typography";
+import withAuthAdmin from "../HOC/withAuthAdmin";
 
 // Notifications
 import Notifications from "../pages/notifications/Notifications";
@@ -153,7 +154,7 @@ const dashboardRoutes = {
       path: "/dashboard/default",
       // path: "/",
       name: "Default",
-      component: withAuth(Default)
+      component: withAuthAdmin(Default)
     },
     // {
     //   path: "/dashboard/analytics",
@@ -197,7 +198,7 @@ const tourRoutes = {
   path: "/tours",
   name: "Tour Management",
   icon: ListIcon,
-  component: withAuth(Tour),
+  component: withAuthAdmin(Tour),
   children: null
 };
 
@@ -205,7 +206,7 @@ const bookingRoutes = {
   path: "/bookings",
   name: "Booking Management",
   icon: ListIcon,
-  component: Booking,
+  component: withAuthAdmin(Booking),
   children: null
 };
 
